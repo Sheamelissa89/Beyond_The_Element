@@ -1,0 +1,40 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Class Notes | Beyond the Elements</title>
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+</head>
+<body>
+    <main>
+        <header>
+            <span class="brand">BEYOND THE ELEMENTS</span>
+            <a class="tag" href="{% url 'chemistry:home' %}">← Home</a>
+        </header>
+
+        <section class="hero">
+            <p class="eyebrow">Your chemistry notebook</p>
+            <h1>Class Notes</h1>
+            <p class="intro">
+                A growing collection of lessons, questions,
+                and discoveries from class.
+            </p>
+        </section>
+
+        <section class="card" aria-labelledby="first-notes">
+            <h2 id="first-notes">Ready for the first lesson</h2>
+            <p>
+                Your notes will go here once class begins.
+                Start with a topic, key ideas, and questions
+                you want to explore.
+            </p>
+        </section>
+
+        <footer>
+            Beyond the Elements · Built one discovery at a time.
+        </footer>
+    </main>
+</body>
+</html>

@@ -1,0 +1,71 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Beyond the Elements</title>
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+</head>
+<body>
+    <main>
+        <header>
+            <span class="brand">BEYOND THE ELEMENTS</span>
+            <span class="tag">A chemistry learning space</span>
+        </header>
+
+        <section class="hero">
+            <p class="eyebrow">From ocean depths to distant stars</p>
+            <h1>Small elements.<br>Endless discovery.</h1>
+            <p class="intro">
+                Explore the chemistry that connects us to the universe—
+                from the waters of our planet to the stars beyond it.
+                A growing space for class notes, discoveries, and practice.
+            </p>
+        </section>
+
+        <section class="cards" aria-label="Learning areas">
+            <article class="card">
+                <span class="symbol" aria-hidden="true">✎</span>
+                <h2>Class Notes</h2>
+                <p>A place to collect lessons, questions, and discoveries from class.</p>
+                <span class="status">Coming soon</span>
+            </article>
+
+            <article class="card">
+                <span class="symbol" aria-hidden="true">He</span>
+                <h2>The Elements</h2>
+                <p>Get to know the building blocks of oceans, life, and distant stars.</p>
+                <span class="status">Coming soon</span>
+            </article>
+
+            <article class="card">
+                <span class="symbol" aria-hidden="true">✦</span>
+                <h2>Practice Lab</h2>
+                <p>Build understanding through practice questions and small challenges.</p>
+                <span class="status">Coming soon</span>
+            </article>
+        </section>
+    <p class="eyebrow">The building blocks of discovery</p>
+    <h2 id="periodic-table-title">A Universe of Elements</h2>
+
+    <a href="{% static 'images/Celestial_Cosmic_Periodic_Table.png' %}"
+       target="_blank" rel="noopener">
+        <img
+            src="{% static 'images/Celestial_Cosmic_Periodic_Table.png' %}"
+            alt="Periodic table artwork with a blue and purple galaxy background"
+            style="display: block; width: 100%; height: auto;
+                   border-radius: 20px; border: 1px solid #8ccbe326;"
+        >
+    </a>
+
+    <p class="intro" style="font-size: 0.9rem;">
+        Galaxy-inspired periodic table artwork. Click to view full size.
+    </p>
+</section>
+        <footer>
+            Beyond the Elements · Built one discovery at a time.
+        </footer>
+    </main>
+</body>
+</html>

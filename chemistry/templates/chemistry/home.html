@@ -28,41 +28,38 @@
             <article class="card">
                 <span class="symbol" aria-hidden="true">✎</span>
                 <h2>Class Notes</h2>
-                <p>A place to collect lessons, questions, and discoveries from class.</p>
-                <span class="status">Coming soon</span>
+                <p>
+                    A place to collect lessons, questions,
+                    and discoveries from class.
+                </p>
+                <a class="status" href="{% url 'chemistry:notes' %}">
+                    Explore Class Notes →
+                </a>
             </article>
 
             <article class="card">
                 <span class="symbol" aria-hidden="true">He</span>
                 <h2>The Elements</h2>
-                <p>Get to know the building blocks of oceans, life, and distant stars.</p>
-                <span class="status">Coming soon</span>
+                <p>
+                    Get to know the building blocks of oceans,
+                    life, and distant stars.
+                </p>
+                <a class="status" href="{% url 'chemistry:elements' %}">
+                    Explore the Elements →
+                </a>
             </article>
 
             <article class="card">
                 <span class="symbol" aria-hidden="true">✦</span>
                 <h2>Practice Lab</h2>
-                <p>Build understanding through practice questions and small challenges.</p>
+                <p>
+                    Build understanding through practice questions
+                    and small challenges.
+                </p>
                 <span class="status">Coming soon</span>
             </article>
         </section>
-    <p class="eyebrow">The building blocks of discovery</p>
-    <h2 id="periodic-table-title">A Universe of Elements</h2>
 
-    <a href="{% static 'images/Celestial_Cosmic_Periodic_Table.png' %}"
-       target="_blank" rel="noopener">
-        <img
-            src="{% static 'images/Celestial_Cosmic_Periodic_Table.png' %}"
-            alt="Periodic table artwork with a blue and purple galaxy background"
-            style="display: block; width: 100%; height: auto;
-                   border-radius: 20px; border: 1px solid #8ccbe326;"
-        >
-    </a>
-
-    <p class="intro" style="font-size: 0.9rem;">
-        Galaxy-inspired periodic table artwork. Click to view full size.
-    </p>
-</section>
         <footer>
             Beyond the Elements · Built one discovery at a time.
         </footer>

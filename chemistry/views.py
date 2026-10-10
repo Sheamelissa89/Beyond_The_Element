@@ -6,3 +6,6 @@ def home(request):
 
 def notes(request):
     return render(request, "chemistry/notes.html")
+
+def elements(request):
+    return render(request, "chemistry/elements.html")

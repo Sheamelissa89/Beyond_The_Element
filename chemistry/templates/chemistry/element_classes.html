@@ -1,0 +1,116 @@
+{% extends "chemistry/base.html" %}
+{% load static %}
+
+{% block title %}Element Classifications | Beyond the Elements{% endblock %}
+
+{% block content %}
+<section class="learning-hero">
+    <p class="eyebrow">Patterns within the periodic table</p>
+    <h1>Element Classifications</h1>
+    <p class="intro">
+        Metals, nonmetals, and metalloids help us describe patterns
+        in element properties and behavior.
+    </p>
+    <a class="learning-link" href="{% url 'chemistry:history' %}#classification">
+        Explore the History of Classification →
+    </a>
+</section>
+
+<p class="learning-note">
+    These are introductory examples. Properties vary between elements,
+    and the boundary of the metalloid group can differ between references.
+</p>
+
+<div class="learning-grid">
+    <article class="card" id="metals">
+        <img
+            class="category-image"
+            src="{% static 'images/Metals.png' %}"
+            alt="Artwork representing metallic elements."
+            loading="lazy"
+        >
+        <h2>Metals</h2>
+        <p>
+            Metals generally conduct heat and electricity well.
+            Many are shiny, malleable, and ductile.
+        </p>
+        <h3>Element examples</h3>
+        <ul>
+            <li>Iron — Fe</li>
+            <li>Copper — Cu</li>
+            <li>Aluminum — Al</li>
+            <li>Gold — Au</li>
+            <li>Mercury — Hg</li>
+        </ul>
+        <p>
+            Metals occupy most of the left and center of the
+            periodic table. Mercury is liquid at room temperature.
+        </p>
+    </article>
+
+    <article class="card" id="nonmetals">
+        <img
+            class="category-image"
+            src="{% static 'images/Nonmetals.png' %}"
+            alt="Artwork representing nonmetallic elements."
+            loading="lazy"
+        >
+        <h2>Nonmetals</h2>
+        <p>
+            Nonmetals have varied properties. Many conduct electricity
+            poorly, and solid nonmetals are often brittle.
+        </p>
+        <h3>Element examples</h3>
+        <ul>
+            <li>Hydrogen — H</li>
+            <li>Carbon — C</li>
+            <li>Nitrogen — N</li>
+            <li>Oxygen — O</li>
+            <li>Sulfur — S</li>
+            <li>Bromine — Br</li>
+        </ul>
+        <p>
+            Most are on the right of the periodic table, with hydrogen
+            on the left. They include solids, liquids, and gases.
+        </p>
+    </article>
+
+    <article class="card" id="metalloids">
+        <img
+            class="category-image"
+            src="{% static 'images/Metalloids.png' %}"
+            alt="Artwork representing metalloid elements."
+            loading="lazy"
+        >
+        <h2>Metalloids</h2>
+        <p>
+            Metalloids show a mixture of metallic and nonmetallic
+            properties. Some are useful semiconductor materials.
+        </p>
+        <h3>Commonly included elements</h3>
+        <ul>
+            <li>Boron — B</li>
+            <li>Silicon — Si</li>
+            <li>Germanium — Ge</li>
+            <li>Arsenic — As</li>
+            <li>Antimony — Sb</li>
+            <li>Tellurium — Te</li>
+        </ul>
+        <p>
+            These elements lie near the staircase boundary between
+            metals and nonmetals.
+        </p>
+    </article>
+</div>
+
+<section class="card learning-section">
+    <h2>Find These Elements</h2>
+    <p>
+        Open the periodic table and search for an element by its
+        name, symbol, or atomic number.
+    </p>
+    <a class="learning-link" href="{% url 'chemistry:elements' %}">
+        Open the Periodic Table →
+    </a>
+</section>
+{% endblock %}

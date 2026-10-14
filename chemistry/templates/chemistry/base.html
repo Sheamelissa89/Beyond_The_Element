@@ -1,0 +1,186 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>{% block title %}Beyond the Elements{% endblock %}</title>
+
+    <link rel="stylesheet" href="{% static 'css/style.css' %}?v=7">
+    <link rel="stylesheet" href="{% static 'css/learning.css' %}?v=9">
+</head>
+
+<body class="{% block body_class %}learning-page{% endblock %}">
+    <main class="ocean-layout">
+        <header>
+            <a class="brand" href="{% url 'chemistry:home' %}">
+                BEYOND THE ELEMENTS
+            </a>
+            <span class="tag">A chemistry learning space</span>
+        </header>
+
+        <div class="ocean-columns">
+            <aside class="discovery-sidebar"
+                   aria-label="Extra discoveries">
+                <p class="bubble-heading">Discover</p>
+
+                {% block discoveries %}
+                <details class="discovery-item">
+                    <summary class="discovery-bubble">History</summary>
+                    <div class="discovery-panel">
+                        <p>
+                            Follow the journey from classical ideas
+                            to modern chemistry.
+                        </p>
+                        <a href="{% url 'chemistry:history' %}">
+                            Explore the history →
+                        </a>
+                    </div>
+                </details>
+
+                <details class="discovery-item">
+                    <summary class="discovery-bubble">
+                        Quick<br>Fact
+                    </summary>
+                    <div class="discovery-panel">
+                        <p>
+                            An element's atomic number is its number
+                            of protons.
+                        </p>
+                    </div>
+                </details>
+
+                <details class="discovery-item">
+                    <summary class="discovery-bubble">Quiz</summary>
+                    <div class="discovery-panel">
+                        <p>Is water an element or a compound?</p>
+
+                        <details class="discovery-answer">
+                            <summary>Reveal answer</summary>
+                            <p>
+                                A compound. Water is H₂O, containing
+                                hydrogen and oxygen.
+                            </p>
+                        </details>
+                    </div>
+                </details>
+
+                <details class="discovery-item">
+                    <summary class="discovery-bubble">
+                        Human<br>Elements
+                    </summary>
+
+                    <div class="discovery-panel">
+                        <p>
+                            Our bodies contain many chemical elements.
+                            These six account for roughly 99% of body mass:
+                        </p>
+
+                        <ul>
+                            <li>
+                                <strong>Oxygen (O)</strong> — in water
+                                and many biological molecules.
+                            </li>
+                            <li>
+                                <strong>Carbon (C)</strong> — forms the
+                                framework of organic molecules.
+                            </li>
+                            <li>
+                                <strong>Hydrogen (H)</strong> — in water
+                                and organic molecules.
+                            </li>
+                            <li>
+                                <strong>Nitrogen (N)</strong> — in proteins
+                                and DNA.
+                            </li>
+                            <li>
+                                <strong>Calcium (Ca)</strong> — supports
+                                bones, teeth, and cell signaling.
+                            </li>
+                            <li>
+                                <strong>Phosphorus (P)</strong> — in bones,
+                                DNA, and energy-carrying ATP.
+                            </li>
+                        </ul>
+
+                        <p>
+                            Smaller amounts of elements such as iron,
+                            sodium, potassium, and magnesium also play
+                            essential roles.
+                        </p>
+
+                        <a href="{% url 'chemistry:elements' %}?group=human#periodic-table">
+                            Highlight the six main human elements →
+                        </a>
+                    </div>
+                </details>
+                {% endblock %}
+            </aside>
+
+            <nav class="bubble-navigation"
+                 aria-label="Main navigation">
+                <p class="bubble-heading">Explore</p>
+
+                <a class="nav-bubble"
+                   href="{% url 'chemistry:home' %}"
+                   {% if request.resolver_match.url_name == 'home' %}aria-current="page"{% endif %}>
+                    Home
+                </a>
+
+                <a class="nav-bubble"
+                   href="{% url 'chemistry:elements' %}"
+                   {% if request.resolver_match.url_name == 'elements' %}aria-current="page"{% endif %}>
+                    Periodic<br>Table
+                </a>
+
+                <a class="nav-bubble"
+                   href="{% url 'chemistry:element_classes' %}"
+                   {% if request.resolver_match.url_name == 'element_classes' %}aria-current="page"{% endif %}>
+                    Element<br>Classes
+                </a>
+
+                <a class="nav-bubble"
+                   href="{% url 'chemistry:states_matter' %}"
+                   {% if request.resolver_match.url_name == 'states_matter' %}aria-current="page"{% endif %}>
+                    States of<br>Matter
+                </a>
+
+                <a class="nav-bubble"
+                   href="{% url 'chemistry:classical_elements' %}"
+                   {% if request.resolver_match.url_name == 'classical_elements' %}aria-current="page"{% endif %}>
+                    Classical<br>Elements
+                </a>
+
+                <a class="nav-bubble"
+                   href="{% url 'chemistry:history' %}"
+                   {% if request.resolver_match.url_name == 'history' %}aria-current="page"{% endif %}>
+                    History
+                </a>
+
+                <a class="nav-bubble"
+                   href="{% url 'chemistry:interactive_learning' %}"
+                   {% if request.resolver_match.url_name == 'interactive_learning' or request.resolver_match.url_name == 'notes' %}aria-current="page"{% endif %}>
+                    Interactive<br>Learning
+                </a>
+
+                <a class="nav-bubble"
+                   href="{% url 'chemistry:atomic_architect' %}"
+                   {% if request.resolver_match.url_name == 'atomic_architect' %}aria-current="page"{% endif %}>
+                    Atomic<br>Architect
+                </a>
+            </nav>
+
+            <div class="ocean-content">
+                {% block content %}{% endblock %}
+            </div>
+        </div>
+
+        <footer>
+            Beyond the Elements · Built one discovery at a time.
+        </footer>
+    </main>
+
+    {% block scripts %}{% endblock %}
+</body>
+</html>

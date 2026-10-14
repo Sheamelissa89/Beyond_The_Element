@@ -1,0 +1,837 @@
+/* ==========================================================
+   BEYOND THE ELEMENTS
+   LEARNING STYLESHEET — learning.css
+   Educational pages, three-column ocean layout,
+   bubble navigation, discoveries, and responsive design.
+   Shared ocean backgrounds are defined in style.css. Cosmic backgrounds are defined below.
+   ========================================================== */
+/* ==========================================================
+   1. LEARNING PAGE FOUNDATION
+   ========================================================== */
+.learning-page .brand {
+    color: #ffffff;
+    text-decoration: none;
+}
+
+.learning-page .learning-nav,
+.learning-page .topic-links {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 16px;
+}
+
+.learning-page .learning-nav a,
+.learning-page .topic-links a,
+.learning-page .learning-link {
+    color: #ffe2a3;
+    text-underline-offset: 4px;
+}
+
+.learning-page a:focus-visible,
+.learning-page summary:focus-visible {
+    outline: 3px solid #91e6d0;
+    outline-offset: 5px;
+    border-radius: 4px;
+}
+
+/* ==========================================================
+   2. LEARNING HERO SECTIONS
+   ========================================================== */
+.learning-page .learning-hero {
+    margin: 40px 0;
+    padding: clamp(24px, 5vw, 48px);
+    border: 1px solid #ffffff33;
+    border-radius: 20px;
+    background: rgba(5, 12, 22, 0.9);
+}
+
+.learning-page .learning-hero h1 {
+    font-size: clamp(2.3rem, 6vw, 4.5rem);
+    overflow-wrap: anywhere;
+}
+
+.learning-page .learning-hero .intro {
+    padding: 0;
+    border: 0;
+    background: none;
+}
+
+.learning-page .centered {
+    text-align: center;
+}
+
+.learning-page .centered .intro {
+    margin-left: auto;
+    margin-right: auto;
+}
+
+/* ==========================================================
+   3. IMAGES AND FIGURES
+   ========================================================== */
+.learning-page .pinwheel-figure {
+    max-width: 560px;
+    margin: 32px auto;
+}
+
+.learning-page .pinwheel-image,
+.learning-page .category-image {
+    display: block;
+    width: 100%;
+    height: auto;
+    border-radius: 18px;
+}
+
+.learning-page .category-image {
+    border-radius: 12px;
+}
+
+.learning-page figcaption {
+    margin-top: 14px;
+    color: #d2deeb;
+    font-size: 0.9rem;
+    line-height: 1.6;
+}
+
+/* ==========================================================
+   4. LEARNING CARDS AND CONTENT
+   ========================================================== */
+.learning-page .section-title {
+    margin: 32px 0 20px;
+    font-size: 1.8rem;
+}
+
+.learning-page .learning-grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 24px;
+}
+
+.learning-page .learning-grid .card {
+    min-width: 0;
+    padding: 24px;
+    background: rgba(5, 12, 22, 0.94);
+}
+
+.learning-page .card h3 {
+    color: #ffe2a3;
+    font-size: 1.15rem;
+}
+
+.learning-page .card p,
+.learning-page .card li {
+    color: #e5efff;
+    line-height: 1.75;
+}
+
+.learning-page .card li + li {
+    margin-top: 8px;
+}
+
+.learning-page .learning-link {
+    display: inline-block;
+    margin-top: 12px;
+    font-weight: 600;
+}
+
+.learning-page .learning-note {
+    margin: 24px 0;
+    padding: 20px;
+    border-left: 4px solid #91e6d0;
+    border-radius: 8px;
+    background: rgba(5, 12, 22, 0.94);
+    color: #e5efff;
+    line-height: 1.75;
+}
+
+.learning-page .learning-section {
+    margin-top: 28px;
+    background: rgba(5, 12, 22, 0.94);
+    scroll-margin-top: 24px;
+}
+
+.learning-page .topic-links {
+    padding: 20px;
+    border-radius: 12px;
+    background: rgba(5, 12, 22, 0.94);
+}
+
+/* ==========================================================
+   5. PRACTICE QUESTIONS
+   ========================================================== */
+.learning-page .practice-question {
+    margin-top: 16px;
+    padding: 18px;
+    border: 1px solid #ffffff33;
+    border-radius: 12px;
+    background: #ffffff05;
+}
+
+.learning-page .practice-question summary {
+    cursor: pointer;
+    color: #ffe2a3;
+    font-weight: 600;
+    line-height: 1.6;
+}
+
+/* ==========================================================
+   6. MAIN OCEAN LAYOUT
+   ========================================================== */
+/*
+   Desktop layout:
+   LEFT:   Discoveries
+   CENTER: Main educational content
+   RIGHT:  Navigation bubbles
+   The layout is shared by all .learning-page pages.
+*/
+.learning-page main.ocean-layout {
+    width: 100%;
+    max-width: 1800px;
+    margin: 0 auto;
+    padding: 32px 24px 60px;
+}
+
+.learning-page .ocean-columns {
+    display: grid;
+    grid-template-columns:
+        300px
+        minmax(0, 1fr)
+        120px;
+    gap: 24px;
+    align-items: start;
+}
+
+.learning-page .ocean-content {
+    grid-column: 2;
+    grid-row: 1;
+    min-width: 0;
+}
+
+/* Prevent wide media from stretching the center column */
+.learning-page .ocean-content img {
+    max-width: 100%;
+    height: auto;
+}
+
+/* ==========================================================
+   7. RIGHT-SIDE BUBBLE NAVIGATION
+   ========================================================== */
+.learning-page .bubble-navigation {
+    grid-column: 3;
+    grid-row: 1;
+    position: sticky;
+    top: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 12px;
+    max-height: calc(100dvh - 40px);
+    overflow-y: auto;
+    padding: 12px 8px;
+    margin-top: 28px;
+}
+
+.learning-page .bubble-heading {
+    margin: 0 0 4px;
+    color: #d7f6ff;
+    font-size: 0.8rem;
+    font-weight: 600;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+}
+
+.learning-page .nav-bubble {
+    position: relative;
+    flex-shrink: 0;
+    display: grid;
+    place-items: center;
+    width: 100px;
+    height: 100px;
+    padding: 12px;
+    border: 1px solid rgba(157, 230, 245, 0.6);
+    border-radius: 50%;
+    background:
+        radial-gradient(
+            circle at 28% 22%,
+            rgba(215, 250, 255, 0.22),
+            transparent 42%
+        ),
+        rgba(4, 25, 40, 0.88);
+    color: #e9fbff;
+    font-size: 0.85rem;
+    font-weight: 600;
+    line-height: 1.35;
+    text-align: center;
+    text-decoration: none;
+    text-shadow: none;
+    box-shadow:
+        inset 0 0 16px rgba(145, 230, 208, 0.12),
+        0 6px 18px rgba(0, 0, 0, 0.25);
+    transition:
+        border-color 180ms ease,
+        background-color 180ms ease,
+        box-shadow 180ms ease;
+}
+
+/* Bubble reflection */
+.learning-page .nav-bubble::before {
+    content: "";
+    position: absolute;
+    top: 13px;
+    left: 22px;
+    width: 22px;
+    height: 9px;
+    border-radius: 50%;
+    background: rgba(230, 253, 255, 0.32);
+    transform: rotate(-35deg);
+    pointer-events: none;
+}
+
+.learning-page .nav-bubble:hover {
+    border-color: #c4fff3;
+    background-color: #123c50;
+    box-shadow: 0 0 20px rgba(145, 230, 208, 0.3);
+}
+
+.learning-page .nav-bubble[aria-current="page"] {
+    border: 2px solid #ffe2a3;
+    color: #ffe2a3;
+    box-shadow: 0 0 18px rgba(255, 226, 163, 0.22);
+}
+
+.learning-page .nav-bubble:focus-visible {
+    outline: 3px solid #ffffff;
+    outline-offset: 4px;
+    border-radius: 50%;
+}
+
+/* ==========================================================
+   8. LEFT-SIDE DISCOVERY NAVIGATION
+   ========================================================== */
+.learning-page .discovery-sidebar {
+    grid-column: 1;
+    grid-row: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+    min-width: 0;
+    margin-top: 40px;
+}
+
+.learning-page .discovery-item {
+    width: 100%;
+}
+
+.learning-page .discovery-bubble {
+    position: relative;
+    display: grid;
+    place-items: center;
+    width: 100px;
+    height: 100px;
+    margin: 0 auto;
+    padding: 12px;
+    border: 1px solid rgba(157, 230, 245, 0.6);
+    border-radius: 50%;
+    background:
+        radial-gradient(
+            circle at 28% 22%,
+            rgba(215, 250, 255, 0.22),
+            transparent 42%
+        ),
+        rgba(4, 25, 40, 0.88);
+    color: #e9fbff;
+    font-size: 0.85rem;
+    font-weight: 600;
+    line-height: 1.35;
+    text-align: center;
+    text-shadow: none;
+    list-style: none;
+    cursor: pointer;
+    box-shadow:
+        inset 0 0 16px rgba(145, 230, 208, 0.12),
+        0 6px 18px rgba(0, 0, 0, 0.25);
+}
+
+.learning-page .discovery-bubble::-webkit-details-marker {
+    display: none;
+}
+
+/* Discovery bubble reflection */
+.learning-page .discovery-bubble::before {
+    content: "";
+    position: absolute;
+    top: 13px;
+    left: 22px;
+    width: 22px;
+    height: 9px;
+    border-radius: 50%;
+    background: rgba(230, 253, 255, 0.32);
+    transform: rotate(-35deg);
+    pointer-events: none;
+}
+
+.learning-page .discovery-bubble:hover,
+.learning-page .discovery-item[open] > .discovery-bubble {
+    border-color: #ffe2a3;
+    color: #ffe2a3;
+    box-shadow: 0 0 18px rgba(255, 226, 163, 0.22);
+}
+
+.learning-page .discovery-bubble:focus-visible {
+    outline: 3px solid #ffffff;
+    outline-offset: 4px;
+    border-radius: 50%;
+}
+
+/* ==========================================================
+   9. EXPANDABLE DISCOVERY PANELS
+   ========================================================== */
+.learning-page .discovery-item[open] {
+    position: relative;
+    z-index: 10;
+}
+
+.learning-page .discovery-panel {
+    margin-top: 14px;
+    padding: 14px;
+    border: 1px solid #91e6d040;
+    border-radius: 14px;
+    background: rgba(5, 12, 22, 0.96);
+    color: #e5efff;
+    font-size: 0.9rem;
+    line-height: 1.6;
+    overflow-wrap: anywhere;
+}
+
+.learning-page .discovery-item[open] > .discovery-panel {
+    width: 100%;
+    max-width: 100%;
+    margin-left: 0;
+    margin-right: 0;
+    padding: 24px;
+    border-radius: 28px;
+    font-size: 1rem;
+    line-height: 1.75;
+    background: #071b2b;
+    box-shadow: 0 16px 40px rgba(0, 0, 0, 0.45);
+}
+
+.learning-page .discovery-panel p {
+    margin: 0 0 12px;
+}
+
+.learning-page .discovery-panel p:last-child {
+    margin-bottom: 0;
+}
+
+.learning-page .discovery-panel ul {
+    margin: 16px 0;
+    padding-left: 22px;
+}
+
+.learning-page .discovery-panel li + li {
+    margin-top: 12px;
+}
+
+.learning-page .discovery-panel a,
+.learning-page .discovery-answer > summary {
+    color: #ffe2a3;
+    text-underline-offset: 4px;
+}
+
+.learning-page .discovery-answer > summary {
+    cursor: pointer;
+}
+
+.learning-page .discovery-answer p {
+    margin-top: 12px;
+}
+
+/* ==========================================================
+   10. MEDIUM DESKTOP SCREENS
+   ========================================================== */
+@media (min-width: 1201px) and (max-width: 1599px) {
+    .learning-page .ocean-columns {
+        grid-template-columns:
+            280px
+            minmax(0, 1fr)
+            120px;
+        gap: 20px;
+    }
+}
+
+/* ==========================================================
+   11. TABLET AND SMALL DESKTOP
+   ========================================================== */
+@media (max-width: 1200px) {
+    .learning-page .ocean-columns {
+        grid-template-columns: minmax(0, 1fr);
+        gap: 0;
+    }
+
+/* Navigation moves above main content */
+    .learning-page .bubble-navigation {
+        grid-column: 1;
+        grid-row: 1;
+        position: static;
+        flex-direction: row;
+        flex-wrap: wrap;
+        justify-content: center;
+        max-height: none;
+        overflow: visible;
+        margin-top: 20px;
+    }
+
+.learning-page .bubble-heading {
+        width: 100%;
+        text-align: center;
+    }
+
+.learning-page .ocean-content {
+        grid-column: 1;
+        grid-row: 2;
+    }
+
+.learning-page .nav-bubble {
+        width: auto;
+        min-width: 100px;
+        height: auto;
+        min-height: 56px;
+        border-radius: 28px;
+    }
+
+.learning-page .nav-bubble::before {
+        display: none;
+    }
+
+.learning-page .nav-bubble:focus-visible {
+        border-radius: 28px;
+    }
+
+/* Discoveries move below main content */
+    .learning-page .discovery-sidebar {
+        grid-column: 1;
+        grid-row: 3;
+        display: grid;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        align-items: start;
+        gap: 16px;
+        margin-top: 32px;
+    }
+
+.learning-page .discovery-sidebar > .bubble-heading {
+        grid-column: 1 / -1;
+        text-align: center;
+    }
+
+.learning-page .discovery-item[open] > .discovery-panel {
+        width: 100%;
+        max-width: 100%;
+    }
+}
+
+/* ==========================================================
+   12. TABLET LEARNING CARDS
+   ========================================================== */
+@media (max-width: 900px) {
+    .learning-page .learning-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+}
+
+/* ==========================================================
+   13. MOBILE LAYOUT
+   ========================================================== */
+@media (max-width: 600px) {
+    .learning-page main.ocean-layout {
+        padding: 20px 16px 48px;
+    }
+
+.learning-page .learning-grid {
+        grid-template-columns: 1fr;
+    }
+
+.learning-page header {
+        align-items: flex-start;
+        flex-direction: column;
+    }
+
+.learning-page .learning-nav {
+        gap: 12px;
+    }
+
+.learning-page .discovery-sidebar {
+        grid-template-columns: 1fr;
+    }
+
+.learning-page .discovery-bubble {
+        width: 100%;
+        height: auto;
+        min-height: 56px;
+        border-radius: 28px;
+    }
+
+.learning-page .discovery-bubble::before {
+        display: none;
+    }
+
+.learning-page .discovery-bubble:focus-visible {
+        border-radius: 28px;
+    }
+}
+
+/* ==========================================================
+   14. ACCESSIBILITY
+   ========================================================== */
+@media (prefers-reduced-motion: reduce) {
+    .learning-page .nav-bubble {
+        transition: none;
+    }
+}
+
+/* ==========================================
+   INTERACTIVE LEARNING — COSMIC BACKGROUND
+   ========================================== */
+body.learning-page.atomic-builder-page {
+    background-image:
+        linear-gradient(
+            rgba(2, 8, 23, 0.08),
+            rgba(2, 8, 23, 0.08)
+        ),
+        url("../images/AtomicArchitecture.png");
+    background-size: cover;
+    background-position: center top;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-color: #020817;
+}
+
+/* 15. ATOMIC ARCHITECT — rules scoped to the builder page */
+
+.atomic-builder-page .atomic-builder {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 260px), 1fr));
+    gap: 24px;
+    align-items: start;
+}
+
+.atomic-builder-page .atomic-builder > .learning-section {
+    min-width: 0;
+    margin-top: 0;
+}
+
+.atomic-builder-page .particle-control {
+    display: grid;
+    grid-template-columns: 44px minmax(0, 1fr) 44px;
+    gap: 12px;
+    align-items: center;
+    margin: 24px 0;
+}
+
+.atomic-builder-page .particle-control h3 {
+    grid-column: 1 / -1;
+    margin: 0;
+}
+
+.atomic-builder-page .particle-control output {
+    text-align: center;
+    font-size: 1.4rem;
+    font-weight: 700;
+    font-variant-numeric: tabular-nums;
+}
+
+.atomic-builder-page .atomic-builder button {
+    min-height: 44px;
+    padding: 10px 12px;
+    border: 1px solid #91e6d070;
+    border-radius: 10px;
+    background: #11263a;
+    color: #e5efff;
+    font: inherit;
+    cursor: pointer;
+}
+
+.atomic-builder-page .atomic-builder button:hover:not(:disabled) {
+    background: #203b51;
+}
+
+.atomic-builder-page .atomic-builder button:focus-visible {
+    outline: 3px solid #ffe2a3;
+    outline-offset: 3px;
+}
+
+.atomic-builder-page .atomic-builder button:disabled {
+    opacity: 0.45;
+    cursor: not-allowed;
+}
+
+.atomic-builder-page #reset-atom {
+    width: 100%;
+}
+
+.atomic-builder-page #atom-symbol {
+    display: inline-block;
+    margin-right: 8px;
+    color: #91e6d0;
+    font-size: 2rem;
+}
+
+.atomic-builder-page .element-facts > div {
+    flex-wrap: wrap;
+    gap: 8px 16px;
+}
+
+.atomic-builder-page .element-facts dd {
+    overflow-wrap: anywhere;
+}
+/* Atomic Architect background */
+body.learning-page.atomic-builder-page {
+    background:
+        radial-gradient(
+            ellipse at 50% 20%,
+            rgba(39, 74, 133, 0.55),
+            transparent 65%
+        ),
+        linear-gradient(
+            145deg,
+            #050c20 0%,
+            #101d40 45%,
+            #030916 100%
+        );
+    background-attachment: fixed;
+    background-color: #030916;
+}
+/* Atomic Architect: full-width artwork */
+body.atomic-builder-page {
+    margin: 0;
+    background: #030916;
+}
+
+.atomic-builder-page main.ocean-layout {
+    width: 100%;
+    max-width: none;
+    margin: 0;
+    padding: 0;
+}
+
+.atomic-builder-page .ocean-columns {
+    display: block;
+}
+
+.atomic-builder-page .ocean-content {
+    width: 100%;
+    min-width: 0;
+}
+
+.atomic-builder-page main.ocean-layout > header,
+.atomic-builder-page main.ocean-layout > footer,
+.atomic-builder-page .discovery-sidebar,
+.atomic-builder-page .bubble-navigation {
+    display: none;
+}
+/* Shared learning pages: bubbles against the outer walls */
+@media (min-width: 1201px) {
+    body.learning-page:not(.atomic-builder-page) main.ocean-layout {
+        max-width: none;
+        padding-left: 120px;
+        padding-right: 120px;
+    }
+
+    body.learning-page:not(.atomic-builder-page) .ocean-columns {
+        display: block;
+    }
+
+    body.learning-page:not(.atomic-builder-page) .ocean-content {
+        width: 100%;
+        max-width: 1500px;
+        margin: 0 auto;
+    }
+
+    /* Right wall: page navigation */
+    body.learning-page:not(.atomic-builder-page) .bubble-navigation {
+        position: fixed;
+        top: 18px;
+        right: 14px;
+        bottom: 18px;
+        z-index: 10;
+
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 10px;
+
+        width: 90px;
+        max-height: none;
+        margin: 0;
+        padding: 6px;
+        overflow-y: auto;
+    }
+
+    body.learning-page:not(.atomic-builder-page) .nav-bubble {
+        flex-shrink: 0;
+        width: 78px;
+        min-width: 0;
+        height: 78px;
+        min-height: 0;
+        padding: 8px;
+        border-radius: 50%;
+        font-size: 0.75rem;
+        line-height: 1.3;
+    }
+
+    /* Left wall: discovery bubbles */
+    body.learning-page:not(.atomic-builder-page) .discovery-sidebar {
+        position: fixed;
+        top: 24px;
+        left: 20px;
+        z-index: 11;
+
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 14px;
+
+        width: 78px;
+        margin: 0;
+    }
+
+    body.learning-page:not(.atomic-builder-page) .discovery-item {
+        position: relative;
+        width: 78px;
+    }
+
+    body.learning-page:not(.atomic-builder-page) .discovery-bubble {
+        width: 78px;
+        height: 78px;
+        margin: 0;
+        padding: 8px;
+        font-size: 0.75rem;
+        line-height: 1.3;
+    }
+
+    /* Open discovery content beside its bubble */
+    body.learning-page:not(.atomic-builder-page)
+    .discovery-item[open] > .discovery-panel {
+        position: absolute;
+        top: 0;
+        left: 90px;
+
+        width: 280px;
+        max-width: calc(100vw - 140px);
+        max-height: calc(100vh - 48px);
+        overflow-y: auto;
+
+        margin: 0;
+        padding: 18px;
+        border-radius: 14px;
+        background: #03101c;
+        box-shadow: 0 12px 30px #00000080;
+    }
+
+    body.learning-page:not(.atomic-builder-page)
+    .bubble-navigation > .bubble-heading,
+    body.learning-page:not(.atomic-builder-page)
+    .discovery-sidebar > .bubble-heading {
+        display: none;
+    }
+}

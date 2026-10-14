@@ -716,33 +716,273 @@ Og Oganesson
         55: "cesium"
     };
 
-    search.addEventListener("input", () => {
-        const query = search.value.trim().toLowerCase();
-        let matches = 0;
+    // Symbols must match the element symbols in elementData.
+const searchGroups = [
+    {
+        terms: ["human", "humans", "body", "human body"],
+        label: "Six main human-body elements",
+        symbols: ["H", "C", "N", "O", "P", "Ca"]
+    },
+    {
+        terms: ["life", "biology", "chnops"],
+        label: "CHNOPS: six major elements in biological molecules",
+        symbols: ["C", "H", "N", "O", "P", "S"]
+    },
+    {
+        terms: ["water", "h2o"],
+        label: "Elements in water, H₂O",
+        symbols: ["H", "O"]
+    },
+    {
+        terms: ["air", "atmosphere"],
+        label: "Elements in major components of dry Earth's air",
+        symbols: ["N", "O", "Ar", "C"]
+    },
+    {
+        terms: ["ocean", "oceans", "seawater", "sea water"],
+        label: "Selected elements in seawater",
+        symbols: ["H", "O", "Na", "Cl", "Mg", "S", "Ca", "K"]
+    },
+    {
+        terms: ["earth", "crust", "earth crust", "earth's crust"],
+        label: "Eight major elements in Earth's crust",
+        symbols: ["O", "Si", "Al", "Fe", "Ca", "Na", "K", "Mg"]
+    },
+    {
+        terms: ["rocks", "minerals"],
+        label: "Examples of elements commonly found in rock-forming minerals",
+        symbols: ["O", "Si", "Al", "Fe", "Ca", "Na", "K", "Mg"]
+    },
+    {
+        terms: ["sun", "stars", "star"],
+        label: "Hydrogen and helium: the dominant elements in the Sun",
+        symbols: ["H", "He"]
+    },
+    {
+        terms: ["salt", "table salt", "sodium chloride", "nacl"],
+        label: "Elements in sodium chloride, NaCl",
+        symbols: ["Na", "Cl"]
+    },
+    {
+        terms: ["carbon dioxide", "co2"],
+        label: "Elements in carbon dioxide, CO₂",
+        symbols: ["C", "O"]
+    },
+    {
+        terms: ["carbon monoxide", "co"],
+        label: "Elements in carbon monoxide, CO",
+        symbols: ["C", "O"]
+    },
+    {
+        terms: ["methane", "ch4"],
+        label: "Elements in methane, CH₄",
+        symbols: ["C", "H"]
+    },
+    {
+        terms: ["ammonia", "nh3"],
+        label: "Elements in ammonia, NH₃",
+        symbols: ["N", "H"]
+    },
+    {
+        terms: ["glucose", "c6h12o6"],
+        label: "Elements in glucose, C₆H₁₂O₆",
+        symbols: ["C", "H", "O"]
+    },
+    {
+        terms: ["sucrose", "table sugar", "sugar", "c12h22o11"],
+        label: "Elements in table sugar: sucrose, C₁₂H₂₂O₁₁",
+        symbols: ["C", "H", "O"]
+    },
+    {
+        terms: ["ethanol", "c2h5oh"],
+        label: "Elements in ethanol, C₂H₅OH",
+        symbols: ["C", "H", "O"]
+    },
+    {
+        terms: ["baking soda", "sodium bicarbonate", "nahco3"],
+        label: "Elements in sodium bicarbonate, NaHCO₃",
+        symbols: ["Na", "H", "C", "O"]
+    },
+    {
+        terms: ["calcium carbonate", "limestone", "caco3"],
+        label: "Elements in calcium carbonate, the main component of limestone",
+        symbols: ["Ca", "C", "O"]
+    },
+    {
+        terms: ["quartz", "silica", "silicon dioxide", "sio2"],
+        label: "Elements in silicon dioxide, SiO₂",
+        symbols: ["Si", "O"]
+    },
+    {
+        terms: ["hydrogen peroxide", "h2o2"],
+        label: "Elements in hydrogen peroxide, H₂O₂",
+        symbols: ["H", "O"]
+    },
+    {
+        terms: ["sulfuric acid", "sulphuric acid", "h2so4"],
+        label: "Elements in sulfuric acid, H₂SO₄",
+        symbols: ["H", "S", "O"]
+    },
+    {
+        terms: ["hydrochloric acid", "hydrogen chloride", "hcl"],
+        label: "Elements in hydrogen chloride, HCl; its aqueous solution is hydrochloric acid",
+        symbols: ["H", "Cl"]
+    },
+    {
+        terms: ["sodium hydroxide", "naoh"],
+        label: "Elements in sodium hydroxide, NaOH",
+        symbols: ["Na", "O", "H"]
+    },
+    {
+        terms: ["magnesium oxide", "mgo"],
+        label: "Elements in magnesium oxide, MgO",
+        symbols: ["Mg", "O"]
+    },
+    {
+        terms: ["iron oxide", "iron iii oxide", "fe2o3"],
+        label: "Elements in iron(III) oxide, Fe₂O₃",
+        symbols: ["Fe", "O"]
+    },
+    {
+        terms: ["brass"],
+        label: "Principal elements in brass; some formulations contain additional elements",
+        symbols: ["Cu", "Zn"]
+    },
+    {
+        terms: ["bronze"],
+        label: "Elements in traditional copper–tin bronze",
+        symbols: ["Cu", "Sn"]
+    },
+    {
+        terms: ["steel"],
+        label: "Iron and carbon: the basis of steel; alloy steels contain additional elements",
+        symbols: ["Fe", "C"]
+    },
+    {
+        terms: ["stainless steel"],
+        label: "Selected elements in many stainless steels; composition varies",
+        symbols: ["Fe", "Cr", "Ni", "C"]
+    },
+    {
+        terms: ["alkali metals", "alkali metal"],
+        label: "Alkali metals",
+        symbols: ["Li", "Na", "K", "Rb", "Cs", "Fr"]
+    },
+    {
+        terms: ["alkaline earth metals", "alkaline earth"],
+        label: "Alkaline earth metals",
+        symbols: ["Be", "Mg", "Ca", "Sr", "Ba", "Ra"]
+    },
+    {
+        terms: ["halogens", "halogen"],
+        label: "Group 17: the halogens",
+        symbols: ["F", "Cl", "Br", "I", "At", "Ts"]
+    },
+    {
+        terms: ["noble gases", "noble gas"],
+        label: "Group 18: the noble gases; the group name does not establish every member's physical state",
+        symbols: ["He", "Ne", "Ar", "Kr", "Xe", "Rn", "Og"]
+    },
+    {
+        terms: ["metalloids", "metalloid"],
+        label: "Six commonly classified metalloids; reference lists can differ",
+        symbols: ["B", "Si", "Ge", "As", "Sb", "Te"]
+    },
+    {
+        terms: ["liquid", "liquids"],
+        label: "Liquid elements at approximately 20°C and ordinary atmospheric pressure",
+        symbols: ["Br", "Hg"]
+    },
+    {
+        terms: ["gas", "gases"],
+        label: "Gaseous elements at approximately 20°C and ordinary atmospheric pressure",
+        symbols: ["H", "He", "N", "O", "F", "Ne", "Cl", "Ar", "Kr", "Xe", "Rn"]
+    }
+];
 
-        tiles.forEach(({ element, button }) => {
-            const matchesQuery =
+// Normalize names and formulas, including pasted subscript digits.
+function normalizeSearch(value) {
+    return value
+        .trim()
+        .toLowerCase()
+        .replace(/[₀-₉]/g, digit =>
+            String("₀₁₂₃₄₅₆₇₈₉".indexOf(digit))
+        )
+        .replace(/[’']/g, "")
+        .replace(/[-_]/g, " ")
+        .replace(/\s+/g, " ");
+}
+
+const groupLookup = new Map();
+
+searchGroups.forEach(group => {
+    group.terms.forEach(term => {
+        groupLookup.set(normalizeSearch(term), group);
+    });
+});
+
+function updateElementSearch() {
+    const query = normalizeSearch(search.value);
+
+    // An exact element symbol takes priority.
+    // For example, "Co" means cobalt, rather than carbon monoxide.
+    const exactSymbol = elements.find(element =>
+        element.symbol.toLowerCase() === query
+    );
+
+    const group = exactSymbol ? null : groupLookup.get(query);
+    const selectedSymbols = group ? new Set(group.symbols) : null;
+    let matches = 0;
+
+    tiles.forEach(({ element, button }) => {
+        const matchesQuery = group
+            ? selectedSymbols.has(element.symbol)
+            : (
                 !query ||
-                element.name.toLowerCase().includes(query) ||
-                element.symbol.toLowerCase() === query ||
-                String(element.number) === query ||
-                (aliases[element.number] || "").includes(query);
-
-            button.classList.toggle("is-dimmed", !matchesQuery);
-            button.classList.toggle(
-                "is-match",
-                Boolean(query) && matchesQuery
+                (exactSymbol
+                    ? element.number === exactSymbol.number
+                    : (
+                        normalizeSearch(element.name).includes(query) ||
+                        String(element.number) === query ||
+                        normalizeSearch(aliases[element.number] || "")
+                            .includes(query)
+                    ))
             );
 
-            if (matchesQuery) {
-                matches += 1;
-            }
-        });
+        button.classList.toggle("is-dimmed", !matchesQuery);
+        button.classList.toggle(
+            "is-match",
+            Boolean(query) && matchesQuery
+        );
 
-        status.textContent = query
-            ? `${matches} matching element${matches === 1 ? "" : "s"}. Highlighted tiles remain in their table positions.`
-            : "118 elements. On smaller screens, scroll sideways to explore.";
+        if (matchesQuery) matches += 1;
     });
+
+    if (group) {
+        status.textContent =
+            `${group.label}. ${matches} elements highlighted. ` +
+            "Select a tile for details. Clear the search to show all 118.";
+    } else if (query) {
+        status.textContent = matches
+            ? `${matches} matching element${matches === 1 ? "" : "s"}. Select a highlighted tile for details.`
+            : "No matches. Try an element, human, water, air, ocean, steel, or halogens.";
+    } else {
+        status.textContent =
+            "118 elements. Try a name, symbol, atomic number, or a topic such as human or water.";
+    }
+}
+
+search.addEventListener("input", updateElementSearch);
+
+// Supports links such as ?group=human and ?group=water.
+const pageParameters = new URLSearchParams(window.location.search);
+const requestedGroup = pageParameters.get("group");
+
+if (requestedGroup && groupLookup.has(normalizeSearch(requestedGroup))) {
+    search.value = requestedGroup;
+}
+
+updateElementSearch();
 
     closeButton.addEventListener("click", () => {
         dialog.close();

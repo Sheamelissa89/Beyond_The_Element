@@ -1,0 +1,114 @@
+{% extends "chemistry/base.html" %}
+{% load static %}
+
+{% block title %}Classical Elements | Beyond the Elements{% endblock %}
+
+{% block content %}
+<section class="learning-hero centered">
+    <p class="eyebrow">How people first imagined matter</p>
+    <h1>The Classical Elements</h1>
+    <p class="intro">
+        Explore the influential Greek tradition of earth, water,
+        air, and fire, together with Aristotle's celestial aether.
+        Other cultures developed different systems.
+    </p>
+
+    <figure class="pinwheel-figure">
+        <img
+            class="pinwheel-image"
+            src="{% static 'images/Elementals.png' %}"
+            alt="Artwork bringing together fire, air, earth, water, and aether."
+        >
+        <figcaption>
+            Historical ideas that helped people explain the natural world.
+        </figcaption>
+    </figure>
+
+    <a class="learning-link" href="{% url 'chemistry:history' %}#classical">
+        Explore Their History →
+    </a>
+</section>
+
+<p class="learning-note">
+    Classical elements belong to historical theories of nature.
+    Modern chemical elements are defined by their number of protons.
+</p>
+
+<div class="learning-grid">
+    <article class="card" id="fire">
+        <h2>Fire</h2>
+        <p>
+            Fire represented heat and transformation in classical thought.
+        </p>
+        <h3>A modern connection</h3>
+        <p>
+            Ordinary flames involve chemical reactions that release
+            energy as heat and light. Fire is not a chemical element.
+        </p>
+    </article>
+
+    <article class="card" id="air">
+        <h2>Air</h2>
+        <p>
+            Air was understood as a basic substance associated
+            with breath and the atmosphere.
+        </p>
+        <h3>A modern connection</h3>
+        <p>
+            Earth's air is a mixture, mainly nitrogen and oxygen,
+            with argon, carbon dioxide, and other gases.
+        </p>
+    </article>
+
+    <article class="card" id="earth">
+        <h2>Earth</h2>
+        <p>
+            Earth represented solidity and the substance of
+            land, stones, and the physical world.
+        </p>
+        <h3>A modern connection</h3>
+        <p>
+            Rocks and soils contain many minerals and compounds.
+            They are not made from a single chemical element.
+        </p>
+    </article>
+
+    <article class="card" id="water">
+        <h2>Water</h2>
+        <p>
+            Water represented fluidity and was treated as a
+            fundamental substance in classical thought.
+        </p>
+        <h3>A modern connection</h3>
+        <p>
+            Water is the compound H₂O. Each molecule contains
+            two hydrogen atoms and one oxygen atom.
+        </p>
+    </article>
+
+    <article class="card" id="aether">
+        <h2>Aether</h2>
+        <p>
+            In Aristotle's account, aether was the substance
+            associated with the heavens and celestial bodies.
+        </p>
+        <h3>A modern connection</h3>
+        <p>
+            Modern astronomy explains stars and planets through
+            matter, radiation, and physical laws. Aether is not
+            an element in the periodic table.
+        </p>
+    </article>
+</div>
+
+<section class="card learning-section">
+    <h2>From Ideas to Evidence</h2>
+    <p>
+        Compare these early explanations with the modern elements,
+        each identified by a unique atomic number.
+    </p>
+    <a class="learning-link" href="{% url 'chemistry:elements' %}">
+        Explore the Modern Elements →
+    </a>
+</section>
+{% endblock %}

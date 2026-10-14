@@ -1,0 +1,122 @@
+{% extends "chemistry/base.html" %}
+{% load static %}
+
+{% block title %}States of Matter | Beyond the Elements{% endblock %}
+
+{% block content %}
+<section class="learning-hero">
+    <p class="eyebrow">Same matter. Different arrangements.</p>
+    <h1>States of Matter</h1>
+    <p class="intro">
+        Temperature and pressure help determine whether matter is
+        solid, liquid, or gas. Changing its state does not change
+        an element's identity.
+    </p>
+    <a class="learning-link" href="{% url 'chemistry:history' %}#matter">
+        Explore the History of Matter →
+    </a>
+</section>
+
+<p class="learning-note">
+    Element examples below refer to approximately 20°C and ordinary
+    atmospheric pressure. These are examples rather than complete lists.
+</p>
+
+<div class="learning-grid">
+    <article class="card" id="solids">
+        <img
+            class="category-image"
+            src="{% static 'images/Solids.png' %}"
+            alt="Artwork illustrating solid matter."
+            loading="lazy"
+        >
+        <h2>Solids</h2>
+        <p>
+            A solid has a definite shape and volume. Its particles
+            remain close together and move around relatively fixed positions.
+        </p>
+        <h3>Element examples</h3>
+        <ul>
+            <li>Iron — Fe</li>
+            <li>Copper — Cu</li>
+            <li>Carbon — C</li>
+            <li>Sulfur — S</li>
+        </ul>
+        <p>Most elements are solids under these conditions.</p>
+    </article>
+
+    <article class="card" id="liquids">
+        <img
+            class="category-image"
+            src="{% static 'images/Liquids.png' %}"
+            alt="Artwork illustrating liquid matter."
+            loading="lazy"
+        >
+        <h2>Liquids</h2>
+        <p>
+            A liquid has a definite volume but takes the shape of
+            its container. Its particles remain close together while
+            moving past one another.
+        </p>
+        <h3>Elements at these conditions</h3>
+        <ul>
+            <li>Mercury — Hg, a metal</li>
+            <li>Bromine — Br, a nonmetal</li>
+        </ul>
+        <p>
+            Water is also a liquid under these conditions, but it is
+            a compound of hydrogen and oxygen.
+        </p>
+    </article>
+
+    <article class="card" id="gases">
+        <img
+            class="category-image"
+            src="{% static 'images/Gases.png' %}"
+            alt="Artwork illustrating gaseous matter."
+            loading="lazy"
+        >
+        <h2>Gases</h2>
+        <p>
+            A gas has no definite shape or volume. Its particles
+            spread out to fill their container.
+        </p>
+        <h3>Element examples</h3>
+        <ul>
+            <li>Hydrogen — H</li>
+            <li>Nitrogen — N</li>
+            <li>Oxygen — O</li>
+            <li>Helium — He</li>
+        </ul>
+        <p>
+            Hydrogen, nitrogen, and oxygen commonly occur as
+            two-atom molecules: H₂, N₂, and O₂.
+        </p>
+    </article>
+</div>
+
+<section class="card learning-section" id="plasma">
+    <h2>Beyond the Familiar: Plasma</h2>
+    <p>
+        Plasma contains freely moving charged particles, including
+        electrons and ions. It appears in stars, lightning, and
+        some illuminated signs.
+    </p>
+    <p>
+        Plasma is a state of matter, rather than a separate
+        classification of chemical elements.
+    </p>
+</section>
+
+<section class="card learning-section">
+    <h2>Connect State and Classification</h2>
+    <p>
+        Mercury is both a metal and a liquid. Oxygen is both a
+        nonmetal and a gas. State describes the physical condition;
+        classification describes a group of element properties.
+    </p>
+    <a class="learning-link" href="{% url 'chemistry:element_classes' %}">
+        Explore Element Classifications →
+    </a>
+</section>
+{% endblock %}

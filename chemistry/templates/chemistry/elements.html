@@ -1,132 +1,256 @@
+{% extends "chemistry/base.html" %}
 {% load static %}
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Explore the Elements | Beyond the Elements</title>
-    <link rel="stylesheet" href="{% static 'css/style.css' %}">
-    <script defer src="{% static 'js/element-details.js' %}"></script>
-    <script defer src="{% static 'js/periodic-table.js' %}"></script>
-</head>
-<body>
-    <main>
-        <header>
-            <span class="brand">BEYOND THE ELEMENTS</span>
-            <a class="tag" href="{% url 'chemistry:home' %}">
-                ← Back to Home
-            </a>
-        </header>
 
-        <section
-            class="elements-section"
-            aria-labelledby="periodic-table-title"
+{% block title %}Explore the Elements | Beyond the Elements{% endblock %}
+{% block body_class %}learning-page periodic-page{% endblock %}
+
+{% block content %}
+<style>
+    /* Changes apply only to the periodic table page. */
+    body.learning-page.periodic-page {
+        background: #030810;
+    }
+
+    .learning-page.periodic-page main.ocean-layout {
+        width: 100%;
+        max-width: none;
+        margin: 0;
+        padding: 20px 110px 30px;
+    }
+
+    .learning-page.periodic-page main.ocean-layout > header,
+    .learning-page.periodic-page main.ocean-layout > footer {
+        display: none;
+    }
+
+    .learning-page.periodic-page .ocean-columns {
+        display: block;
+    }
+
+    .learning-page.periodic-page .ocean-content {
+        width: 100%;
+        max-width: none;
+        margin: 0;
+    }
+
+    .learning-page.periodic-page .elements-section {
+        margin: 0;
+        padding: 0;
+        border: 0;
+        border-radius: 0;
+        background: none;
+        box-shadow: none;
+    }
+
+    .learning-page.periodic-page .periodic-heading {
+        text-align: center;
+    }
+
+    .learning-page.periodic-page .periodic-heading h1 {
+        margin: 10px 0;
+        color: #fff0cf;
+        font-family: Georgia, serif;
+        font-size: clamp(2rem, 4vw, 3.5rem);
+        letter-spacing: 0;
+    }
+
+    .learning-page.periodic-page .periodic-heading .intro {
+        max-width: 700px;
+        margin: 0 auto;
+        padding: 0;
+        border: 0;
+        background: none;
+        font-size: 1rem;
+    }
+
+    .learning-page.periodic-page .periodic-search {
+        margin: 18px auto;
+        text-align: center;
+    }
+
+    .learning-page.periodic-page .element-search-label {
+        margin: 0 0 8px;
+    }
+
+    .learning-page.periodic-page .element-search {
+        max-width: 480px;
+    }
+
+    .learning-page.periodic-page .table-hint {
+        margin: 8px 0;
+    }
+
+    .learning-page.periodic-page .periodic-table-scroll {
+        width: 100%;
+        max-width: none;
+        padding: 0;
+        overflow-x: auto;
+    }
+
+    /* Artwork and generated buttons share this container. */
+    .learning-page.periodic-page .periodic-table.artwork-table {
+        position: relative;
+        display: block;
+        width: 100%;
+        min-width: 0;
+        margin: 0;
+        padding: 0;
+        border: 0;
+    }
+
+    .learning-page.periodic-page .periodic-artwork {
+        display: block;
+        width: 100%;
+        max-width: none;
+        height: auto;
+        border-radius: 0;
+    }
+
+    @media (max-width: 1200px) {
+        .learning-page.periodic-page main.ocean-layout {
+            padding: 16px;
+        }
+
+        .learning-page.periodic-page .bubble-navigation,
+        .learning-page.periodic-page .discovery-sidebar {
+            position: static;
+        }
+
+        .learning-page.periodic-page .bubble-navigation {
+            margin: 0 0 20px;
+        }
+
+        .learning-page.periodic-page .discovery-sidebar {
+            margin: 0 0 20px;
+        }
+    }
+
+    @media (max-width: 700px) {
+        /* Keep individual element targets usable on small screens. */
+        .learning-page.periodic-page .periodic-table.artwork-table {
+            min-width: 900px;
+        }
+    }
+    @media (min-width: 1201px) {
+    body.learning-page.periodic-page main.ocean-layout {
+        width: 100%;
+        max-width: none;
+        padding-left: 110px;
+        padding-right: 110px;
+    }
+
+    body.learning-page.periodic-page .ocean-columns > .ocean-content {
+        width: 100%;
+        max-width: none;
+        margin: 0;
+    }
+
+    body.learning-page.periodic-page #periodic-table {
+        width: 100%;
+        max-width: none;
+    }
+}
+</style>
+
+<script defer src="{% static 'js/element-details.js' %}"></script>
+<script defer src="{% static 'js/periodic-table.js' %}?v=3"></script>
+
+<section class="elements-section"
+         aria-labelledby="periodic-table-title">
+
+    <div class="periodic-heading">
+        <p class="eyebrow">The building blocks of discovery</p>
+        <h1 id="periodic-table-title">A Universe of Elements</h1>
+
+        <p class="intro">
+            Explore all 118 elements. Select an element in the artwork
+            to discover its identity.
+        </p>
+    </div>
+
+    <div class="periodic-search">
+        <label class="element-search-label" for="element-search">
+            Find an element
+        </label>
+
+        <input
+            id="element-search"
+            class="element-search"
+            type="search"
+            placeholder="Try oxygen, 8, human, water, or halogens"
+            autocomplete="off"
         >
-            <p class="eyebrow">The building blocks of discovery</p>
-            <h1 id="periodic-table-title">A Universe of Elements</h1>
 
-            <p class="intro">
-                Explore all 118 elements. Select an element in the artwork
-                to discover its identity.
-            </p>
+        <p id="element-search-status"
+           class="table-hint"
+           aria-live="polite">
+            118 elements. On smaller screens, scroll sideways to explore.
+        </p>
+    </div>
 
-            <label class="element-search-label" for="element-search">
-                Find an element
-            </label>
+    <div class="periodic-table-scroll"
+         tabindex="0"
+         role="region"
+         aria-label="Periodic table, scroll horizontally">
 
-            <input
-                id="element-search"
-                class="element-search"
-                type="search"
-                placeholder="Try oxygen, O, or 8"
-                autocomplete="off"
+        <div id="periodic-table"
+             class="periodic-table artwork-table">
+            <img
+                class="periodic-artwork"
+                src="{% static 'images/Celestial_Cosmic_Periodic_Table.png' %}"
+                alt="Galaxy-inspired periodic table. Use the element buttons to explore."
+                width="1672"
+                height="941"
             >
+        </div>
+    </div>
 
-            <p
-                id="element-search-status"
-                class="table-hint"
-                aria-live="polite"
-            >
-                118 elements. On smaller screens, scroll sideways to explore.
-            </p>
+    <noscript>
+        <p>Enable JavaScript to explore the interactive periodic table.</p>
+    </noscript>
+</section>
 
-            <div
-                class="periodic-table-scroll"
-                tabindex="0"
-                role="region"
-                aria-label="Periodic table, scroll horizontally"
-            >
-                <div
-                    id="periodic-table"
-                    class="periodic-table artwork-table"
-                >
-                    <img
-                        class="periodic-artwork"
-                        src="{% static 'images/Celestial_Cosmic_Periodic_Table.png' %}"
-                        alt="Galaxy-inspired periodic table. Use the element buttons to explore."
-                        width="1672"
-                        height="941"
-                    >
-                </div>
-            </div>
+<dialog id="element-dialog"
+        class="element-dialog"
+        aria-labelledby="element-dialog-name">
 
-            <noscript>
-                Enable JavaScript to explore the interactive periodic table.
-            </noscript>
-        </section>
+    <button id="element-dialog-close"
+            class="dialog-close"
+            type="button"
+            aria-label="Close element information">
+        ×
+    </button>
 
-        <dialog
-            id="element-dialog"
-            class="element-dialog"
-            aria-labelledby="element-dialog-name"
-        >
-            <button
-                id="element-dialog-close"
-                class="dialog-close"
-                type="button"
-                aria-label="Close element information"
-            >
-                ×
-            </button>
+    <p class="eyebrow">Meet the element</p>
 
-            <p class="eyebrow">Meet the element</p>
+    <div id="element-dialog-symbol"
+         class="element-large-symbol"></div>
 
-            <div
-                id="element-dialog-symbol"
-                class="element-large-symbol"
-            ></div>
+    <h2 id="element-dialog-name"></h2>
 
-            <h2 id="element-dialog-name"></h2>
+    <dl class="element-facts">
+        <div>
+            <dt>Atomic number</dt>
+            <dd id="element-dialog-number"></dd>
+        </div>
+        <div>
+            <dt>Chemical symbol</dt>
+            <dd id="element-dialog-symbol-text"></dd>
+        </div>
+        <div>
+            <dt>Period</dt>
+            <dd id="element-dialog-period"></dd>
+        </div>
+    </dl>
 
-            <dl class="element-facts">
-                <div>
-                    <dt>Atomic number</dt>
-                    <dd id="element-dialog-number"></dd>
-                </div>
-                <div>
-                    <dt>Chemical symbol</dt>
-                    <dd id="element-dialog-symbol-text"></dd>
-                </div>
-                <div>
-                    <dt>Period</dt>
-                    <dd id="element-dialog-period"></dd>
-                </div>
-            </dl>
+    <p class="element-explanation">
+        The atomic number tells you how many protons are in the nucleus.
+        A neutral atom has the same number of electrons.
+    </p>
 
-            <p class="element-explanation">
-                The atomic number tells you how many protons are in the nucleus.
-                A neutral atom has the same number of electrons.
-            </p>
-
-            <p class="element-development-note">
-                Detailed element pages, compounds, and reaction examples
-                are coming next.
-            </p>
-        </dialog>
-
-        <footer>
-            Beyond the Elements · Built one discovery at a time.
-        </footer>
-    </main>
-</body>
-</html>
+    <p class="element-development-note">
+        Detailed element pages, compounds, and reaction examples
+        are coming next.
+    </p>
+</dialog>
+{% endblock %}

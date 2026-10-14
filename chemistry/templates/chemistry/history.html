@@ -1,0 +1,87 @@
+{% extends "chemistry/base.html" %}
+
+{% block title %}History of Chemistry | Beyond the Elements{% endblock %}
+
+{% block content %}
+<section class="learning-hero">
+    <p class="eyebrow">A changing understanding of matter</p>
+    <h1>History of Chemistry</h1>
+    <p class="intro">
+        People have explored matter through observation, practical
+        craft, philosophical ideas, and experimental science.
+        Follow some of the connections between those approaches.
+    </p>
+</section>
+
+<nav class="topic-links" aria-label="History topics">
+    <a href="#classical">Classical Elements</a>
+    <a href="#matter">States of Matter</a>
+    <a href="#classification">Element Classifications</a>
+    <a href="#periodic-table">Periodic Table</a>
+</nav>
+
+<section class="card learning-section" id="classical">
+    <h2>The Classical Elements</h2>
+    <p>
+        In ancient Greek thought, earth, water, air, and fire offered
+        a way to explain the variety and transformation of matter.
+        Aristotle also described aether in connection with the heavens.
+    </p>
+    <p>
+        These ideas influenced later natural philosophy, although
+        they differ from the experimental definitions used in chemistry today.
+    </p>
+    <a class="learning-link" href="{% url 'chemistry:classical_elements' %}">
+        Explore the Classical Elements →
+    </a>
+</section>
+
+<section class="card learning-section" id="matter">
+    <h2>Understanding States of Matter</h2>
+    <p>
+        Everyday experiences such as melting ice, boiling water,
+        and condensing steam raised questions about how matter changes.
+    </p>
+    <p>
+        Experimental study and particle theories helped explain
+        these changes through particle motion, interactions,
+        temperature, and pressure.
+    </p>
+    <a class="learning-link" href="{% url 'chemistry:states_matter' %}">
+        Explore States of Matter →
+    </a>
+</section>
+
+<section class="card learning-section" id="classification">
+    <h2>Grouping the Elements</h2>
+    <p>
+        People worked with metals long before modern atomic theory.
+        As chemical knowledge grew, comparisons of conductivity,
+        appearance, and reactions helped reveal recurring properties.
+    </p>
+    <p>
+        Categories such as metals, nonmetals, and metalloids
+        provide useful descriptions, while the periodic table
+        reveals more detailed patterns.
+    </p>
+    <a class="learning-link" href="{% url 'chemistry:element_classes' %}">
+        Explore Element Classifications →
+    </a>
+</section>
+
+<section class="card learning-section" id="periodic-table">
+    <h2>The Periodic Table</h2>
+    <p>
+        Early arrangements compared element properties and atomic
+        weights. The modern periodic table orders elements by atomic
+        number and displays recurring patterns in their behavior.
+    </p>
+    <p>
+        Its structure connects the identity of an element with
+        the arrangement of electrons in its atoms.
+    </p>
+    <a class="learning-link" href="{% url 'chemistry:elements' %}">
+        Explore the Periodic Table →
+    </a>
+</section>
+{% endblock %}

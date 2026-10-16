@@ -150,6 +150,227 @@
         max-width: none;
     }
 }
+/* Compact the introduction so the artwork begins higher. */
+body.learning-page.periodic-page main.ocean-layout {
+    padding-top: 8px;
+}
+
+.learning-page.periodic-page .periodic-heading .eyebrow {
+    margin: 0 0 4px;
+}
+
+.learning-page.periodic-page .periodic-heading h1 {
+    margin: 4px 0 8px;
+}
+
+.learning-page.periodic-page .periodic-search {
+    margin: 8px auto 12px;
+}
+
+.learning-page.periodic-page .element-search-label {
+    display: block;
+    margin-bottom: 4px;
+}
+
+.learning-page.periodic-page .table-hint {
+    margin: 4px 0 0;
+}
+
+@media (min-width: 1000px) {
+    .learning-page.periodic-page .elements-section {
+        display: grid;
+        grid-template-columns: minmax(0, 1fr) minmax(320px, 480px);
+        align-items: center;
+        gap: 12px 32px;
+    }
+
+    .learning-page.periodic-page .periodic-heading {
+        text-align: left;
+    }
+
+    .learning-page.periodic-page .periodic-heading .intro {
+        margin: 0;
+    }
+
+    .learning-page.periodic-page .periodic-search {
+        width: 100%;
+        margin: 0;
+    }
+
+    .learning-page.periodic-page .element-search {
+        box-sizing: border-box;
+        width: 100%;
+    }
+
+    .learning-page.periodic-page .periodic-table-scroll,
+    .learning-page.periodic-page .elements-section > noscript {
+        grid-column: 1 / -1;
+        min-width: 0;
+    }
+}
+@media (min-width: 1000px) {
+    .learning-page.periodic-page .elements-section {
+        grid-template-columns:
+            minmax(0, 1fr)
+            minmax(0, 600px)
+            minmax(300px, 420px)
+            minmax(0, 1fr);
+        gap: 6px 20px;
+    }
+
+    .learning-page.periodic-page .periodic-heading {
+        grid-column: 2;
+        text-align: center;
+    }
+
+    .learning-page.periodic-page .periodic-heading h1 {
+        font-size: clamp(30px, 2.5vw, 44px);
+        margin: 3px 0 5px;
+    }
+
+    .learning-page.periodic-page .periodic-heading .intro {
+        margin: 0 auto;
+    }
+
+    .learning-page.periodic-page .periodic-search {
+        grid-column: 3;
+        margin: 0;
+        align-self: center;
+    }
+
+    .learning-page.periodic-page .periodic-table-scroll {
+        grid-column: 1 / -1;
+    }
+}
+body.periodic-page .periodic-artwork-stage {
+    position: relative;
+    width: 100%;
+}
+
+body.periodic-page .periodic-artwork-stage > .periodic-search {
+    position: absolute;
+    z-index: 5;
+    top: 4%;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 30%;
+    max-width: 480px;
+    margin: 0;
+}
+
+body.periodic-page .periodic-table.artwork-table {
+    min-width: 0;
+}
+
+@media (max-width: 1000px) {
+    body.periodic-page .periodic-artwork-stage {
+        min-width: 900px;
+    }
+}
+body.periodic-page .periodic-artwork-stage > .periodic-search {
+    top: 12%;
+    left: 43%;
+    width: 32%;
+    max-width: 460px;
+    transform: translateX(-50%);
+    padding: 14px 18px;
+    border: 1px solid rgba(233, 199, 128, .45);
+    border-radius: 16px;
+    background: rgba(3, 15, 28, .88);
+    box-shadow: 0 8px 24px rgba(0, 0, 0, .35);
+}
+
+body.periodic-page .periodic-search .element-search-label {
+    margin: 0 0 8px;
+    color: #ffe4ad;
+    font-size: 16px;
+}
+
+body.periodic-page .periodic-search .element-search {
+    display: block;
+    width: 100%;
+    margin: 0;
+    padding: 10px 12px;
+    font-size: 16px;
+    box-sizing: border-box;
+}
+
+body.periodic-page .periodic-search .table-hint {
+    margin: 8px 0 0;
+    font-size: 13px;
+    line-height: 1.4;
+}
+
+@media (max-width: 1100px) {
+    body.periodic-page .periodic-artwork-stage > .periodic-search {
+        top: 4%;
+        padding: 10px 12px;
+    }
+}
+body.periodic-page .periodic-artwork-stage > .periodic-search {
+    width: 34%;
+    max-width: 520px;
+    padding: 18px 20px;
+}
+
+body.periodic-page .periodic-search .element-search-label {
+    font-size: 20px;
+    font-weight: 600;
+    line-height: 1.4;
+    margin-bottom: 10px;
+    color: #ffe4ad;
+}
+
+body.periodic-page .periodic-search .element-search {
+    font-size: 18px;
+    line-height: 1.4;
+    min-height: 48px;
+    padding: 12px 14px;
+    color: #fff;
+    background: #0b202e;
+    border: 1px solid #92b9c9;
+    border-radius: 10px;
+}
+
+body.periodic-page .periodic-search .element-search::placeholder {
+    color: #d3e0e8;
+    opacity: 1;
+}
+
+body.periodic-page .periodic-search .element-search:focus-visible {
+    outline: 2px solid #ffe0a0;
+    outline-offset: 3px;
+}
+
+body.periodic-page .periodic-search .table-hint {
+    font-size: 16px;
+    line-height: 1.5;
+    margin-top: 10px;
+    color: #edf3f7;
+}
+
+@media (max-width: 1100px) {
+    body.periodic-page .periodic-artwork-stage > .periodic-search {
+        padding: 10px 12px;
+    }
+
+    body.periodic-page .periodic-search .element-search-label {
+        font-size: 17px;
+        margin-bottom: 6px;
+    }
+
+    body.periodic-page .periodic-search .element-search {
+        font-size: 16px;
+        min-height: 44px;
+        padding: 8px 10px;
+    }
+
+    body.periodic-page .periodic-search .table-hint {
+        font-size: 14px;
+        line-height: 1.35;
+        margin-top: 6px;
+    }
+}
 </style>
 
 <script defer src="{% static 'js/element-details.js' %}"></script>
@@ -168,31 +389,12 @@
         </p>
     </div>
 
-    <div class="periodic-search">
-        <label class="element-search-label" for="element-search">
-            Find an element
-        </label>
-
-        <input
-            id="element-search"
-            class="element-search"
-            type="search"
-            placeholder="Try oxygen, 8, human, water, or halogens"
-            autocomplete="off"
-        >
-
-        <p id="element-search-status"
-           class="table-hint"
-           aria-live="polite">
-            118 elements. On smaller screens, scroll sideways to explore.
-        </p>
-    </div>
-
     <div class="periodic-table-scroll"
-         tabindex="0"
-         role="region"
-         aria-label="Periodic table, scroll horizontally">
+     tabindex="0"
+     role="region"
+     aria-label="Periodic table, scroll horizontally">
 
+    <div class="periodic-artwork-stage">
         <div id="periodic-table"
              class="periodic-table artwork-table">
             <img
@@ -203,11 +405,32 @@
                 height="941"
             >
         </div>
-    </div>
 
-    <noscript>
-        <p>Enable JavaScript to explore the interactive periodic table.</p>
-    </noscript>
+        <div class="periodic-search">
+            <label class="element-search-label" for="element-search">
+                Find an element
+            </label>
+
+            <input
+                id="element-search"
+                class="element-search"
+                type="search"
+                placeholder="Try oxygen, 8, human, water, or halogens"
+                autocomplete="off"
+            >
+
+            <p id="element-search-status"
+               class="table-hint"
+               aria-live="polite">
+                118 elements. On smaller screens, scroll sideways to explore.
+            </p>
+        </div>
+    </div>
+</div>
+
+<noscript>
+    <p>Enable JavaScript to explore the interactive periodic table.</p>
+</noscript>
 </section>
 
 <dialog id="element-dialog"

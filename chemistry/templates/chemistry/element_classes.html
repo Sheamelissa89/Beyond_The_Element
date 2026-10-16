@@ -2,115 +2,753 @@
 {% load static %}
 
 {% block title %}Element Classifications | Beyond the Elements{% endblock %}
+{% block body_class %}learning-page classifications-page{% endblock %}
 
 {% block content %}
-<section class="learning-hero">
-    <p class="eyebrow">Patterns within the periodic table</p>
-    <h1>Element Classifications</h1>
-    <p class="intro">
-        Metals, nonmetals, and metalloids help us describe patterns
-        in element properties and behavior.
+<style>
+    .classifications-experience {
+        position: relative;
+        left: 50%;
+        transform: translateX(-50%);
+        width: calc(100vw - 160px);
+        max-width: 1600px;
+        padding: 24px 0 40px;
+        color: #eef4f7;
+    }
+
+    .classifications-experience *,
+    #classification-dialog * {
+        box-sizing: border-box;
+    }
+
+    .classification-heading {
+        max-width: 850px;
+        margin: 0 auto 30px;
+        text-align: center;
+    }
+
+    .classification-heading .eyebrow {
+        color: #e9c780;
+        font-size: 14px;
+        letter-spacing: .15em;
+        text-transform: uppercase;
+    }
+
+    .classification-heading h1 {
+        margin: 12px 0 18px;
+        color: #ffe4ad;
+        font: 400 clamp(36px, 4vw, 62px)/1.15 Georgia, serif;
+        text-shadow: 0 3px 14px #000;
+    }
+
+    .classification-heading .classification-intro {
+        margin: 0;
+        color: #f0f4f7;
+        font-size: 20px;
+        line-height: 1.7;
+    }
+
+    .classification-portals {
+        display: grid;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 24px;
+    }
+
+    .classification-portal {
+        overflow: hidden;
+        border: 1px solid rgba(233, 199, 128, .55);
+        border-radius: 20px;
+        background: rgba(4, 20, 32, .95);
+        box-shadow: 0 16px 35px rgba(0, 0, 0, .3);
+    }
+
+    .classification-open {
+        display: block;
+        width: 100%;
+        padding: 0;
+        border: 0;
+        border-radius: 0;
+        background: transparent;
+        color: inherit;
+        text-align: left;
+        cursor: pointer;
+    }
+
+    .classification-open img {
+        display: block;
+        width: 100%;
+        height: auto;
+        margin: 0;
+        border-radius: 0;
+        transition: filter .2s;
+    }
+
+    .classification-open:hover img {
+        filter: brightness(1.15);
+    }
+
+    .classification-portal-copy {
+        display: block;
+        padding: 26px;
+    }
+
+    .classification-portal-title {
+        display: block;
+        margin-bottom: 14px;
+        color: #ffe4ad;
+        font: 400 32px/1.2 Georgia, serif;
+    }
+
+    .classification-portal-summary {
+        display: block;
+        min-height: 90px;
+        color: #e0eaf0;
+        font: 18px/1.7 Arial, sans-serif;
+    }
+
+    .classification-portal-action {
+        display: inline-block;
+        margin-top: 22px;
+        padding: 11px 18px;
+        border: 1px solid #e9c780;
+        border-radius: 28px;
+        color: #ffe4ad;
+        font: 17px/1.4 Arial, sans-serif;
+    }
+
+    .classification-actions {
+        display: flex;
+        justify-content: center;
+        flex-wrap: wrap;
+        gap: 16px;
+        margin: 30px 0 22px;
+    }
+
+    .classification-actions > *,
+    #classification-dialog button,
+    #classification-dialog .classification-topic-link {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        min-height: 48px;
+        padding: 12px 20px;
+        border: 1px solid #e9c780;
+        border-radius: 28px;
+        background: #102c3b;
+        color: #ffe4ad;
+        font: 18px/1.45 Arial, sans-serif;
+        text-decoration: none;
+        cursor: pointer;
+    }
+
+    .classification-actions > :hover,
+    #classification-dialog button:hover,
+    #classification-dialog .classification-topic-link:hover {
+        background: #244b5e;
+    }
+
+    .classification-note {
+        max-width: 900px;
+        margin: 0 auto;
+        color: #d5e2e9;
+        font-size: 16px;
+        line-height: 1.7;
+        text-align: center;
+    }
+
+    #classification-dialog {
+        box-sizing: border-box;
+        width: min(1050px, calc(100vw - 32px));
+        max-width: calc(100vw - 32px);
+        max-height: 88dvh;
+        overflow-y: auto;
+        padding: clamp(24px, 4vw, 48px);
+        border: 2px solid #e9c780;
+        border-radius: 22px;
+        background: #091e2b;
+        color: #f0f4f7;
+        font: 20px/1.7 Arial, sans-serif;
+        text-align: left;
+        box-shadow: 0 24px 100px #000;
+    }
+
+    #classification-dialog::backdrop {
+        background: rgba(0, 8, 15, .85);
+        backdrop-filter: blur(5px);
+    }
+
+    .classification-dialog-top {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        flex-wrap: wrap;
+        gap: 14px;
+        margin-bottom: 24px;
+    }
+
+    #classification-dialog .classification-dialog-label {
+        margin: 0;
+        color: #e9c780;
+        font-size: 15px;
+        letter-spacing: .1em;
+        text-transform: uppercase;
+    }
+
+    #classification-dialog h2 {
+        margin: 0 0 24px;
+        color: #ffe4ad;
+        font: 400 clamp(32px, 3.5vw, 46px)/1.2 Georgia, serif;
+        text-shadow: none;
+    }
+
+    #classification-dialog h3 {
+        margin: 28px 0 12px;
+        color: #f6d89c;
+        font-size: 23px;
+    }
+
+    #classification-dialog p,
+    #classification-dialog li {
+        color: #edf3f7;
+        font-size: 21px;
+        line-height: 1.75;
+    }
+
+    #classification-dialog ul {
+        padding-left: 26px;
+    }
+
+    .classification-example-buttons {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 12px;
+        margin: 18px 0;
+    }
+
+    #classification-dialog .classification-callout {
+        padding: 18px 22px;
+        border-left: 4px solid #e9c780;
+        background: #163342;
+    }
+
+    .classification-comparison-scroll {
+        overflow-x: auto;
+    }
+
+    #classification-dialog table {
+        width: 100%;
+        min-width: 650px;
+        border-collapse: collapse;
+        font-size: 18px;
+        line-height: 1.6;
+    }
+
+    #classification-dialog caption {
+        text-align: left;
+        margin-bottom: 16px;
+        color: #dce8ee;
+    }
+
+    #classification-dialog th,
+    #classification-dialog td {
+        padding: 16px;
+        border: 1px solid #52616a;
+        vertical-align: top;
+        text-align: left;
+    }
+
+    #classification-dialog th {
+        background: #173746;
+        color: #ffe4ad;
+    }
+
+    .classifications-experience :focus-visible,
+    #classification-dialog :focus-visible {
+        outline: 3px solid #fff0c8;
+        outline-offset: 5px;
+    }
+
+    @media (max-width: 1000px) {
+        .classification-portals {
+            grid-template-columns: 1fr;
+        }
+
+        .classification-portal-summary {
+            min-height: 0;
+        }
+    }
+
+    @media (max-width: 650px) {
+        .classifications-experience {
+            width: calc(100vw - 120px);
+        }
+
+        #classification-dialog p,
+        #classification-dialog li {
+            font-size: 18px;
+        }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+        .classification-open img {
+            transition: none;
+        }
+    }
+    body.classifications-page .classifications-experience {
+    width: calc(100vw - 180px);
+    max-width: 1700px;
+    box-sizing: border-box;
+}
+
+body.classifications-page .classification-portals {
+    width: 100%;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 24px;
+}
+
+body.classifications-page .classification-portal {
+    min-width: 0;
+    overflow: hidden;
+}
+
+body.classifications-page .classification-open img {
+    display: block;
+    width: 100%;
+    max-width: none;
+    height: auto;
+    object-fit: contain;
+}
+
+/* Keep the heading neatly stacked above the images. */
+body.classifications-page .classification-heading {
+    display: block;
+    width: 100%;
+    max-width: 900px;
+    margin: 0 auto 24px;
+    text-align: center;
+}
+
+@media (max-width: 1000px) {
+    body.classifications-page .classification-portals {
+        grid-template-columns: 1fr;
+    }
+
+    body.classifications-page .classifications-experience {
+        width: calc(100vw - 130px);
+    }
+}
+body.classifications-page .classifications-experience {
+    width: calc(100vw - 160px);
+    max-width: none;
+    min-height: 100vh;
+}
+
+body.classifications-page .classification-portals {
+    gap: 24px;
+}
+
+body.classifications-page .classification-open img {
+    width: 100%;
+    max-width: none;
+    height: auto;
+}
+
+body.classifications-page .classification-portal-copy {
+    padding: 32px;
+}
+
+body.classifications-page .classification-portal-title {
+    font-size: 38px;
+}
+
+body.classifications-page .classification-portal-summary {
+    font-size: 22px;
+    line-height: 1.7;
+    min-height: 120px;
+}
+
+body.classifications-page .classification-portal-action {
+    font-size: 20px;
+    padding: 14px 24px;
+    margin-top: 28px;
+}
+
+@media (max-width: 650px) {
+    body.classifications-page .classifications-experience {
+        width: calc(100vw - 130px);
+    }
+}
+</style>
+
+<div class="classifications-experience">
+    <header class="classification-heading">
+        <p class="eyebrow">Patterns within the periodic table</p>
+        <h1>Element Classifications</h1>
+        <p class="classification-intro">
+            Three doorways into the properties of matter.
+            Choose a class to explore its patterns, examples, and possibilities.
+        </p>
+    </header>
+
+    <div class="classification-portals">
+        <article class="classification-portal" id="metals">
+            <button type="button" class="classification-open"
+                    data-classification="metals"
+                    aria-haspopup="dialog"
+                    aria-controls="classification-dialog">
+                <img src="{% static 'images/Metals.png' %}"
+                     alt="Artwork representing metallic elements.">
+                <span class="classification-portal-copy">
+                    <span class="classification-portal-title">Metals</span>
+                    <span class="classification-portal-summary">
+                        Explore conductivity, shine, and the ability
+                        to shape materials into useful forms.
+                    </span>
+                    <span class="classification-portal-action">
+                        Discover Metals →
+                    </span>
+                </span>
+            </button>
+        </article>
+
+        <article class="classification-portal" id="nonmetals">
+            <button type="button" class="classification-open"
+                    data-classification="nonmetals"
+                    aria-haspopup="dialog"
+                    aria-controls="classification-dialog">
+                <img src="{% static 'images/Nonmetals.png' %}"
+                     alt="Artwork representing nonmetallic elements.">
+                <span class="classification-portal-copy">
+                    <span class="classification-portal-title">Nonmetals</span>
+                    <span class="classification-portal-summary">
+                        Discover diverse properties and forms,
+                        from familiar gases to solid carbon.
+                    </span>
+                    <span class="classification-portal-action">
+                        Discover Nonmetals →
+                    </span>
+                </span>
+            </button>
+        </article>
+
+        <article class="classification-portal" id="metalloids">
+            <button type="button" class="classification-open"
+                    data-classification="metalloids"
+                    aria-haspopup="dialog"
+                    aria-controls="classification-dialog">
+                <img src="{% static 'images/Metalloids.png' %}"
+                     alt="Artwork representing metalloid elements.">
+                <span class="classification-portal-copy">
+                    <span class="classification-portal-title">Metalloids</span>
+                    <span class="classification-portal-summary">
+                        Investigate mixed properties and the
+                        semiconductor materials used in electronics.
+                    </span>
+                    <span class="classification-portal-action">
+                        Discover Metalloids →
+                    </span>
+                </span>
+            </button>
+        </article>
+    </div>
+
+    <nav class="classification-actions" aria-label="Explore classifications">
+        <button type="button" id="classification-compare"
+                aria-haspopup="dialog"
+                aria-controls="classification-dialog">
+            Compare the Classes
+        </button>
+        <a href="{% url 'chemistry:elements' %}">Open the Periodic Table →</a>
+        <a href="{% url 'chemistry:history' %}">Explore the Living Timeline →</a>
+    </nav>
+
+    <p class="classification-note">
+        Classifications describe patterns rather than identical behavior.
+        Properties vary, and references can differ on which elements
+        belong to the metalloid category.
     </p>
-    <a class="learning-link" href="{% url 'chemistry:history' %}#classification">
-        Explore the History of Classification →
-    </a>
-</section>
 
-<p class="learning-note">
-    These are introductory examples. Properties vary between elements,
-    and the boundary of the metalloid group can differ between references.
-</p>
-
-<div class="learning-grid">
-    <article class="card" id="metals">
-        <img
-            class="category-image"
-            src="{% static 'images/Metals.png' %}"
-            alt="Artwork representing metallic elements."
-            loading="lazy"
-        >
-        <h2>Metals</h2>
-        <p>
-            Metals generally conduct heat and electricity well.
-            Many are shiny, malleable, and ductile.
-        </p>
-        <h3>Element examples</h3>
-        <ul>
-            <li>Iron — Fe</li>
-            <li>Copper — Cu</li>
-            <li>Aluminum — Al</li>
-            <li>Gold — Au</li>
-            <li>Mercury — Hg</li>
-        </ul>
-        <p>
-            Metals occupy most of the left and center of the
-            periodic table. Mercury is liquid at room temperature.
-        </p>
-    </article>
-
-    <article class="card" id="nonmetals">
-        <img
-            class="category-image"
-            src="{% static 'images/Nonmetals.png' %}"
-            alt="Artwork representing nonmetallic elements."
-            loading="lazy"
-        >
-        <h2>Nonmetals</h2>
-        <p>
-            Nonmetals have varied properties. Many conduct electricity
-            poorly, and solid nonmetals are often brittle.
-        </p>
-        <h3>Element examples</h3>
-        <ul>
-            <li>Hydrogen — H</li>
-            <li>Carbon — C</li>
-            <li>Nitrogen — N</li>
-            <li>Oxygen — O</li>
-            <li>Sulfur — S</li>
-            <li>Bromine — Br</li>
-        </ul>
-        <p>
-            Most are on the right of the periodic table, with hydrogen
-            on the left. They include solids, liquids, and gases.
-        </p>
-    </article>
-
-    <article class="card" id="metalloids">
-        <img
-            class="category-image"
-            src="{% static 'images/Metalloids.png' %}"
-            alt="Artwork representing metalloid elements."
-            loading="lazy"
-        >
-        <h2>Metalloids</h2>
-        <p>
-            Metalloids show a mixture of metallic and nonmetallic
-            properties. Some are useful semiconductor materials.
-        </p>
-        <h3>Commonly included elements</h3>
-        <ul>
-            <li>Boron — B</li>
-            <li>Silicon — Si</li>
-            <li>Germanium — Ge</li>
-            <li>Arsenic — As</li>
-            <li>Antimony — Sb</li>
-            <li>Tellurium — Te</li>
-        </ul>
-        <p>
-            These elements lie near the staircase boundary between
-            metals and nonmetals.
-        </p>
-    </article>
+    <noscript>
+        <p>Enable JavaScript to open the discovery panels and comparison.</p>
+    </noscript>
 </div>
 
-<section class="card learning-section">
-    <h2>Find These Elements</h2>
-    <p>
-        Open the periodic table and search for an element by its
-        name, symbol, or atomic number.
+<dialog id="classification-dialog"
+        aria-labelledby="classification-dialog-title">
+    <div class="classification-dialog-top">
+        <p class="classification-dialog-label">Explore the properties of matter</p>
+        <button type="button" id="classification-close">Close ×</button>
+    </div>
+
+    <h2 id="classification-dialog-title" tabindex="-1"></h2>
+    <div id="classification-dialog-body"></div>
+</dialog>
+
+<template id="classification-comparison">
+    <div class="classification-comparison-scroll"
+         tabindex="0" role="region"
+         aria-label="Class comparison table, scroll horizontally if needed">
+        <table>
+            <caption>
+                Typical properties of elemental substances under ordinary
+                conditions. These are general patterns, with exceptions.
+            </caption>
+            <thead>
+                <tr>
+                    <th scope="col">Property</th>
+                    <th scope="col">Metals</th>
+                    <th scope="col">Nonmetals</th>
+                    <th scope="col">Metalloids</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <th scope="row">Electrical behavior</th>
+                    <td>Generally good conductors.</td>
+                    <td>Often poor conductors; graphite is an exception.</td>
+                    <td>Varies; silicon and germanium are semiconductors.</td>
+                </tr>
+                <tr>
+                    <th scope="row">Appearance</th>
+                    <td>Often shiny when freshly exposed.</td>
+                    <td>Varied; appearance alone cannot identify the class.</td>
+                    <td>May have a metallic-looking shine.</td>
+                </tr>
+                <tr>
+                    <th scope="row">Mechanical behavior</th>
+                    <td>Many are malleable and ductile.</td>
+                    <td>Solid forms are often brittle.</td>
+                    <td>Solid forms are generally brittle.</td>
+                </tr>
+                <tr>
+                    <th scope="row">Physical state</th>
+                    <td>Mostly solids; mercury is liquid at room temperature.</td>
+                    <td>Includes solids, gases, and liquid bromine.</td>
+                    <td>The examples on this page are solids at room temperature.</td>
+                </tr>
+                <tr>
+                    <th scope="row">Table location</th>
+                    <td>Mostly left and center.</td>
+                    <td>Mostly right, plus hydrogen on the left.</td>
+                    <td>Near the staircase boundary.</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <p class="classification-callout">
+        A single property is rarely enough to classify a material.
+        Look for several properties and pay attention to its form and conditions.
     </p>
-    <a class="learning-link" href="{% url 'chemistry:elements' %}">
-        Open the Periodic Table →
-    </a>
-</section>
+</template>
+
+<script>
+(() => {
+    "use strict";
+
+    const dialog = document.getElementById("classification-dialog");
+    const title = document.getElementById("classification-dialog-title");
+    const body = document.getElementById("classification-dialog-body");
+
+    const classes = {
+        metals: {
+            name: "Metals",
+            introduction:
+                "Metals generally conduct heat and electricity well. Many " +
+                "can be shaped without breaking, making them useful materials.",
+            properties: [
+                "Malleable means a material can be shaped or flattened.",
+                "Ductile means a material can be drawn into wire.",
+                "Many metals have a shiny surface when freshly exposed."
+            ],
+            location: "Metals occupy most of the left and center of the periodic table.",
+            uses:
+                "Explore copper in electrical wiring, aluminum in foil, and " +
+                "iron in steel. Steel is an alloy rather than a pure element.",
+            exception:
+                "These properties are general patterns. Mercury, for example, " +
+                "is a liquid at room temperature.",
+            examples: [
+                ["Iron", "Fe", 26], ["Copper", "Cu", 29],
+                ["Aluminum", "Al", 13], ["Gold", "Au", 79],
+                ["Mercury", "Hg", 80]
+            ]
+        },
+        nonmetals: {
+            name: "Nonmetals",
+            introduction:
+                "Nonmetals show a wide variety of properties. They include " +
+                "solids, liquids, and gases under ordinary room conditions.",
+            properties: [
+                "Many nonmetals conduct electricity poorly.",
+                "Solid nonmetals are often brittle rather than malleable.",
+                "Their properties depend on the element and its structural form."
+            ],
+            location:
+                "Most nonmetals appear on the right of the periodic table. " +
+                "Hydrogen is positioned on the left.",
+            uses:
+                "Explore oxygen in respiration, nitrogen in the atmosphere, " +
+                "and graphite—a form of carbon—in pencil cores.",
+            exception:
+                "Graphite conducts electricity. The behavior of one form of " +
+                "carbon should not be assumed to describe every form.",
+            examples: [
+                ["Hydrogen", "H", 1], ["Carbon", "C", 6],
+                ["Nitrogen", "N", 7], ["Oxygen", "O", 8],
+                ["Sulfur", "S", 16], ["Bromine", "Br", 35]
+            ]
+        },
+        metalloids: {
+            name: "Metalloids",
+            introduction:
+                "Metalloids combine properties associated with metals and " +
+                "nonmetals. The category helps describe elements near the boundary.",
+            properties: [
+                "Some have a shiny, metallic-looking appearance.",
+                "Their solid forms are generally brittle.",
+                "Silicon and germanium are important semiconductor materials."
+            ],
+            location:
+                "Commonly included metalloids lie near the staircase boundary " +
+                "between metals and nonmetals.",
+            uses:
+                "Explore how semiconductor materials such as silicon are used " +
+                "in electronic devices and solar cells.",
+            exception:
+                "References differ on the exact membership of this category. " +
+                "Its elements do not all have identical electrical properties.",
+            examples: [
+                ["Boron", "B", 5], ["Silicon", "Si", 14],
+                ["Germanium", "Ge", 32], ["Arsenic", "As", 33],
+                ["Antimony", "Sb", 51], ["Tellurium", "Te", 52]
+            ]
+        }
+    };
+
+    function paragraph(text, className = "") {
+        const p = document.createElement("p");
+        p.textContent = text;
+        if (className) p.className = className;
+        body.append(p);
+    }
+
+    function heading(text) {
+        const h3 = document.createElement("h3");
+        h3.textContent = text;
+        body.append(h3);
+    }
+
+    function present(name) {
+        title.textContent = name;
+        body.replaceChildren();
+    }
+
+    function openDialog() {
+        if (!dialog.open) dialog.showModal();
+        dialog.scrollTop = 0;
+        title.focus({ preventScroll: true });
+    }
+
+    function showElement(key, element) {
+        const [name, symbol, number] = element;
+
+        present(`${name} · ${symbol}`);
+        paragraph(`Atomic number: ${number}`);
+        paragraph(
+            `Every ${name.toLowerCase()} atom has ${number} protons in its ` +
+            `nucleus. A neutral atom has ${number} electrons.`
+        );
+        paragraph(
+            `Classification on this page: ${classes[key].name}.`
+        );
+
+        const back = document.createElement("button");
+        back.type = "button";
+        back.textContent = `← Back to ${classes[key].name}`;
+        back.addEventListener("click", () => showClass(key));
+        body.append(back);
+
+        openDialog();
+    }
+
+    function showClass(key) {
+        const data = classes[key];
+        present(data.name);
+
+        paragraph(data.introduction);
+        heading("Recognize the properties");
+
+        const list = document.createElement("ul");
+        data.properties.forEach(text => {
+            const item = document.createElement("li");
+            item.textContent = text;
+            list.append(item);
+        });
+        body.append(list);
+
+        heading("Where to look");
+        paragraph(data.location);
+
+        heading("Connections to everyday life");
+        paragraph(data.uses);
+
+        heading("Meet the elements");
+        paragraph("Select an example to discover its identity.");
+
+        const examples = document.createElement("div");
+        examples.className = "classification-example-buttons";
+
+        data.examples.forEach(element => {
+            const button = document.createElement("button");
+            button.type = "button";
+            button.textContent = `${element[0]} · ${element[1]}`;
+            button.addEventListener("click", () => showElement(key, element));
+            examples.append(button);
+        });
+
+        body.append(examples);
+        paragraph(data.exception, "classification-callout");
+
+        const link = document.createElement("a");
+        link.href = "{% url 'chemistry:elements' %}";
+        link.className = "classification-topic-link";
+        link.textContent = "Explore the Periodic Table →";
+        body.append(link);
+
+        openDialog();
+    }
+
+    document.querySelectorAll("[data-classification]").forEach(button => {
+        button.addEventListener("click", () => {
+            showClass(button.dataset.classification);
+        });
+    });
+
+    document.getElementById("classification-compare")
+        .addEventListener("click", () => {
+            present("Compare the Classes");
+            body.append(
+                document.getElementById("classification-comparison")
+                    .content.cloneNode(true)
+            );
+            openDialog();
+        });
+
+    document.getElementById("classification-close")
+        .addEventListener("click", () => dialog.close());
+
+    dialog.addEventListener("click", event => {
+        if (event.target !== dialog) return;
+
+        const bounds = dialog.getBoundingClientRect();
+        const inside =
+            event.clientX >= bounds.left &&
+            event.clientX <= bounds.right &&
+            event.clientY >= bounds.top &&
+            event.clientY <= bounds.bottom;
+
+        if (!inside) dialog.close();
+    });
+})();
+</script>
 {% endblock %}

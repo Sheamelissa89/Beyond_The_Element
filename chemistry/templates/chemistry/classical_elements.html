@@ -2,113 +2,647 @@
 {% load static %}
 
 {% block title %}Classical Elements | Beyond the Elements{% endblock %}
+{% block body_class %}learning-page classical-page{% endblock %}
 
 {% block content %}
-<section class="learning-hero centered">
-    <p class="eyebrow">How people first imagined matter</p>
-    <h1>The Classical Elements</h1>
-    <p class="intro">
-        Explore the influential Greek tradition of earth, water,
-        air, and fire, together with Aristotle's celestial aether.
-        Other cultures developed different systems.
-    </p>
+<style>
+    body.classical-page .classical-experience {
+        position: relative;
+        left: 50%;
+        transform: translateX(-50%);
+        width: calc(100vw - 160px);
+        max-width: none;
+        min-height: 100vh;
+        padding: 24px 0 40px;
+        box-sizing: border-box;
+        color: #eef4f7;
+    }
 
-    <figure class="pinwheel-figure">
-        <img
-            class="pinwheel-image"
-            src="{% static 'images/Elementals.png' %}"
-            alt="Artwork bringing together fire, air, earth, water, and aether."
-        >
+    .classical-experience *,
+    #classical-dialog * {
+        box-sizing: border-box;
+    }
+
+    body.classical-page .classical-heading {
+        display: block;
+        max-width: 900px;
+        margin: 0 auto 24px;
+        text-align: center;
+    }
+
+    .classical-heading .eyebrow {
+        margin: 0 0 12px;
+        color: #e9c780;
+        font-size: 14px;
+        letter-spacing: .15em;
+        text-transform: uppercase;
+    }
+
+    .classical-heading h1 {
+        margin: 0 0 18px;
+        color: #ffe4ad;
+        font: 400 clamp(36px, 4vw, 60px)/1.15 Georgia, serif;
+        text-shadow: 0 3px 14px #000;
+    }
+
+    .classical-heading .classical-intro {
+        margin: 0;
+        color: #eef4f7;
+        font-size: 20px;
+        line-height: 1.7;
+    }
+
+    .classical-figure {
+        width: min(100%, 1000px);
+        margin: 0 auto;
+        padding: 0;
+        border: 0;
+        background: none;
+    }
+
+    .classical-artwork {
+        position: relative;
+        width: 100%;
+        overflow: hidden;
+        border: 1px solid rgba(233, 199, 128, .6);
+        border-radius: 24px;
+        box-shadow: 0 20px 60px rgba(0, 0, 0, .4);
+    }
+
+    .classical-artwork > img {
+        display: block;
+        width: 100%;
+        max-width: none;
+        height: auto;
+        margin: 0;
+        border-radius: 0;
+    }
+
+    .classical-hotspot {
+        position: absolute;
+        left: var(--x);
+        top: var(--y);
+        transform: translate(-50%, -50%);
+        display: grid;
+        place-items: center;
+        width: 25%;
+        height: 25%;
+        min-width: 44px;
+        min-height: 44px;
+        padding: 0;
+        border: 2px solid transparent;
+        border-radius: 50%;
+        background: transparent;
+        cursor: pointer;
+        transition: border-color .2s, box-shadow .2s;
+    }
+
+    .classical-hotspot:hover,
+    .classical-hotspot:focus-visible {
+        border-color: #ffe0a0;
+        box-shadow:
+            0 0 28px rgba(255, 215, 130, .7),
+            inset 0 0 24px rgba(255, 215, 130, .15);
+        outline: none;
+    }
+
+    .classical-hotspot-label {
+        position: absolute;
+        bottom: -10px;
+        padding: 8px 14px;
+        border: 1px solid #e9c780;
+        border-radius: 24px;
+        background: rgba(4, 20, 32, .95);
+        color: #ffe4ad;
+        white-space: nowrap;
+        font: 18px/1.2 Arial, sans-serif;
+    }
+
+    .classical-figure figcaption {
+        margin: 16px 0;
+        color: #e8eff3;
+        font-size: 17px;
+        line-height: 1.6;
+        text-align: center;
+    }
+
+    .classical-actions {
+        display: flex;
+        justify-content: center;
+        flex-wrap: wrap;
+        gap: 14px;
+        margin: 24px 0;
+    }
+
+    .classical-actions > *,
+    #classical-dialog button,
+    #classical-dialog .classical-topic-link {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        min-height: 48px;
+        padding: 12px 20px;
+        border: 1px solid #e9c780;
+        border-radius: 28px;
+        background: #102c3b;
+        color: #ffe4ad;
+        font: 18px/1.45 Arial, sans-serif;
+        text-decoration: none;
+        cursor: pointer;
+    }
+
+    .classical-actions > :hover,
+    #classical-dialog button:hover,
+    #classical-dialog .classical-topic-link:hover {
+        background: #244b5e;
+    }
+
+    .classical-note {
+        max-width: 900px;
+        margin: 0 auto;
+        color: #dce8ee;
+        font-size: 17px;
+        line-height: 1.7;
+        text-align: center;
+    }
+
+    #classical-dialog {
+        box-sizing: border-box;
+        width: min(1050px, calc(100vw - 32px));
+        max-width: calc(100vw - 32px);
+        max-height: 88dvh;
+        overflow-y: auto;
+        padding: clamp(24px, 4vw, 48px);
+        border: 2px solid #e9c780;
+        border-radius: 22px;
+        background: #091e2b;
+        color: #f0f4f7;
+        font: 20px/1.7 Arial, sans-serif;
+        text-align: left;
+        box-shadow: 0 24px 100px #000;
+    }
+
+    #classical-dialog::backdrop {
+        background: rgba(0, 8, 15, .85);
+        backdrop-filter: blur(5px);
+    }
+
+    .classical-dialog-top {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        flex-wrap: wrap;
+        gap: 14px;
+        margin-bottom: 24px;
+    }
+
+    #classical-dialog .classical-dialog-label {
+        margin: 0;
+        color: #e9c780;
+        font-size: 15px;
+        letter-spacing: .1em;
+        text-transform: uppercase;
+    }
+
+    #classical-dialog h2 {
+        margin: 0 0 24px;
+        color: #ffe4ad;
+        font: 400 clamp(32px, 3.5vw, 48px)/1.2 Georgia, serif;
+        text-shadow: none;
+    }
+
+    #classical-dialog h3 {
+        margin: 26px 0 12px;
+        color: #f6d89c;
+        font-size: 24px;
+    }
+
+    #classical-dialog .classical-dialog-copy,
+    #classical-dialog .classical-question {
+        margin: 0 0 20px;
+        color: #edf3f7;
+        font-size: 23px;
+        line-height: 1.75;
+    }
+
+    #classical-dialog .classical-question {
+        padding: 18px 22px;
+        border-left: 4px solid #e9c780;
+        background: #163342;
+    }
+
+    .classical-dialog-navigation {
+        display: flex;
+        justify-content: space-between;
+        flex-wrap: wrap;
+        gap: 14px;
+        margin-top: 28px;
+        padding-top: 22px;
+        border-top: 1px solid rgba(233, 199, 128, .35);
+    }
+
+    .classical-table-scroll {
+        overflow-x: auto;
+    }
+
+    #classical-dialog table {
+        width: 100%;
+        min-width: 580px;
+        border-collapse: collapse;
+        font-size: 19px;
+        line-height: 1.6;
+    }
+
+    #classical-dialog th,
+    #classical-dialog td {
+        padding: 18px;
+        border: 1px solid #52616a;
+        text-align: left;
+        vertical-align: top;
+    }
+
+    #classical-dialog th {
+        color: #ffe4ad;
+        background: #173746;
+    }
+
+    .classical-experience a:focus-visible,
+    .classical-actions button:focus-visible,
+    #classical-dialog :focus-visible {
+        outline: 3px solid #fff0c8;
+        outline-offset: 5px;
+    }
+
+    #classical-dialog [hidden] {
+        display: none !important;
+    }
+
+    @media (max-width: 650px) {
+        body.classical-page .classical-experience {
+            width: calc(100vw - 120px);
+        }
+
+        .classical-heading .classical-intro {
+            font-size: 18px;
+        }
+
+        .classical-hotspot-label {
+            padding: 5px 8px;
+            font-size: 14px;
+        }
+
+        #classical-dialog .classical-dialog-copy,
+        #classical-dialog .classical-question {
+            font-size: 19px;
+        }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+        .classical-hotspot {
+            transition: none;
+        }
+    }
+</style>
+
+<div class="classical-experience">
+    <header class="classical-heading">
+        <p class="eyebrow">Early explanations of the natural world</p>
+        <h1>The Classical Elements</h1>
+        <p class="classical-intro">
+            Explore the Greek tradition of earth, water, air, and fire,
+            together with Aristotle’s celestial aether.
+            Other cultures developed different systems.
+        </p>
+    </header>
+
+    <figure class="classical-figure">
+        <div class="classical-artwork">
+            <img
+                src="{% static 'images/Elementals.png' %}"
+                alt="Swirling artwork depicting air at the upper left,
+                     fire at the upper right, water at the lower left,
+                     earth at the lower right, and aether at the center."
+                fetchpriority="high"
+            >
+
+            <button type="button" class="classical-hotspot"
+                    style="--x: 34%; --y: 24%;"
+                    data-classical="air"
+                    aria-label="Explore Air"
+                    aria-haspopup="dialog"
+                    aria-controls="classical-dialog">
+                <span class="classical-hotspot-label">Air +</span>
+            </button>
+
+            <button type="button" class="classical-hotspot"
+                    style="--x: 73%; --y: 29%;"
+                    data-classical="fire"
+                    aria-label="Explore Fire"
+                    aria-haspopup="dialog"
+                    aria-controls="classical-dialog">
+                <span class="classical-hotspot-label">Fire +</span>
+            </button>
+
+            <button type="button" class="classical-hotspot"
+                    style="--x: 30%; --y: 70%;"
+                    data-classical="water"
+                    aria-label="Explore Water"
+                    aria-haspopup="dialog"
+                    aria-controls="classical-dialog">
+                <span class="classical-hotspot-label">Water +</span>
+            </button>
+
+            <button type="button" class="classical-hotspot"
+                    style="--x: 72%; --y: 71%;"
+                    data-classical="earth"
+                    aria-label="Explore Earth"
+                    aria-haspopup="dialog"
+                    aria-controls="classical-dialog">
+                <span class="classical-hotspot-label">Earth +</span>
+            </button>
+
+            <button type="button" class="classical-hotspot"
+                    style="--x: 51%; --y: 49%;"
+                    data-classical="aether"
+                    aria-label="Explore Aether"
+                    aria-haspopup="dialog"
+                    aria-controls="classical-dialog">
+                <span class="classical-hotspot-label">Aether +</span>
+            </button>
+        </div>
+
         <figcaption>
-            Historical ideas that helped people explain the natural world.
+            Select a region to explore its historical meaning
+            and a connection to modern science.
         </figcaption>
     </figure>
 
-    <a class="learning-link" href="{% url 'chemistry:history' %}#classical">
-        Explore Their History →
-    </a>
-</section>
+    <nav class="classical-actions" aria-label="Continue exploring">
+        <a href="{% url 'chemistry:history' %}">Explore Their History →</a>
+        <button type="button" id="classical-compare"
+                aria-haspopup="dialog" aria-controls="classical-dialog">
+            Compare Classical & Chemical Elements
+        </button>
+        <a href="{% url 'chemistry:elements' %}">Explore Modern Elements →</a>
+    </nav>
 
-<p class="learning-note">
-    Classical elements belong to historical theories of nature.
-    Modern chemical elements are defined by their number of protons.
-</p>
+    <p class="classical-note">
+        Classical elements belong to historical theories of nature.
+        Modern chemical elements are defined by their number of protons.
+        The artwork is an imaginative interpretation.
+    </p>
 
-<div class="learning-grid">
-    <article class="card" id="fire">
-        <h2>Fire</h2>
-        <p>
-            Fire represented heat and transformation in classical thought.
-        </p>
-        <h3>A modern connection</h3>
-        <p>
-            Ordinary flames involve chemical reactions that release
-            energy as heat and light. Fire is not a chemical element.
-        </p>
-    </article>
-
-    <article class="card" id="air">
-        <h2>Air</h2>
-        <p>
-            Air was understood as a basic substance associated
-            with breath and the atmosphere.
-        </p>
-        <h3>A modern connection</h3>
-        <p>
-            Earth's air is a mixture, mainly nitrogen and oxygen,
-            with argon, carbon dioxide, and other gases.
-        </p>
-    </article>
-
-    <article class="card" id="earth">
-        <h2>Earth</h2>
-        <p>
-            Earth represented solidity and the substance of
-            land, stones, and the physical world.
-        </p>
-        <h3>A modern connection</h3>
-        <p>
-            Rocks and soils contain many minerals and compounds.
-            They are not made from a single chemical element.
-        </p>
-    </article>
-
-    <article class="card" id="water">
-        <h2>Water</h2>
-        <p>
-            Water represented fluidity and was treated as a
-            fundamental substance in classical thought.
-        </p>
-        <h3>A modern connection</h3>
-        <p>
-            Water is the compound H₂O. Each molecule contains
-            two hydrogen atoms and one oxygen atom.
-        </p>
-    </article>
-
-    <article class="card" id="aether">
-        <h2>Aether</h2>
-        <p>
-            In Aristotle's account, aether was the substance
-            associated with the heavens and celestial bodies.
-        </p>
-        <h3>A modern connection</h3>
-        <p>
-            Modern astronomy explains stars and planets through
-            matter, radiation, and physical laws. Aether is not
-            an element in the periodic table.
-        </p>
-    </article>
+    <noscript>
+        <p>Enable JavaScript to open the five discovery windows.</p>
+    </noscript>
 </div>
 
-<section class="card learning-section">
-    <h2>From Ideas to Evidence</h2>
-    <p>
-        Compare these early explanations with the modern elements,
-        each identified by a unique atomic number.
-    </p>
-    <a class="learning-link" href="{% url 'chemistry:elements' %}">
-        Explore the Modern Elements →
-    </a>
-</section>
+<dialog id="classical-dialog" aria-labelledby="classical-dialog-title">
+    <div class="classical-dialog-top">
+        <p class="classical-dialog-label">Ideas, observations, and connections</p>
+        <button type="button" id="classical-close">Close ×</button>
+    </div>
+
+    <h2 id="classical-dialog-title" tabindex="-1"></h2>
+
+    <div id="classical-entry">
+        <h3>In Classical Thought</h3>
+        <p class="classical-dialog-copy" id="classical-past"></p>
+
+        <h3>A Modern Connection</h3>
+        <p class="classical-dialog-copy" id="classical-modern"></p>
+
+        <p class="classical-question" id="classical-question"></p>
+
+        <a class="classical-topic-link" id="classical-topic"></a>
+
+        <nav class="classical-dialog-navigation"
+             aria-label="Browse classical elements">
+            <button type="button" id="classical-previous">← Previous</button>
+            <button type="button" id="classical-next">Next →</button>
+        </nav>
+    </div>
+
+    <div id="classical-comparison" hidden>
+        <div class="classical-table-scroll"
+             tabindex="0" role="region"
+             aria-label="Comparison table, scroll horizontally if needed">
+            <table>
+                <thead>
+                    <tr>
+                        <th scope="col">Question</th>
+                        <th scope="col">Classical elements</th>
+                        <th scope="col">Chemical elements</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <th scope="row">What are they?</th>
+                        <td>Categories within historical explanations of nature.</td>
+                        <td>Types of atoms identified by their proton count.</td>
+                    </tr>
+                    <tr>
+                        <th scope="row">Examples</th>
+                        <td>Earth, water, air, and fire;
+                            aether in Aristotle’s celestial account.</td>
+                        <td>Hydrogen, oxygen, carbon, iron, and others
+                            in the periodic table.</td>
+                    </tr>
+                    <tr>
+                        <th scope="row">How is water described?</th>
+                        <td>A fundamental substance in this classical framework.</td>
+                        <td>A compound: H₂O.</td>
+                    </tr>
+                    <tr>
+                        <th scope="row">How is air described?</th>
+                        <td>A basic substance in this classical framework.</td>
+                        <td>A mixture of gases.</td>
+                    </tr>
+                    <tr>
+                        <th scope="row">What identifies an element?</th>
+                        <td>Its role within the historical theory.</td>
+                        <td>Its atomic number: the number of protons.</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <p class="classical-question">
+            A familiar word can have different meanings in different frameworks.
+            Ask how it is being defined and what evidence supports the explanation.
+        </p>
+
+        <a class="classical-topic-link"
+           href="{% url 'chemistry:elements' %}">
+            Explore the Periodic Table →
+        </a>
+    </div>
+</dialog>
+
+<script>
+(() => {
+    "use strict";
+
+    const dialog = document.getElementById("classical-dialog");
+    const title = document.getElementById("classical-dialog-title");
+    const entryPanel = document.getElementById("classical-entry");
+    const comparison = document.getElementById("classical-comparison");
+    const topic = document.getElementById("classical-topic");
+
+    const entries = [
+        {
+            key: "fire",
+            name: "Fire",
+            past:
+                "Fire represented heat and transformation in classical thought. " +
+                "It offered a way to describe striking changes in the natural world.",
+            modern:
+                "Ordinary flames involve chemical reactions that release energy " +
+                "as heat and light. Fire is not a chemical element.",
+            question:
+                "Explore: What changes when something burns, and what evidence " +
+                "would help explain the process?",
+            url: "{% url 'chemistry:states_matter' %}",
+            link: "Explore States of Matter →"
+        },
+        {
+            key: "air",
+            name: "Air",
+            past:
+                "Air was understood as a basic substance associated with breath " +
+                "and the atmosphere.",
+            modern:
+                "Earth’s air is a mixture, mainly nitrogen and oxygen, with " +
+                "argon, carbon dioxide, and other gases. Air is not one element.",
+            question:
+                "Consider: How might we investigate a mixture whose components " +
+                "we cannot easily distinguish by sight?",
+            url: "{% url 'chemistry:states_matter' %}",
+            link: "Explore Gases and Other States →"
+        },
+        {
+            key: "earth",
+            name: "Earth",
+            past:
+                "Earth represented solidity and the substance of land, stones, " +
+                "and the physical world.",
+            modern:
+                "Rocks and soils contain many minerals and compounds. " +
+                "They are not made from a single chemical element.",
+            question:
+                "Observe: What different materials can you recognize in a rock " +
+                "or a sample of soil?",
+            url: "{% url 'chemistry:element_classes' %}",
+            link: "Explore Element Classifications →"
+        },
+        {
+            key: "water",
+            name: "Water",
+            past:
+                "Water represented fluidity and was treated as a fundamental " +
+                "substance in classical thought.",
+            modern:
+                "Water is the compound H₂O. Each molecule contains two hydrogen " +
+                "atoms and one oxygen atom. Its physical state can change " +
+                "without changing that chemical identity.",
+            question:
+                "Consider: What stays the same when ice melts into liquid water?",
+            url: "{% url 'chemistry:states_matter' %}",
+            link: "Explore Changes of State →"
+        },
+        {
+            key: "aether",
+            name: "Aether",
+            past:
+                "In Aristotle’s account, aether was associated with the heavens " +
+                "and celestial bodies. The artwork labels it “Ether”; here " +
+                "we use “aether” for the historical concept.",
+            modern:
+                "Modern astronomy explains stars and planets through matter, " +
+                "radiation, and physical laws. Aether is not an element in the " +
+                "periodic table, and this image is a symbolic interpretation.",
+            question:
+                "Consider: How do we investigate things that are too distant " +
+                "to examine directly?",
+            url: "{% url 'chemistry:history' %}",
+            link: "Explore the Living Timeline →"
+        }
+    ];
+
+    let currentIndex = 0;
+
+    function openDialog() {
+        if (!dialog.open) dialog.showModal();
+        dialog.scrollTop = 0;
+        title.focus({ preventScroll: true });
+    }
+
+    function showEntry(index) {
+        currentIndex = (index + entries.length) % entries.length;
+        const entry = entries[currentIndex];
+
+        entryPanel.hidden = false;
+        comparison.hidden = true;
+
+        title.textContent = entry.name;
+        document.getElementById("classical-past").textContent = entry.past;
+        document.getElementById("classical-modern").textContent = entry.modern;
+        document.getElementById("classical-question").textContent = entry.question;
+
+        topic.href = entry.url;
+        topic.textContent = entry.link;
+
+        const previousIndex =
+            (currentIndex - 1 + entries.length) % entries.length;
+        const nextIndex = (currentIndex + 1) % entries.length;
+
+        document.getElementById("classical-previous").textContent =
+            `← ${entries[previousIndex].name}`;
+
+        document.getElementById("classical-next").textContent =
+            `${entries[nextIndex].name} →`;
+
+        openDialog();
+    }
+
+    document.querySelectorAll("[data-classical]").forEach(button => {
+        button.addEventListener("click", () => {
+            const index = entries.findIndex(
+                entry => entry.key === button.dataset.classical
+            );
+            if (index !== -1) showEntry(index);
+        });
+    });
+
+    document.getElementById("classical-previous")
+        .addEventListener("click", () => showEntry(currentIndex - 1));
+
+    document.getElementById("classical-next")
+        .addEventListener("click", () => showEntry(currentIndex + 1));
+
+    document.getElementById("classical-compare")
+        .addEventListener("click", () => {
+            entryPanel.hidden = true;
+            comparison.hidden = false;
+            title.textContent = "Classical & Chemical Elements";
+            openDialog();
+        });
+
+    document.getElementById("classical-close")
+        .addEventListener("click", () => dialog.close());
+
+    dialog.addEventListener("click", event => {
+        if (event.target !== dialog) return;
+
+        const bounds = dialog.getBoundingClientRect();
+        const inside =
+            event.clientX >= bounds.left &&
+            event.clientX <= bounds.right &&
+            event.clientY >= bounds.top &&
+            event.clientY <= bounds.bottom;
+
+        if (!inside) dialog.close();
+    });
+})();
+</script>
 {% endblock %}

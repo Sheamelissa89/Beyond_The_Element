@@ -1,87 +1,702 @@
 {% extends "chemistry/base.html" %}
+{% load static %}
 
-{% block title %}History of Chemistry | Beyond the Elements{% endblock %}
+{% block title %}The Living Timeline | Beyond the Elements{% endblock %}
+{% block body_class %}learning-page history-image-page{% endblock %}
 
 {% block content %}
-<section class="learning-hero">
-    <p class="eyebrow">A changing understanding of matter</p>
-    <h1>History of Chemistry</h1>
-    <p class="intro">
-        People have explored matter through observation, practical
-        craft, philosophical ideas, and experimental science.
-        Follow some of the connections between those approaches.
+<style>
+    /* Expand this page beyond the usual narrow content column. */
+    body.history-image-page main.ocean-layout {
+        width: calc(100% - 140px);
+        max-width: none;
+        margin: 0 auto;
+        padding: 12px 0 30px;
+        display: block;
+    }
+
+    .parallel-history {
+        width: 100%;
+        max-width: none;
+    }
+
+    .history-scroll {
+        width: 100%;
+        overflow-x: auto;
+        scrollbar-color: #e9c780 #061722;
+    }
+
+    .history-canvas {
+        position: relative;
+        width: 100%;
+        min-width: 1000px;
+        line-height: 0;
+    }
+
+    .history-canvas > img {
+        display: block;
+        width: 100%;
+        max-width: none;
+        height: auto;
+        margin: 0;
+    }
+
+    .history-hotspot {
+        position: absolute;
+        left: var(--x);
+        top: var(--y);
+        transform: translate(-50%, -50%);
+        width: 10.3%;
+        height: 13%;
+        padding: 0;
+        border: 2px solid transparent;
+        border-radius: 50%;
+        background: transparent;
+        cursor: pointer;
+        color: #fff2cc;
+        font: inherit;
+        line-height: 1.2;
+        transition: border-color .2s, box-shadow .2s;
+    }
+
+    .history-hotspot:hover,
+    .history-hotspot:focus-visible {
+        border-color: #ffe0a0;
+        box-shadow:
+            0 0 20px rgba(255, 210, 120, .65),
+            inset 0 0 18px rgba(255, 210, 120, .15);
+        outline: none;
+    }
+
+    .hotspot-hint {
+        position: absolute;
+        bottom: -8px;
+        right: 8px;
+        display: grid;
+        place-items: center;
+        width: 26px;
+        height: 26px;
+        border: 1px solid #e9c780;
+        border-radius: 50%;
+        background: #071b27;
+        color: #ffe0a0;
+        font-size: 20px;
+        line-height: 1;
+    }
+
+    .history-card-hotspot {
+        width: 15.5%;
+        height: 4.6%;
+        border-radius: 25px;
+    }
+
+    .history-help {
+        margin: 12px 0 0;
+        text-align: center;
+        color: #eed8aa;
+        font-size: .9rem;
+        line-height: 1.5;
+    }
+
+    .history-dialog {
+        width: min(680px, calc(100vw - 32px));
+        max-height: 85dvh;
+        overflow-y: auto;
+        box-sizing: border-box;
+        padding: clamp(24px, 5vw, 42px);
+        border: 1px solid #e9c780;
+        border-radius: 20px;
+        background: #061722;
+        color: #e9f1f3;
+        box-shadow: 0 20px 90px #000;
+    }
+
+    .history-dialog::backdrop {
+        background: rgba(0, 8, 15, .8);
+        backdrop-filter: blur(5px);
+    }
+
+    .history-dialog h2 {
+        margin: 10px 0 20px;
+        color: #e9c780;
+        font-family: Georgia, serif;
+        font-size: clamp(1.7rem, 4vw, 2.4rem);
+        line-height: 1.2;
+    }
+
+    .history-dialog p {
+        line-height: 1.8;
+        color: #d0dfe3;
+    }
+
+    .history-dialog .history-dialog-label {
+        color: #e9c780;
+        text-transform: uppercase;
+        letter-spacing: .12em;
+        font-size: .75rem;
+    }
+
+    .history-dialog-question {
+        padding: 14px 18px;
+        border-left: 2px solid #e9c780;
+        background: rgba(233, 199, 128, .06);
+    }
+
+    .history-dialog-actions {
+        display: flex;
+        gap: 12px;
+        flex-wrap: wrap;
+        margin-top: 24px;
+    }
+
+    .history-dialog button,
+    .history-dialog a {
+        display: inline-block;
+        padding: 11px 18px;
+        border: 1px solid #e9c780;
+        border-radius: 24px;
+        background: #0c2532;
+        color: #f4d99e;
+        font: inherit;
+        line-height: 1.4;
+        text-decoration: none;
+        cursor: pointer;
+    }
+
+    .history-dialog :focus-visible {
+        outline: 3px solid #fff1ce;
+        outline-offset: 4px;
+    }
+
+    .history-dialog .history-close {
+        float: right;
+        margin: 0 0 12px 16px;
+    }
+
+    @media (max-width: 720px) {
+        body.history-image-page main.ocean-layout {
+            width: calc(100% - 110px);
+        }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+        .history-hotspot {
+            transition: none;
+        }
+    }
+    /* Let the artwork span the page's available content area. */
+body.history-image-page main.ocean-layout {
+    width: calc(100% - 140px);
+    max-width: none;
+    padding: 0 0 20px;
+}
+
+body.history-image-page .parallel-history {
+    grid-column: 1 / -1;
+    width: 100%;
+    max-width: none;
+    min-width: 0;
+    margin: 0;
+    padding: 0;
+    justify-self: stretch;
+}
+
+body.history-image-page .history-scroll {
+    width: 100%;
+    max-width: none;
+}
+
+body.history-image-page .history-canvas {
+    width: 100%;
+    min-width: 1000px;
+    max-width: none;
+}
+
+body.history-image-page .history-canvas > img {
+    width: 100%;
+    max-width: none;
+    height: auto;
+}
+
+@media (max-width: 720px) {
+    body.history-image-page main.ocean-layout {
+        width: calc(100% - 110px);
+    }
+}
+body.history-image-page .parallel-history {
+    position: relative;
+    left: 50%;
+    transform: translateX(-50%);
+    width: calc(100vw - 160px) !important;
+    max-width: none !important;
+    margin: 0 !important;
+    padding: 0 !important;
+}
+
+body.history-image-page .history-scroll,
+body.history-image-page .history-canvas {
+    width: 100% !important;
+    max-width: none !important;
+}
+
+body.history-image-page .history-canvas > img {
+    display: block;
+    width: 100% !important;
+    max-width: none !important;
+    height: auto !important;
+}
+/* Larger, easier-to-read information windows. */
+#history-dialog {
+    width: min(820px, calc(100vw - 32px));
+    max-width: calc(100vw - 32px);
+    max-height: 88dvh;
+    padding: clamp(24px, 4vw, 48px);
+    background: #091e2b;
+    border: 2px solid #e9c780;
+    color: #f5f7fa;
+    font-family: Arial, sans-serif;
+    font-size: 18px;
+    text-align: left;
+}
+
+#history-dialog .history-dialog-label {
+    font-size: 14px;
+    line-height: 1.6;
+    letter-spacing: .08em;
+    color: #f5d797;
+    clear: both;
+}
+
+#history-dialog h2 {
+    font-size: clamp(28px, 3vw, 40px);
+    line-height: 1.25;
+    margin: 16px 0 24px;
+    color: #ffe0a0;
+    text-shadow: none;
+}
+
+#history-dialog > p:not(.history-dialog-label) {
+    font-size: 20px;
+    line-height: 1.75;
+    color: #f0f4f7;
+}
+
+#history-dialog .history-dialog-question {
+    margin-top: 24px;
+    padding: 20px;
+    background: #173342;
+    border-left: 4px solid #f1ce85;
+}
+
+#history-dialog button,
+#history-dialog a {
+    font-size: 17px;
+    line-height: 1.5;
+    min-height: 48px;
+    padding: 12px 20px;
+    color: #ffe4ad;
+    background: #153444;
+}
+
+#history-dialog button:hover,
+#history-dialog a:hover {
+    background: #254b5d;
+}
+
+#history-dialog .history-dialog-actions {
+    gap: 14px;
+    margin-top: 28px;
+}
+
+#history-dialog::backdrop {
+    background: rgba(0, 8, 15, .85);
+    backdrop-filter: blur(5px);
+}
+
+@media (max-width: 600px) {
+    #history-dialog > p:not(.history-dialog-label) {
+        font-size: 18px;
+    }
+
+    #history-dialog .history-dialog-actions {
+        flex-direction: column;
+    }
+
+    #history-dialog .history-dialog-actions > * {
+        text-align: center;
+    }
+}
+#history-dialog {
+    width: min(1050px, calc(100vw - 32px));
+    padding: clamp(24px, 4vw, 56px);
+}
+
+#history-dialog h2 {
+    font-size: clamp(32px, 3.5vw, 48px);
+}
+
+#history-dialog > p:not(.history-dialog-label) {
+    font-size: 24px;
+    line-height: 1.7;
+}
+
+#history-dialog .history-dialog-label {
+    font-size: 17px;
+}
+
+#history-dialog button,
+#history-dialog a {
+    font-size: 20px;
+    padding: 14px 24px;
+}
+
+@media (max-width: 600px) {
+    #history-dialog > p:not(.history-dialog-label) {
+        font-size: 20px;
+    }
+
+    #history-dialog button,
+    #history-dialog a {
+        font-size: 18px;
+    }
+}
+.history-arrow-hotspot {
+    width: 3.2%;
+    height: 5.7%;
+    border-radius: 50%;
+}
+
+/* Give the popup navigation its own row. */
+#history-dialog .history-era-navigation {
+    display: flex;
+    justify-content: space-between;
+    gap: 14px;
+    flex-wrap: wrap;
+    margin-top: 26px;
+    padding-top: 22px;
+    border-top: 1px solid rgba(233, 199, 128, .35);
+}
+</style>
+
+<section class="parallel-history" aria-label="The Living Timeline">
+    <div
+        class="history-scroll"
+        tabindex="0"
+        role="region"
+        aria-label="Interactive history artwork. Scroll horizontally on smaller screens."
+    >
+        <div class="history-canvas" id="history-canvas">
+            <img
+                src="{% static 'images/ParallelHistory.png' %}"
+                alt="The Living Timeline: scientific discovery above and
+                     philosophical exploration below, across six eras."
+                width="1672"
+                height="941"
+                fetchpriority="high"
+            >
+        </div>
+    </div>
+
+    <p class="history-help">
+        Select an illustrated milestone to explore.
+        On smaller screens, scroll sideways to follow the timeline.
     </p>
+
+    <noscript>
+        <p>Enable JavaScript to open the milestone information windows.</p>
+    </noscript>
 </section>
 
-<nav class="topic-links" aria-label="History topics">
-    <a href="#classical">Classical Elements</a>
-    <a href="#matter">States of Matter</a>
-    <a href="#classification">Element Classifications</a>
-    <a href="#periodic-table">Periodic Table</a>
-</nav>
+<dialog
+    class="history-dialog"
+    id="history-dialog"
+    aria-labelledby="history-dialog-title"
+>
+    <button type="button" class="history-close" id="history-close">
+        Close ×
+    </button>
 
-<section class="card learning-section" id="classical">
-    <h2>The Classical Elements</h2>
-    <p>
-        In ancient Greek thought, earth, water, air, and fire offered
-        a way to explain the variety and transformation of matter.
-        Aristotle also described aether in connection with the heavens.
-    </p>
-    <p>
-        These ideas influenced later natural philosophy, although
-        they differ from the experimental definitions used in chemistry today.
-    </p>
-    <a class="learning-link" href="{% url 'chemistry:classical_elements' %}">
-        Explore the Classical Elements →
-    </a>
-</section>
+    <p class="history-dialog-label" id="history-dialog-label"></p>
+    <h2 id="history-dialog-title"></h2>
+    <p id="history-dialog-text"></p>
+    <p class="history-dialog-question" id="history-dialog-question"></p>
 
-<section class="card learning-section" id="matter">
-    <h2>Understanding States of Matter</h2>
-    <p>
-        Everyday experiences such as melting ice, boiling water,
-        and condensing steam raised questions about how matter changes.
-    </p>
-    <p>
-        Experimental study and particle theories helped explain
-        these changes through particle motion, interactions,
-        temperature, and pressure.
-    </p>
-    <a class="learning-link" href="{% url 'chemistry:states_matter' %}">
-        Explore States of Matter →
-    </a>
-</section>
+    <div class="history-dialog-actions">
+        <button type="button" id="history-follow">
+            Follow the Connection →
+        </button>
+        <a id="history-explore">Explore this topic →</a>
+    </div>
+</dialog>
 
-<section class="card learning-section" id="classification">
-    <h2>Grouping the Elements</h2>
-    <p>
-        People worked with metals long before modern atomic theory.
-        As chemical knowledge grew, comparisons of conductivity,
-        appearance, and reactions helped reveal recurring properties.
-    </p>
-    <p>
-        Categories such as metals, nonmetals, and metalloids
-        provide useful descriptions, while the periodic table
-        reveals more detailed patterns.
-    </p>
-    <a class="learning-link" href="{% url 'chemistry:element_classes' %}">
-        Explore Element Classifications →
-    </a>
-</section>
+<script>
+(() => {
+    "use strict";
 
-<section class="card learning-section" id="periodic-table">
-    <h2>The Periodic Table</h2>
-    <p>
-        Early arrangements compared element properties and atomic
-        weights. The modern periodic table orders elements by atomic
-        number and displays recurring patterns in their behavior.
-    </p>
-    <p>
-        Its structure connects the identity of an element with
-        the arrangement of electrons in its atoms.
-    </p>
-    <a class="learning-link" href="{% url 'chemistry:elements' %}">
-        Explore the Periodic Table →
-    </a>
-</section>
+    const canvas = document.getElementById("history-canvas");
+    const dialog = document.getElementById("history-dialog");
+
+    const topicLinks = {
+        classical: "{% url 'chemistry:classical_elements' %}",
+        matter: "{% url 'chemistry:states_matter' %}",
+        classes: "{% url 'chemistry:element_classes' %}",
+        elements: "{% url 'chemistry:elements' %}"
+    };
+
+    const eras = [
+        "Ancient Worlds",
+        "Early Inquiry",
+        "Alchemy",
+        "Scientific Revolution",
+        "Atomic Age",
+        "New Frontiers"
+    ];
+
+    /* Each entry: title, explanation, question, topic, connected era.
+       Connections invite thematic comparison, not claims of direct influence. */
+    const entries = {
+        science: [
+            [
+                "Learning through materials",
+                "Explore matter through practical experiences with clay, metals, " +
+                "water, and heat. Begin with what people can observe: changes " +
+                "in shape, texture, temperature, and appearance.",
+                "What can working with a material teach us about its properties?",
+                "matter", 0
+            ],
+            [
+                "Looking closely at change",
+                "Melting ice, boiling water, and condensing steam invite questions " +
+                "about what changes and what stays the same. Compare a change " +
+                "of state with a change that produces a different substance.",
+                "Does a different appearance always mean a different substance?",
+                "matter", 1
+            ],
+            [
+                "Exploring transformation",
+                "Use this stop to investigate mixtures and material changes. " +
+                "Ask what was combined, what conditions changed, and what " +
+                "evidence would help explain the result.",
+                "How would you test whether a new substance formed?",
+                "classes", 2
+            ],
+            [
+                "Questions we can test",
+                "An investigation connects a question to observations and " +
+                "measurements. Decide what to change, what to keep consistent, " +
+                "and how someone else could repeat the process.",
+                "What result would support your explanation—or challenge it?",
+                "matter", 1
+            ],
+            [
+                "Patterns and atomic structure",
+                "The modern periodic table orders elements by atomic number. " +
+                "Recurring patterns connect element identity with the arrangement " +
+                "of electrons and chemical behavior.",
+                "What can an element’s position help you predict?",
+                "elements", 4
+            ],
+            [
+                "The next investigation",
+                "Use your understanding of element properties to develop a new " +
+                "question about materials. Separate what you already know from " +
+                "what you predict and what still needs testing.",
+                "Which material property would you like to explore next?",
+                "classes", 5
+            ]
+        ],
+        philosophy: [
+            [
+                "What is the world made of?",
+                "In ancient Greek thought, earth, water, air, and fire offered " +
+                "a framework for understanding matter. These classical elements " +
+                "differ from the experimentally defined chemical elements used today.",
+                "What makes an explanation useful, and how could we test it?",
+                "classical", 1
+            ],
+            [
+                "Observation and interpretation",
+                "An observation describes what we notice. An interpretation " +
+                "proposes what it means. Distinguishing them helps us recognize " +
+                "assumptions and consider other explanations.",
+                "What did you observe directly, and what did you infer?",
+                "matter", 3
+            ],
+            [
+                "What does transformation mean?",
+                "Transformation can describe a material process or serve as a " +
+                "metaphor for change. Symbolic meaning and experimental evidence " +
+                "offer different kinds of understanding.",
+                "Are you describing a measurable change, a meaning, or both?",
+                "classical", 2
+            ],
+            [
+                "What counts as evidence?",
+                "Consider how we decide whether an explanation deserves " +
+                "confidence. Looking for evidence that challenges an idea can " +
+                "be as valuable as finding evidence that supports it.",
+                "What finding would make you revise your understanding?",
+                "elements", 4
+            ],
+            [
+                "Models and their limits",
+                "A model represents selected features of something complex. " +
+                "An atom illustration can help explain structure while leaving " +
+                "out details that the picture cannot capture.",
+                "What does a model help you understand, and what does it leave out?",
+                "elements", 4
+            ],
+            [
+                "Knowledge and responsibility",
+                "New understanding creates new possibilities and new questions. " +
+                "Consider how knowledge might be used, who could benefit, and " +
+                "what consequences deserve attention.",
+                "What should guide how we use what we discover?",
+                "classes", 5
+            ]
+        ]
+    };
+
+    const xPositions = [18.9, 32.4, 46.0, 60.4, 74.2, 88.0];
+    let currentPath = "science";
+    let currentIndex = 0;
+
+    function moveThroughHistory(direction) {
+    const nextIndex =
+        (currentIndex + direction + eras.length) % eras.length;
+
+    showEntry(currentPath, nextIndex);
+}
+
+function addArtworkArrow(direction, x) {
+    const button = document.createElement("button");
+    button.type = "button";
+    button.className = "history-hotspot history-arrow-hotspot";
+    button.style.setProperty("--x", `${x}%`);
+    button.style.setProperty("--y", "32.3%");
+
+    const label = direction < 0 ? "Previous era" : "Next era";
+    button.setAttribute("aria-label", label);
+    button.setAttribute("aria-haspopup", "dialog");
+    button.setAttribute("aria-controls", "history-dialog");
+    button.title = label;
+
+    button.addEventListener("click", () => {
+        moveThroughHistory(direction);
+    });
+
+    canvas.append(button);
+}
+
+// Transparent buttons over the arrows pictured in the artwork.
+addArtworkArrow(-1, 2.9);
+addArtworkArrow(1, 97.0);
+
+// Previous / Next controls inside the information popup.
+const eraNavigation = document.createElement("nav");
+eraNavigation.className = "history-era-navigation";
+eraNavigation.setAttribute("aria-label", "Browse history eras");
+
+[-1, 1].forEach(direction => {
+    const button = document.createElement("button");
+    button.type = "button";
+    button.textContent =
+        direction < 0 ? "← Previous Era" : "Next Era →";
+
+    button.addEventListener("click", () => {
+        moveThroughHistory(direction);
+    });
+
+    eraNavigation.append(button);
+});
+
+dialog.append(eraNavigation);
+
+// Announce updated content when navigating within an open popup.
+document.getElementById("history-dialog-title")
+    .setAttribute("aria-live", "polite");
+
+    function showEntry(path, index) {
+        currentPath = path;
+        currentIndex = index;
+
+        const entry = entries[path][index];
+
+        document.getElementById("history-dialog-label").textContent =
+            `${path === "science" ? "Scientific Discovery" :
+                "Philosophical Exploration"} · ${eras[index]}`;
+
+        document.getElementById("history-dialog-title").textContent = entry[0];
+        document.getElementById("history-dialog-text").textContent = entry[1];
+        document.getElementById("history-dialog-question").textContent = entry[2];
+        document.getElementById("history-explore").href = topicLinks[entry[3]];
+
+        if (!dialog.open) dialog.showModal();
+        dialog.scrollTop = 0;
+    }
+
+    function addHotspot(path, index, x, y, isCard = false) {
+        const button = document.createElement("button");
+        button.type = "button";
+        button.className = "history-hotspot" +
+            (isCard ? " history-card-hotspot" : "");
+
+        button.style.setProperty("--x", `${x}%`);
+        button.style.setProperty("--y", `${y}%`);
+
+        const label =
+            `${path === "science" ? "Scientific discovery" :
+                "Philosophical exploration"}: ${eras[index]}`;
+
+        button.setAttribute("aria-label", label);
+        button.setAttribute("aria-haspopup", "dialog");
+        button.setAttribute("aria-controls", "history-dialog");
+        button.title = label;
+
+        if (!isCard) {
+            const hint = document.createElement("span");
+            hint.className = "hotspot-hint";
+            hint.textContent = "+";
+            hint.setAttribute("aria-hidden", "true");
+            button.append(hint);
+        }
+
+        button.addEventListener("click", () => showEntry(path, index));
+        canvas.append(button);
+    }
+
+    xPositions.forEach((x, index) => {
+        addHotspot("science", index, x, 32.3);
+        addHotspot("philosophy", index, x, 53.2);
+    });
+
+    // Activate the two buttons already illustrated in the artwork.
+    addHotspot("science", 2, 37.6, 82.2, true);
+    addHotspot("philosophy", 2, 77.1, 82.2, true);
+
+    document.getElementById("history-close").addEventListener("click", () => {
+        dialog.close();
+    });
+
+    document.getElementById("history-follow").addEventListener("click", () => {
+        const connectedIndex = entries[currentPath][currentIndex][4];
+        const otherPath = currentPath === "science" ? "philosophy" : "science";
+        showEntry(otherPath, connectedIndex);
+    });
+
+    // Clicking outside the information window closes it.
+    dialog.addEventListener("click", event => {
+        if (event.target !== dialog) return;
+
+        const bounds = dialog.getBoundingClientRect();
+        const inside =
+            event.clientX >= bounds.left &&
+            event.clientX <= bounds.right &&
+            event.clientY >= bounds.top &&
+            event.clientY <= bounds.bottom;
+
+        if (!inside) dialog.close();
+    });
+})();
+</script>
 {% endblock %}

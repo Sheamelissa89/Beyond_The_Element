@@ -2,121 +2,881 @@
 {% load static %}
 
 {% block title %}States of Matter | Beyond the Elements{% endblock %}
+{% block body_class %}learning-page matter-page{% endblock %}
 
 {% block content %}
-<section class="learning-hero">
-    <p class="eyebrow">Same matter. Different arrangements.</p>
-    <h1>States of Matter</h1>
-    <p class="intro">
-        Temperature and pressure help determine whether matter is
-        solid, liquid, or gas. Changing its state does not change
-        an element's identity.
+<style>
+    body.matter-page .matter-experience {
+        position: relative;
+        left: 50%;
+        transform: translateX(-50%);
+        width: calc(100vw - 160px);
+        max-width: none;
+        min-height: 100vh;
+        padding: 24px 0 40px;
+        box-sizing: border-box;
+        color: #eef4f7;
+    }
+
+    .matter-experience *,
+    #matter-dialog * {
+        box-sizing: border-box;
+    }
+
+    body.matter-page .matter-heading {
+        display: block;
+        width: 100%;
+        max-width: 950px;
+        margin: 0 auto 30px;
+        text-align: center;
+    }
+
+    .matter-heading .eyebrow {
+        color: #e9c780;
+        font-size: 14px;
+        letter-spacing: .15em;
+        text-transform: uppercase;
+    }
+
+    .matter-heading h1 {
+        margin: 12px 0 18px;
+        color: #ffe4ad;
+        font: 400 clamp(36px, 4vw, 62px)/1.15 Georgia, serif;
+        text-shadow: 0 3px 14px #000;
+    }
+
+    .matter-heading .matter-intro {
+        margin: 0;
+        color: #f0f4f7;
+        font-size: 20px;
+        line-height: 1.7;
+    }
+
+    .matter-portals {
+        display: grid;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 24px;
+    }
+
+    .matter-portal {
+        min-width: 0;
+        overflow: hidden;
+        border: 1px solid rgba(233, 199, 128, .55);
+        border-radius: 20px;
+        background: rgba(4, 20, 32, .95);
+        box-shadow: 0 16px 35px rgba(0, 0, 0, .3);
+    }
+
+    .matter-open {
+        display: block;
+        width: 100%;
+        height: 100%;
+        padding: 0;
+        border: 0;
+        border-radius: 0;
+        background: transparent;
+        color: inherit;
+        text-align: left;
+        cursor: pointer;
+    }
+
+    .matter-open img {
+        display: block;
+        width: 100%;
+        max-width: none;
+        height: auto;
+        margin: 0;
+        border-radius: 0;
+        object-fit: contain;
+        transition: filter .2s;
+    }
+
+    .matter-open:hover img {
+        filter: brightness(1.12);
+    }
+
+    .matter-portal-copy {
+        display: block;
+        padding: 32px;
+    }
+
+    .matter-portal-title {
+        display: block;
+        margin-bottom: 14px;
+        color: #ffe4ad;
+        font: 400 38px/1.2 Georgia, serif;
+    }
+
+    .matter-portal-summary {
+        display: block;
+        min-height: 120px;
+        color: #e0eaf0;
+        font: 22px/1.7 Arial, sans-serif;
+    }
+
+    .matter-portal-action {
+        display: inline-block;
+        margin-top: 28px;
+        padding: 14px 24px;
+        border: 1px solid #e9c780;
+        border-radius: 28px;
+        color: #ffe4ad;
+        font: 20px/1.4 Arial, sans-serif;
+    }
+
+    .matter-actions {
+        display: flex;
+        justify-content: center;
+        flex-wrap: wrap;
+        gap: 16px;
+        margin: 30px 0 22px;
+    }
+
+    .matter-actions > *,
+    #matter-dialog button,
+    #matter-dialog .matter-topic-link {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        min-height: 48px;
+        padding: 12px 20px;
+        border: 1px solid #e9c780;
+        border-radius: 28px;
+        background: #102c3b;
+        color: #ffe4ad;
+        font: 18px/1.45 Arial, sans-serif;
+        text-decoration: none;
+        cursor: pointer;
+    }
+
+    .matter-actions > :hover,
+    #matter-dialog button:hover,
+    #matter-dialog .matter-topic-link:hover {
+        background: #244b5e;
+    }
+
+    .matter-note {
+        max-width: 1000px;
+        margin: 0 auto;
+        color: #dce8ee;
+        font-size: 16px;
+        line-height: 1.7;
+        text-align: center;
+    }
+
+    #matter-dialog {
+        box-sizing: border-box;
+        width: min(1050px, calc(100vw - 32px));
+        max-width: calc(100vw - 32px);
+        max-height: 88dvh;
+        overflow-y: auto;
+        padding: clamp(24px, 4vw, 48px);
+        border: 2px solid #e9c780;
+        border-radius: 22px;
+        background: #091e2b;
+        color: #f0f4f7;
+        font: 20px/1.7 Arial, sans-serif;
+        text-align: left;
+        box-shadow: 0 24px 100px #000;
+    }
+
+    #matter-dialog::backdrop {
+        background: rgba(0, 8, 15, .85);
+        backdrop-filter: blur(5px);
+    }
+
+    .matter-dialog-top {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        flex-wrap: wrap;
+        gap: 14px;
+        margin-bottom: 24px;
+    }
+
+    #matter-dialog .matter-dialog-label {
+        margin: 0;
+        color: #e9c780;
+        font-size: 15px;
+        letter-spacing: .1em;
+        text-transform: uppercase;
+    }
+
+    #matter-dialog h2 {
+        margin: 0 0 24px;
+        color: #ffe4ad;
+        font: 400 clamp(32px, 3.5vw, 46px)/1.2 Georgia, serif;
+        text-shadow: none;
+    }
+
+    #matter-dialog h3 {
+        margin: 28px 0 12px;
+        color: #f6d89c;
+        font-size: 23px;
+    }
+
+    #matter-dialog p,
+    #matter-dialog li {
+        color: #edf3f7;
+        font-size: 21px;
+        line-height: 1.75;
+    }
+
+    #matter-dialog ul {
+        padding-left: 26px;
+    }
+
+    .matter-example-buttons,
+    .matter-dialog-navigation {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 12px;
+        margin: 20px 0;
+    }
+
+    #matter-dialog .matter-callout {
+        padding: 18px 22px;
+        border-left: 4px solid #e9c780;
+        background: #163342;
+    }
+
+    .matter-table-scroll {
+        overflow-x: auto;
+    }
+
+    #matter-dialog table {
+        width: 100%;
+        min-width: 720px;
+        border-collapse: collapse;
+        font-size: 18px;
+        line-height: 1.6;
+    }
+
+    #matter-dialog caption {
+        margin-bottom: 16px;
+        color: #dce8ee;
+        text-align: left;
+    }
+
+    #matter-dialog th,
+    #matter-dialog td {
+        padding: 16px;
+        border: 1px solid #52616a;
+        vertical-align: top;
+        text-align: left;
+    }
+
+    #matter-dialog th {
+        background: #173746;
+        color: #ffe4ad;
+    }
+
+    .matter-experience :focus-visible,
+    #matter-dialog :focus-visible {
+        outline: 3px solid #fff0c8;
+        outline-offset: 5px;
+    }
+
+    @media (max-width: 1000px) {
+        .matter-portals {
+            grid-template-columns: 1fr;
+        }
+
+        .matter-portal-summary {
+            min-height: 0;
+        }
+    }
+
+    @media (max-width: 650px) {
+        body.matter-page .matter-experience {
+            width: calc(100vw - 130px);
+        }
+
+        .matter-portal-copy {
+            padding: 22px;
+        }
+
+        .matter-portal-summary {
+            font-size: 20px;
+        }
+
+        #matter-dialog p,
+        #matter-dialog li {
+            font-size: 18px;
+        }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+        .matter-open img {
+            transition: none;
+        }
+    }
+    /* Four equally sized discovery panels. */
+body.matter-page .matter-portals {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 20px;
+}
+
+body.matter-page .matter-open {
+    display: flex;
+    flex-direction: column;
+}
+
+body.matter-page .matter-open img {
+    width: 100%;
+    height: auto;
+    aspect-ratio: 16 / 9;
+    object-fit: contain;
+}
+
+body.matter-page .matter-portal-copy {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    flex: 1;
+    padding: 26px;
+}
+
+body.matter-page .matter-portal-title {
+    font-size: 34px;
+}
+
+body.matter-page .matter-portal-summary {
+    min-height: 0;
+    margin-bottom: 28px;
+    font-size: 20px;
+    line-height: 1.7;
+}
+
+body.matter-page .matter-portal-action {
+    margin-top: auto;
+    padding: 12px 18px;
+    font-size: 18px;
+}
+
+@media (max-width: 1200px) {
+    body.matter-page .matter-portals {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+}
+
+@media (max-width: 700px) {
+    body.matter-page .matter-portals {
+        grid-template-columns: 1fr;
+    }
+}
+body.matter-page .matter-portal {
+    min-height: 60vh;
+}
+
+body.matter-page .matter-open {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+}
+
+body.matter-page .matter-portal-copy {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    flex: 1;
+    width: 100%;
+    padding: 30px 26px;
+}
+
+body.matter-page .matter-portal-action {
+    margin-top: auto;
+}
+
+@media (max-width: 700px) {
+    body.matter-page .matter-portal {
+        min-height: 560px;
+    }
+}
+</style>
+
+<div class="matter-experience">
+    <header class="matter-heading">
+        <p class="eyebrow">Same matter. Different arrangements.</p>
+        <h1>States of Matter</h1>
+        <p class="matter-intro">
+            Explore how particles arrange and move.
+            Discover how temperature and pressure help shape
+            the physical state of a substance.
+        </p>
+    </header>
+
+    <div class="matter-portals">
+        <article class="matter-portal" id="solids">
+            <button type="button" class="matter-open"
+                    data-state="solids"
+                    aria-haspopup="dialog"
+                    aria-controls="matter-dialog">
+                <img src="{% static 'images/Solids.png' %}"
+                     alt="Artwork illustrating solid matter.">
+                <span class="matter-portal-copy">
+                    <span class="matter-portal-title">Solids</span>
+                    <span class="matter-portal-summary">
+                        Discover definite shape and volume,
+                        with particles moving around relatively fixed positions.
+                    </span>
+                    <span class="matter-portal-action">
+                        Discover Solids →
+                    </span>
+                </span>
+            </button>
+        </article>
+
+        <article class="matter-portal" id="liquids">
+            <button type="button" class="matter-open"
+                    data-state="liquids"
+                    aria-haspopup="dialog"
+                    aria-controls="matter-dialog">
+                <img src="{% static 'images/Liquids.png' %}"
+                     alt="Artwork illustrating liquid matter.">
+                <span class="matter-portal-copy">
+                    <span class="matter-portal-title">Liquids</span>
+                    <span class="matter-portal-summary">
+                        Explore matter that flows, keeping its volume
+                        while taking the shape of its container.
+                    </span>
+                    <span class="matter-portal-action">
+                        Discover Liquids →
+                    </span>
+                </span>
+            </button>
+        </article>
+
+        <article class="matter-portal" id="gases">
+            <button type="button" class="matter-open"
+                    data-state="gases"
+                    aria-haspopup="dialog"
+                    aria-controls="matter-dialog">
+                <img src="{% static 'images/Gases.png' %}"
+                     alt="Stylized artwork representing gases;
+                          the colors are illustrative.">
+                <span class="matter-portal-copy">
+                    <span class="matter-portal-title">Gases</span>
+                    <span class="matter-portal-summary">
+                        Investigate particles that spread out,
+                        filling the available space in their container.
+                    </span>
+                    <span class="matter-portal-action">
+                        Discover Gases →
+                    </span>
+                </span>
+            </button>
+                </article>
+
+        <!-- Fourth card: Plasma -->
+        <article class="matter-portal" id="plasma">
+            <button type="button"
+                    class="matter-open"
+                    data-state="plasma"
+                    aria-haspopup="dialog"
+                    aria-controls="matter-dialog">
+
+                <img
+                    src="{% static 'images/Plasma.png' %}"
+                    alt="Luminous plasma filaments inside a plasma globe."
+                >
+
+                <span class="matter-portal-copy">
+                    <span class="matter-portal-title">Plasma</span>
+
+                    <span class="matter-portal-summary">
+                        Explore freely moving charged particles
+                        and the luminous displays they can produce.
+                    </span>
+
+                    <span class="matter-portal-action">
+                        Discover Plasma →
+                    </span>
+                </span>
+            </button>
+        </article>
+    </div>
+
+    <nav class="matter-actions" aria-label="Explore states of matter">
+
+    <nav class="matter-actions" aria-label="Explore states of matter">
+        <button type="button" id="matter-compare"
+                aria-haspopup="dialog" aria-controls="matter-dialog">
+            Compare the States
+        </button>
+        <button type="button" data-state="plasma" id="plasma"
+                aria-haspopup="dialog" aria-controls="matter-dialog">
+            Beyond the Familiar: Plasma →
+        </button>
+        <button type="button" id="matter-connect"
+                aria-haspopup="dialog" aria-controls="matter-dialog">
+            Connect State & Classification
+        </button>
+        <a href="{% url 'chemistry:history' %}">
+            Explore the Living Timeline →
+        </a>
+    </nav>
+
+    <p class="matter-note">
+        Element examples refer to approximately 20°C and ordinary
+        atmospheric pressure. Artwork is illustrative; a substance’s
+        state depends on its conditions.
     </p>
-    <a class="learning-link" href="{% url 'chemistry:history' %}#matter">
-        Explore the History of Matter →
-    </a>
-</section>
 
-<p class="learning-note">
-    Element examples below refer to approximately 20°C and ordinary
-    atmospheric pressure. These are examples rather than complete lists.
-</p>
-
-<div class="learning-grid">
-    <article class="card" id="solids">
-        <img
-            class="category-image"
-            src="{% static 'images/Solids.png' %}"
-            alt="Artwork illustrating solid matter."
-            loading="lazy"
-        >
-        <h2>Solids</h2>
-        <p>
-            A solid has a definite shape and volume. Its particles
-            remain close together and move around relatively fixed positions.
-        </p>
-        <h3>Element examples</h3>
-        <ul>
-            <li>Iron — Fe</li>
-            <li>Copper — Cu</li>
-            <li>Carbon — C</li>
-            <li>Sulfur — S</li>
-        </ul>
-        <p>Most elements are solids under these conditions.</p>
-    </article>
-
-    <article class="card" id="liquids">
-        <img
-            class="category-image"
-            src="{% static 'images/Liquids.png' %}"
-            alt="Artwork illustrating liquid matter."
-            loading="lazy"
-        >
-        <h2>Liquids</h2>
-        <p>
-            A liquid has a definite volume but takes the shape of
-            its container. Its particles remain close together while
-            moving past one another.
-        </p>
-        <h3>Elements at these conditions</h3>
-        <ul>
-            <li>Mercury — Hg, a metal</li>
-            <li>Bromine — Br, a nonmetal</li>
-        </ul>
-        <p>
-            Water is also a liquid under these conditions, but it is
-            a compound of hydrogen and oxygen.
-        </p>
-    </article>
-
-    <article class="card" id="gases">
-        <img
-            class="category-image"
-            src="{% static 'images/Gases.png' %}"
-            alt="Artwork illustrating gaseous matter."
-            loading="lazy"
-        >
-        <h2>Gases</h2>
-        <p>
-            A gas has no definite shape or volume. Its particles
-            spread out to fill their container.
-        </p>
-        <h3>Element examples</h3>
-        <ul>
-            <li>Hydrogen — H</li>
-            <li>Nitrogen — N</li>
-            <li>Oxygen — O</li>
-            <li>Helium — He</li>
-        </ul>
-        <p>
-            Hydrogen, nitrogen, and oxygen commonly occur as
-            two-atom molecules: H₂, N₂, and O₂.
-        </p>
-    </article>
+    <noscript>
+        <p>Enable JavaScript to open the discovery panels and comparison.</p>
+    </noscript>
 </div>
 
-<section class="card learning-section" id="plasma">
-    <h2>Beyond the Familiar: Plasma</h2>
-    <p>
-        Plasma contains freely moving charged particles, including
-        electrons and ions. It appears in stars, lightning, and
-        some illuminated signs.
-    </p>
-    <p>
-        Plasma is a state of matter, rather than a separate
-        classification of chemical elements.
-    </p>
-</section>
+<dialog id="matter-dialog" aria-labelledby="matter-dialog-title">
+    <div class="matter-dialog-top">
+        <p class="matter-dialog-label">Explore matter in motion</p>
+        <button type="button" id="matter-close">Close ×</button>
+    </div>
 
-<section class="card learning-section">
-    <h2>Connect State and Classification</h2>
-    <p>
-        Mercury is both a metal and a liquid. Oxygen is both a
-        nonmetal and a gas. State describes the physical condition;
-        classification describes a group of element properties.
+    <h2 id="matter-dialog-title" tabindex="-1"></h2>
+    <div id="matter-dialog-body"></div>
+</dialog>
+
+<template id="matter-comparison">
+    <div class="matter-table-scroll" tabindex="0" role="region"
+         aria-label="State comparison table, scroll horizontally if needed">
+        <table>
+            <caption>
+                A simple particle model for four familiar states of matter.
+            </caption>
+            <thead>
+                <tr>
+                    <th scope="col">Property</th>
+                    <th scope="col">Solid</th>
+                    <th scope="col">Liquid</th>
+                    <th scope="col">Gas</th>
+                    <th scope="col">Plasma</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <th scope="row">Shape</th>
+                    <td>Definite shape.</td>
+                    <td>Takes the container’s shape.</td>
+                    <td>Fills the available space.</td>
+                    <td>No fixed shape; electric and magnetic fields
+                        can influence its form.</td>
+                </tr>
+                <tr>
+                    <th scope="row">Volume</th>
+                    <td>Approximately fixed under ordinary conditions.</td>
+                    <td>Approximately fixed under ordinary conditions.</td>
+                    <td>Depends strongly on pressure and temperature.</td>
+                    <td>No fixed volume independent of its conditions
+                        and confinement.</td>
+                </tr>
+                <tr>
+                    <th scope="row">Particle behavior</th>
+                    <td>Particles remain close and vibrate around
+                        relatively fixed positions.</td>
+                    <td>Particles remain close but move past one another.</td>
+                    <td>Particles move freely, with large separations
+                        compared with their size.</td>
+                    <td>Includes freely moving electrons and ions;
+                        neutral particles may also be present.</td>
+                </tr>
+                <tr>
+                    <th scope="row">Examples</th>
+                    <td>Iron, copper, solid carbon.</td>
+                    <td>Mercury, bromine, liquid water.</td>
+                    <td>Hydrogen, oxygen, helium.</td>
+                    <td>Stars, lightning, some illuminated signs.</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <p class="matter-callout">
+        A change of state does not by itself create a different substance.
+        Ice, liquid water, and water vapor are all H₂O.
     </p>
-    <a class="learning-link" href="{% url 'chemistry:element_classes' %}">
-        Explore Element Classifications →
-    </a>
-</section>
+</template>
+
+<script>
+(() => {
+    "use strict";
+
+    const dialog = document.getElementById("matter-dialog");
+    const title = document.getElementById("matter-dialog-title");
+    const body = document.getElementById("matter-dialog-body");
+
+    const states = {
+        solids: {
+            name: "Solids",
+            introduction:
+                "A solid has a definite shape and volume under ordinary " +
+                "conditions. Its particles remain close together and move " +
+                "around relatively fixed positions.",
+            properties: [
+                "Particles are moving even when the object appears still.",
+                "A solid generally keeps its own shape rather than flowing.",
+                "Most elements are solids at approximately 20°C and ordinary atmospheric pressure."
+            ],
+            everyday:
+                "Compare an iron tool, copper wire, and an ice cube. " +
+                "All are solids, but their composition and properties differ.",
+            note:
+                "Ice is solid water, a compound. Iron and copper are elements. " +
+                "Being solid does not tell you whether something is an element, " +
+                "compound, or mixture.",
+            examples: [
+                ["Iron", "Fe", 26],
+                ["Copper", "Cu", 29],
+                ["Carbon", "C", 6],
+                ["Sulfur", "S", 16]
+            ]
+        },
+        liquids: {
+            name: "Liquids",
+            introduction:
+                "A liquid has a definite volume but takes the shape of " +
+                "its container. Its particles remain close together while " +
+                "moving past one another.",
+            properties: [
+                "Liquids flow and can be poured.",
+                "Changing containers changes their shape rather than the amount of liquid.",
+                "Mercury and bromine are liquid elements at approximately 20°C and ordinary atmospheric pressure."
+            ],
+            everyday:
+                "Water is a familiar liquid under these conditions. " +
+                "It is a compound of hydrogen and oxygen, rather than an element.",
+            note:
+                "Mercury is a metal; bromine is a nonmetal. " +
+                "Both are liquids under the reference conditions on this page.",
+            examples: [
+                ["Mercury", "Hg", 80],
+                ["Bromine", "Br", 35]
+            ]
+        },
+        gases: {
+            name: "Gases",
+            introduction:
+                "A gas has no definite shape or volume. Its particles " +
+                "spread out to fill their container.",
+            properties: [
+                "Gas particles move freely and collide with one another and their surroundings.",
+                "A gas can be compressed much more easily than an ordinary liquid or solid.",
+                "Temperature and pressure affect the volume occupied by a gas."
+            ],
+            everyday:
+                "Air is a mixture of gases. Oxygen and nitrogen are " +
+                "examples of elements commonly present in air.",
+            note:
+                "Hydrogen, nitrogen, and oxygen commonly occur as H₂, N₂, " +
+                "and O₂ molecules. Helium commonly occurs as individual atoms. " +
+                "The artwork’s colors are decorative, not a guide to real gas colors.",
+            examples: [
+                ["Hydrogen", "H", 1],
+                ["Nitrogen", "N", 7],
+                ["Oxygen", "O", 8],
+                ["Helium", "He", 2]
+            ]
+        },
+        plasma: {
+            name: "Beyond the Familiar: Plasma",
+            introduction:
+                "Plasma contains freely moving charged particles, including " +
+                "electrons and ions. It can also contain neutral particles.",
+            properties: [
+                "Its charged particles respond to electric and magnetic fields.",
+                "Plasma appears in stars, lightning, and some illuminated signs.",
+                "Plasma is a state of matter, not a separate class of chemical elements."
+            ],
+            everyday:
+                "An illuminated gas-discharge sign offers a connection to " +
+                "plasma beyond examples such as stars and lightning.",
+            note:
+                "The word plasma describes physical behavior. An element’s " +
+                "identity still depends on the number of protons in its nuclei.",
+            examples: []
+        }
+    };
+
+    function paragraph(text, className = "") {
+        const p = document.createElement("p");
+        p.textContent = text;
+        if (className) p.className = className;
+        body.append(p);
+    }
+
+    function heading(text) {
+        const h3 = document.createElement("h3");
+        h3.textContent = text;
+        body.append(h3);
+    }
+
+    function present(name) {
+        title.textContent = name;
+        body.replaceChildren();
+    }
+
+    function openDialog() {
+        if (!dialog.open) dialog.showModal();
+        dialog.scrollTop = 0;
+        title.focus({ preventScroll: true });
+    }
+
+    function topicLink(text, href) {
+        const link = document.createElement("a");
+        link.className = "matter-topic-link";
+        link.href = href;
+        link.textContent = text;
+        body.append(link);
+    }
+
+    function showElement(key, element) {
+        const [name, symbol, number] = element;
+
+        present(`${name} · ${symbol}`);
+        paragraph(`Atomic number: ${number}`);
+        paragraph(
+            `Every ${name.toLowerCase()} atom has ${number} protons. ` +
+            `A neutral atom has ${number} electrons.`
+        );
+
+        const stateName = {
+            solids: "solid",
+            liquids: "liquid",
+            gases: "gas"
+        };
+
+        paragraph(
+            `At approximately 20°C and ordinary atmospheric pressure, ` +
+            `${name.toLowerCase()} is a ${stateName[key]}.`
+        );
+
+        if (key === "gases") {
+            paragraph(
+                symbol === "He"
+                    ? "Helium gas commonly consists of individual helium atoms."
+                    : `${name} gas commonly consists of two-atom molecules: ${symbol}₂.`
+            );
+        }
+
+        paragraph(
+            "Changing the physical state does not change the element’s atomic number.",
+            "matter-callout"
+        );
+
+        const navigation = document.createElement("div");
+        navigation.className = "matter-dialog-navigation";
+
+        const back = document.createElement("button");
+        back.type = "button";
+        back.textContent = `← Back to ${states[key].name}`;
+        back.addEventListener("click", () => showState(key));
+        navigation.append(back);
+        body.append(navigation);
+
+        topicLink("Open the Periodic Table →", "{% url 'chemistry:elements' %}");
+        openDialog();
+    }
+
+    function showState(key) {
+        const data = states[key];
+        present(data.name);
+        paragraph(data.introduction);
+
+        heading("How it behaves");
+        const list = document.createElement("ul");
+
+        data.properties.forEach(text => {
+            const item = document.createElement("li");
+            item.textContent = text;
+            list.append(item);
+        });
+
+        body.append(list);
+        heading("Make a connection");
+        paragraph(data.everyday);
+
+        if (data.examples.length) {
+            heading("Meet the elements");
+            paragraph("Select an example to explore its identity.");
+
+            const examples = document.createElement("div");
+            examples.className = "matter-example-buttons";
+
+            data.examples.forEach(element => {
+                const button = document.createElement("button");
+                button.type = "button";
+                button.textContent = `${element[0]} · ${element[1]}`;
+                button.addEventListener("click", () => showElement(key, element));
+                examples.append(button);
+            });
+
+            body.append(examples);
+        }
+
+        paragraph(data.note, "matter-callout");
+        topicLink("Open the Periodic Table →", "{% url 'chemistry:elements' %}");
+        openDialog();
+    }
+
+    document.querySelectorAll("[data-state]").forEach(button => {
+        button.addEventListener("click", () => showState(button.dataset.state));
+    });
+
+    document.getElementById("matter-compare").addEventListener("click", () => {
+        present("Compare the States");
+        body.append(
+            document.getElementById("matter-comparison")
+                .content.cloneNode(true)
+        );
+        openDialog();
+    });
+
+    document.getElementById("matter-connect").addEventListener("click", () => {
+        present("State & Classification");
+
+        paragraph(
+            "State describes a substance’s physical condition. " +
+            "Classification describes patterns in an element’s properties."
+        );
+
+        heading("Two descriptions, one element");
+        paragraph(
+            "Mercury is both a metal and a liquid. " +
+            "Oxygen is both a nonmetal and a gas at approximately 20°C " +
+            "and ordinary atmospheric pressure."
+        );
+
+        paragraph(
+            "An element’s physical state can change with temperature and " +
+            "pressure. Its identity remains tied to its proton count.",
+            "matter-callout"
+        );
+
+        topicLink(
+            "Explore Element Classifications →",
+            "{% url 'chemistry:element_classes' %}"
+        );
+
+        openDialog();
+    });
+
+    document.getElementById("matter-close").addEventListener("click", () => {
+        dialog.close();
+    });
+
+    dialog.addEventListener("click", event => {
+        if (event.target !== dialog) return;
+
+        const bounds = dialog.getBoundingClientRect();
+        const inside =
+            event.clientX >= bounds.left &&
+            event.clientX <= bounds.right &&
+            event.clientY >= bounds.top &&
+            event.clientY <= bounds.bottom;
+
+        if (!inside) dialog.close();
+    });
+})();
+</script>
 {% endblock %}

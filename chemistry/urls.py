@@ -26,4 +26,5 @@ urlpatterns = [
         name="element_classes",
     ),
     path("history/", views.history, name="history"),
+    path("plasma/", views.plasma, name="plasma"), 
 ]

@@ -1,0 +1,1976 @@
+{% extends "chemistry/base.html" %}
+{% load static %}
+
+{% block title %}Plasma Laboratory | Beyond the Elements{% endblock %}
+{% block body_class %}learning-page plasma-page{% endblock %}
+
+{% block content %}
+<style>
+    /* ======================================================
+       PLASMA PAGE — LAYOUT AND BACKGROUND
+       Side navigation remains controlled by base.html.
+       ====================================================== */
+
+    body.learning-page.plasma-page {
+        margin: 0;
+        min-height: 100vh;
+        color: #eaf4ff;
+        font-size: 17px;
+        line-height: 1.7;
+        background:
+            radial-gradient(
+                ellipse at 15% 15%,
+                rgba(91, 37, 151, 0.2),
+                transparent 45%
+            ),
+            radial-gradient(
+                ellipse at 90% 65%,
+                rgba(20, 89, 145, 0.18),
+                transparent 50%
+            ),
+            #020612;
+    }
+
+    /* Remove the inherited narrow center-column limits. */
+    body.learning-page.plasma-page main.ocean-layout {
+        display: block;
+        width: auto !important;
+        max-width: none !important;
+        min-width: 0;
+        margin: 0 112px !important;
+        padding: 0 !important;
+        background: transparent !important;
+        box-sizing: border-box;
+    }
+
+    body.learning-page.plasma-page .ocean-columns {
+        display: block;
+        width: 100% !important;
+        max-width: none !important;
+        min-width: 0;
+        margin: 0 !important;
+        padding: 0 !important;
+        background: transparent !important;
+    }
+
+    body.learning-page.plasma-page .ocean-content {
+        width: 100% !important;
+        max-width: none !important;
+        min-width: 0;
+        margin: 0 !important;
+        padding: 0 !important;
+        flex: 1 1 auto;
+        background: transparent !important;
+    }
+
+    body.plasma-page .plasma-world,
+    body.plasma-page .plasma-world * {
+        box-sizing: border-box;
+    }
+
+    body.plasma-page .plasma-world {
+        width: 100%;
+        min-width: 0;
+        margin: 0;
+        color: #eaf4ff;
+        background: rgba(3, 8, 25, 0.7);
+    }
+
+    body.plasma-page .plasma-container {
+        width: calc(100% - 64px);
+        max-width: 1700px;
+        min-width: 0;
+        margin: 0 auto;
+    }
+
+    body.plasma-page .plasma-world h1,
+    body.plasma-page .plasma-world h2,
+    body.plasma-page .plasma-world h3 {
+        font-family: inherit;
+    }
+
+    body.plasma-page .plasma-world p {
+        overflow-wrap: break-word;
+    }
+
+    /* ======================================================
+       INTRODUCTION
+       ====================================================== */
+
+    body.plasma-page .plasma-introduction {
+        padding: 70px 0 65px;
+        background:
+            radial-gradient(
+                ellipse at 50% 0,
+                rgba(96, 44, 170, 0.18),
+                transparent 65%
+            ),
+            linear-gradient(
+                180deg,
+                rgba(5, 10, 32, 0.94),
+                rgba(12, 10, 45, 0.82)
+            );
+    }
+
+    body.plasma-page .plasma-introduction-heading {
+        max-width: 1080px;
+        margin: 0 auto 48px;
+        text-align: center;
+    }
+
+    body.plasma-page .plasma-eyebrow {
+        margin: 0 0 18px;
+        color: #91e9ff;
+        font-size: 0.95rem;
+        letter-spacing: 3px;
+        text-transform: uppercase;
+    }
+
+    body.plasma-page .plasma-introduction-heading h1 {
+        margin: 12px 0 25px;
+        color: #fff;
+        font-size: clamp(2.6rem, 4.8vw, 5.3rem);
+        line-height: 1.15;
+        text-shadow:
+            0 0 15px rgba(175, 105, 255, 0.9),
+            0 0 45px rgba(100, 65, 255, 0.65);
+    }
+
+    body.plasma-page .plasma-introduction-heading p:not(.plasma-eyebrow) {
+        max-width: 920px;
+        margin: 16px auto;
+        color: #e4edff;
+        font-size: 1.12rem;
+        line-height: 1.85;
+    }
+
+    body.plasma-page .plasma-learning-heading {
+        margin: 0 0 30px;
+        color: #b7eaff;
+        font-size: clamp(1.8rem, 2.8vw, 2.8rem);
+        line-height: 1.3;
+        text-align: center;
+    }
+
+    body.plasma-page .plasma-introduction-action {
+        margin-top: 38px;
+        text-align: center;
+    }
+
+    /* ======================================================
+       BUTTONS AND KEYBOARD FOCUS
+       ====================================================== */
+
+    body.plasma-page .plasma-button {
+        display: inline-block;
+        margin-top: 12px;
+        padding: 14px 26px;
+        border: 1px solid #76e8ff;
+        border-radius: 12px;
+        color: #c8f7ff;
+        background: rgba(9, 40, 61, 0.95);
+        font: inherit;
+        font-size: 1rem;
+        text-align: center;
+        text-decoration: none;
+        cursor: pointer;
+        transition:
+            background 0.2s ease,
+            box-shadow 0.2s ease,
+            transform 0.2s ease;
+    }
+
+    body.plasma-page .plasma-button:hover {
+        background: #164e70;
+        box-shadow: 0 0 24px rgba(66, 223, 255, 0.35);
+        transform: translateY(-2px);
+    }
+
+    body.plasma-page .plasma-world :is(
+        a,
+        button,
+        select,
+        input
+    ):focus-visible {
+        outline: 3px solid #b8f3ff;
+        outline-offset: 5px;
+    }
+
+    /* ======================================================
+       EDUCATIONAL SECTIONS AND CARDS
+       ====================================================== */
+
+    body.plasma-page .plasma-section {
+        width: 100%;
+        margin: 0;
+        padding: 65px 0;
+        background: rgba(3, 8, 25, 0.88);
+    }
+
+    body.plasma-page .plasma-section-title {
+        margin: 0 0 22px;
+        color: #e9d4ff;
+        font-size: clamp(2rem, 3.2vw, 3.3rem);
+        line-height: 1.25;
+        text-align: center;
+        text-shadow: 0 0 20px rgba(155, 76, 255, 0.45);
+    }
+
+    body.plasma-page .plasma-intro {
+        max-width: 1000px;
+        margin: 0 auto 36px;
+        color: #e4edff;
+        font-size: 1.1rem;
+        line-height: 1.85;
+        text-align: center;
+    }
+
+    body.plasma-page .plasma-grid {
+        display: grid;
+        grid-template-columns: repeat(4, minmax(0, 1fr));
+        gap: 22px;
+        align-items: stretch;
+    }
+
+    body.plasma-page .plasma-card {
+        display: flex;
+        flex-direction: column;
+        min-width: 0;
+        padding: 26px;
+        border: 1px solid rgba(125, 170, 255, 0.45);
+        border-radius: 18px;
+        background: rgba(4, 12, 31, 0.92);
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.25);
+        transition:
+            transform 0.2s ease,
+            border-color 0.2s ease,
+            box-shadow 0.2s ease;
+    }
+
+    body.plasma-page .plasma-card:hover {
+        transform: translateY(-4px);
+        border-color: #a56cff;
+        box-shadow: 0 0 25px rgba(128, 76, 255, 0.25);
+    }
+
+    body.plasma-page .plasma-card h3 {
+        margin: 0 0 16px;
+        color: #a7ecff;
+        font-size: 1.2rem;
+        line-height: 1.4;
+    }
+
+    body.plasma-page .plasma-card p {
+        margin: 0;
+        color: #e2edff;
+        font-size: 1rem;
+        line-height: 1.8;
+    }
+
+    body.plasma-page .plasma-state-icon,
+    body.plasma-page .plasma-discovery-icon {
+        margin-bottom: 14px;
+        font-size: 2.7rem;
+        line-height: 1.3;
+    }
+
+    body.plasma-page .plasma-discovery {
+        text-align: center;
+    }
+
+    /* ======================================================
+       DEDICATED, UNCROPPED INFOGRAPHIC
+       ====================================================== */
+
+    body.plasma-page .plasma-infographic-section {
+        width: 100%;
+        padding: 60px 0;
+        background: linear-gradient(
+            180deg,
+            rgba(3, 8, 25, 0.98),
+            rgba(10, 12, 35, 0.95)
+        );
+    }
+
+    body.plasma-page .plasma-infographic-heading {
+        width: calc(100% - 64px);
+        max-width: 1000px;
+        margin: 0 auto 32px;
+        text-align: center;
+    }
+
+    body.plasma-page .plasma-infographic-heading p {
+        margin: 16px auto 0;
+        color: #d9e8ff;
+        font-size: 1.1rem;
+        line-height: 1.8;
+    }
+
+    body.plasma-page .plasma-infographic-frame {
+        width: calc(100% - 40px);
+        max-width: 1800px;
+        margin: 0 auto;
+        border: 1px solid rgba(130, 165, 255, 0.35);
+        border-radius: 20px;
+        background: #020612;
+        box-shadow: 0 0 40px rgba(95, 65, 210, 0.18);
+    }
+
+    body.plasma-page .plasma-infographic-frame img {
+        display: block;
+        width: 100%;
+        max-width: none;
+        height: auto;
+        margin: 0;
+        border-radius: inherit;
+        object-fit: contain;
+    }
+
+    /* ======================================================
+       INTERACTIVE LABORATORY
+       ====================================================== */
+
+    body.plasma-page #plasma-lab {
+        padding: 75px 0;
+        scroll-margin-top: 24px;
+        background:
+            radial-gradient(
+                ellipse at 50% 20%,
+                rgba(65, 30, 120, 0.28),
+                transparent 65%
+            ),
+            rgba(3, 8, 25, 0.94);
+    }
+
+    body.plasma-page .plasma-laboratory {
+        padding: 30px;
+        border: 1px solid rgba(163, 104, 255, 0.6);
+        border-radius: 24px;
+        background: rgba(3, 8, 25, 0.96);
+        box-shadow: 0 0 50px rgba(102, 51, 255, 0.12);
+    }
+
+    body.plasma-page .plasma-lab-grid {
+        display: grid;
+        grid-template-columns: minmax(260px, 1fr) minmax(0, 1.8fr);
+        gap: 28px;
+        align-items: stretch;
+    }
+
+    body.plasma-page .plasma-controls {
+        min-width: 0;
+        padding: 24px;
+        border: 1px solid #425d8d;
+        border-radius: 18px;
+        background: rgba(3, 12, 29, 0.94);
+    }
+
+    body.plasma-page .plasma-controls h3 {
+        margin: 0 0 22px;
+        color: #a9eaff;
+        font-size: 1.45rem;
+        line-height: 1.4;
+    }
+
+    body.plasma-page .plasma-control {
+        margin: 22px 0;
+    }
+
+    body.plasma-page .plasma-control label {
+        display: block;
+        margin-bottom: 10px;
+        color: #dceaff;
+        font-weight: 600;
+    }
+
+    body.plasma-page .plasma-control select,
+    body.plasma-page .plasma-control input {
+        width: 100%;
+        min-width: 0;
+    }
+
+    body.plasma-page .plasma-control select {
+        padding: 12px;
+        border: 1px solid #5574a5;
+        border-radius: 10px;
+        color: #fff;
+        background: #08172e;
+        font: inherit;
+    }
+
+    body.plasma-page .plasma-control input[type="range"] {
+        accent-color: #b685ff;
+        cursor: pointer;
+    }
+
+    body.plasma-page .plasma-control output {
+        color: #a9eaff;
+    }
+
+    body.plasma-page .plasma-model-note {
+        margin: 22px 0 0;
+        color: #bacce5;
+        font-size: 0.92rem;
+        line-height: 1.7;
+    }
+
+    body.plasma-page .plasma-chamber {
+        position: relative;
+        min-width: 0;
+        min-height: 500px;
+        overflow: hidden;
+        border: 2px solid #6585c7;
+        border-radius: 24px;
+        background: #020612;
+        box-shadow:
+            inset 0 0 60px #000,
+            0 0 30px rgba(112, 76, 255, 0.25);
+    }
+
+    body.plasma-page #plasma-canvas {
+        position: absolute;
+        inset: 0;
+        display: block;
+        width: 100%;
+        height: 100%;
+    }
+
+    body.plasma-page .plasma-chamber-label {
+        position: absolute;
+        top: 14px;
+        left: 14px;
+        right: 14px;
+        width: fit-content;
+        max-width: calc(100% - 28px);
+        padding: 8px 12px;
+        border-radius: 10px;
+        color: #bceeff;
+        background: rgba(2, 6, 18, 0.82);
+        font-size: 0.75rem;
+        letter-spacing: 1px;
+        pointer-events: none;
+    }
+
+    body.plasma-page .plasma-chamber-glow {
+        position: absolute;
+        inset: 0;
+        box-shadow: inset 0 0 60px rgba(152, 92, 255, 0.2);
+        pointer-events: none;
+    }
+
+    body.plasma-page .plasma-readouts {
+        display: grid;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 16px;
+        margin-top: 24px;
+    }
+
+    body.plasma-page .plasma-readout {
+        padding: 18px;
+        border: 1px solid #4d6298;
+        border-radius: 15px;
+        background: rgba(5, 14, 34, 0.95);
+        text-align: center;
+    }
+
+    body.plasma-page .plasma-readout strong {
+        display: block;
+        margin-top: 8px;
+        color: #c4a0ff;
+        font-size: 1.8rem;
+    }
+
+    body.plasma-page .plasma-readout-note {
+        max-width: 1000px;
+        margin: 24px auto 0;
+        color: #bacce5;
+        font-size: 0.95rem;
+        line-height: 1.8;
+        text-align: center;
+    }
+
+    /* ======================================================
+       REMAINING SECTIONS AND QUIZ
+       ====================================================== */
+
+    body.plasma-page .plasma-learning-section {
+        background: rgba(5, 12, 32, 0.96);
+    }
+
+    body.plasma-page .plasma-discovery-section {
+        background: rgba(9, 10, 35, 0.96);
+    }
+
+    body.plasma-page .plasma-challenge-section {
+        background: linear-gradient(
+            180deg,
+            rgba(8, 12, 35, 0.97),
+            rgba(20, 10, 48, 0.94)
+        );
+    }
+
+    body.plasma-page .plasma-quiz {
+        max-width: 1000px;
+        margin: 0 auto;
+        padding: 30px;
+        border: 1px solid #7256a9;
+        border-radius: 20px;
+        background: rgba(8, 15, 41, 0.96);
+    }
+
+    body.plasma-page .plasma-quiz-progress {
+        margin: 0 0 12px;
+        color: #a9eaff;
+        font-size: 0.95rem;
+    }
+
+    body.plasma-page .plasma-quiz h3 {
+        margin: 0 0 22px;
+        color: #f0e7ff;
+        font-size: 1.35rem;
+        line-height: 1.5;
+    }
+
+    body.plasma-page .plasma-quiz button {
+        display: block;
+        width: 100%;
+        margin: 12px 0;
+        padding: 16px;
+        border: 1px solid #526ca1;
+        border-radius: 12px;
+        color: #fff;
+        background: #101d3d;
+        font: inherit;
+        text-align: left;
+        cursor: pointer;
+    }
+
+    body.plasma-page .plasma-quiz button:hover:not(:disabled) {
+        background: #253d70;
+    }
+
+    body.plasma-page .plasma-quiz button:disabled {
+        cursor: default;
+    }
+
+    body.plasma-page .plasma-quiz button.is-correct {
+        border-color: #7ee3bc;
+        background: #123c36;
+    }
+
+    body.plasma-page .plasma-quiz button.is-incorrect {
+        border-color: #efb1cf;
+        background: #44253f;
+    }
+
+    body.plasma-page #plasma-quiz-result {
+        margin: 20px 0;
+        color: #bdefff;
+        font-weight: 600;
+    }
+
+    body.plasma-page #plasma-next {
+        text-align: center;
+        background: #282047;
+    }
+
+    body.plasma-page .plasma-world [hidden] {
+        display: none !important;
+    }
+
+    body.plasma-page .plasma-footer {
+        padding: 30px 20px;
+        border-top: 1px solid rgba(125, 170, 255, 0.25);
+        color: #d0def2;
+        background: rgba(3, 8, 25, 0.94);
+        text-align: center;
+    }
+
+    /* ======================================================
+       RESPONSIVE LAYOUT
+       ====================================================== */
+
+    @media (max-width: 1200px) {
+        body.plasma-page .plasma-grid {
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+        }
+
+        body.plasma-page .plasma-container {
+            width: calc(100% - 40px);
+        }
+
+        body.plasma-page .plasma-laboratory {
+            padding: 22px;
+        }
+
+        body.plasma-page .plasma-lab-grid {
+            grid-template-columns: 1fr;
+        }
+
+        body.plasma-page .plasma-chamber {
+            min-height: 420px;
+        }
+    }
+
+    @media (max-width: 850px) {
+        body.learning-page.plasma-page main.ocean-layout {
+            margin-left: 88px !important;
+            margin-right: 88px !important;
+        }
+
+        body.plasma-page .plasma-readouts {
+            grid-template-columns: 1fr;
+        }
+
+        body.plasma-page .plasma-introduction {
+            padding: 48px 0;
+        }
+
+        body.plasma-page .plasma-card {
+            padding: 22px;
+        }
+    }
+
+    @media (max-width: 650px) {
+        body.learning-page.plasma-page main.ocean-layout {
+            margin-left: 70px !important;
+            margin-right: 70px !important;
+        }
+
+        body.plasma-page .plasma-container,
+        body.plasma-page .plasma-infographic-heading {
+            width: calc(100% - 24px);
+        }
+
+        body.plasma-page .plasma-grid {
+            grid-template-columns: 1fr;
+            gap: 16px;
+        }
+
+        body.plasma-page .plasma-introduction-heading h1 {
+            font-size: clamp(2rem, 7vw, 3rem);
+        }
+
+        body.plasma-page .plasma-eyebrow {
+            font-size: 0.78rem;
+            letter-spacing: 2px;
+        }
+
+        body.plasma-page .plasma-introduction-heading p:not(.plasma-eyebrow),
+        body.plasma-page .plasma-intro,
+        body.plasma-page .plasma-infographic-heading p {
+            font-size: 1rem;
+        }
+
+        body.plasma-page .plasma-section,
+        body.plasma-page .plasma-infographic-section,
+        body.plasma-page #plasma-lab {
+            padding: 42px 0;
+        }
+
+        body.plasma-page .plasma-section-title,
+        body.plasma-page .plasma-learning-heading {
+            font-size: 1.65rem;
+        }
+
+        body.plasma-page .plasma-infographic-frame {
+            width: 100%;
+            border-radius: 0;
+        }
+
+        body.plasma-page .plasma-laboratory,
+        body.plasma-page .plasma-controls,
+        body.plasma-page .plasma-quiz {
+            padding: 16px;
+        }
+
+        body.plasma-page .plasma-lab-grid {
+            gap: 18px;
+        }
+
+        body.plasma-page .plasma-chamber {
+            min-height: 300px;
+            border-radius: 16px;
+        }
+
+        body.plasma-page .plasma-chamber-label {
+            font-size: 0.65rem;
+        }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+        body.plasma-page .plasma-button,
+        body.plasma-page .plasma-card {
+            transition: none;
+        }
+
+        body.plasma-page .plasma-button:hover,
+        body.plasma-page .plasma-card:hover {
+            transform: none;
+        }
+    }
+    /* ======================================================
+   LARGER SIDE BUBBLES
+   ====================================================== */
+
+body.learning-page.plasma-page {
+    --plasma-bubble-size: 176px;
+    --plasma-bubble-gap: 14px;
+    --plasma-rail-offset: 14px;
+}
+
+/* Keep the expanded center clear of the larger bubbles. */
+body.learning-page.plasma-page main.ocean-layout {
+    margin-left: 208px !important;
+    margin-right: 208px !important;
+}
+
+body.learning-page.plasma-page .nav-bubble,
+body.learning-page.plasma-page .discovery-bubble {
+    font-size: 1.05rem;
+    line-height: 1.3;
+    padding: 14px;
+}
+
+body.learning-page.plasma-page .discovery-panel {
+    width: min(360px, calc(100vw - 230px));
+}
+
+/* ======================================================
+   GLASS PLASMA BALL
+   ====================================================== */
+
+body.plasma-page .plasma-lab-grid {
+    align-items: center;
+}
+
+body.plasma-page .plasma-chamber {
+    isolation: isolate;
+    position: relative;
+
+    width: 100%;
+    max-width: 680px;
+    height: auto;
+    min-height: 0;
+    aspect-ratio: 1 / 1;
+
+    justify-self: center;
+    overflow: hidden;
+
+    border: 2px solid rgba(195, 228, 255, 0.65);
+    border-radius: 50%;
+
+    background:
+        radial-gradient(
+            circle at 35% 25%,
+            rgba(132, 153, 255, 0.18),
+            rgba(12, 15, 42, 0.95) 55%,
+            #020612 85%
+        );
+
+    box-shadow:
+        inset 0 0 20px rgba(224, 242, 255, 0.25),
+        inset -22px -20px 55px rgba(0, 0, 0, 0.8),
+        inset 12px 10px 35px rgba(139, 174, 255, 0.18),
+        0 0 24px rgba(125, 178, 255, 0.3),
+        0 0 65px rgba(143, 80, 255, 0.25),
+        0 24px 45px rgba(0, 0, 0, 0.55);
+}
+
+body.plasma-page #plasma-canvas {
+    border-radius: 50%;
+}
+
+/* Curved glass reflection. */
+body.plasma-page .plasma-chamber::before {
+    content: "";
+    position: absolute;
+    top: 8%;
+    left: 14%;
+    width: 48%;
+    height: 24%;
+
+    border-radius: 50%;
+    background: linear-gradient(
+        180deg,
+        rgba(255, 255, 255, 0.42),
+        rgba(220, 237, 255, 0.12) 45%,
+        transparent
+    );
+
+    transform: rotate(-28deg);
+    filter: blur(3px);
+    pointer-events: none;
+    z-index: 3;
+}
+
+/* Glass surface and illuminated rim. */
+body.plasma-page .plasma-chamber::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+
+    border-radius: 50%;
+    background:
+        radial-gradient(
+            circle at 27% 23%,
+            rgba(255, 255, 255, 0.18),
+            transparent 30%
+        ),
+        radial-gradient(
+            circle at 50% 50%,
+            transparent 57%,
+            rgba(145, 188, 255, 0.1) 78%,
+            rgba(231, 245, 255, 0.35) 96%,
+            rgba(255, 255, 255, 0.6) 100%
+        );
+
+    pointer-events: none;
+    z-index: 2;
+}
+
+body.plasma-page .plasma-chamber-glow {
+    border-radius: 50%;
+    box-shadow:
+        inset 0 0 45px rgba(152, 92, 255, 0.3),
+        inset 0 0 12px rgba(218, 239, 255, 0.3);
+    z-index: 1;
+}
+
+body.plasma-page .plasma-chamber-label {
+    top: auto;
+    bottom: 12%;
+    left: 50%;
+    right: auto;
+
+    width: max-content;
+    max-width: 72%;
+    padding: 8px 12px;
+
+    transform: translateX(-50%);
+    text-align: center;
+    font-size: 0.7rem;
+    z-index: 4;
+}
+
+/* ======================================================
+   RESPONSIVE BUBBLES AND GLASS BALL
+   ====================================================== */
+
+@media (max-width: 1200px) {
+    body.learning-page.plasma-page {
+        --plasma-bubble-size: 128px;
+        --plasma-bubble-gap: 12px;
+        --plasma-rail-offset: 10px;
+    }
+
+    body.learning-page.plasma-page main.ocean-layout {
+        margin-left: 154px !important;
+        margin-right: 154px !important;
+    }
+
+    body.learning-page.plasma-page .nav-bubble,
+    body.learning-page.plasma-page .discovery-bubble {
+        font-size: 0.9rem;
+        padding: 10px;
+    }
+}
+
+@media (max-width: 850px) {
+    body.learning-page.plasma-page {
+        --plasma-bubble-size: 88px;
+        --plasma-bubble-gap: 10px;
+        --plasma-rail-offset: 8px;
+    }
+
+    body.learning-page.plasma-page main.ocean-layout {
+        margin-left: 110px !important;
+        margin-right: 110px !important;
+    }
+
+    body.learning-page.plasma-page .nav-bubble,
+    body.learning-page.plasma-page .discovery-bubble {
+        font-size: 0.72rem;
+        padding: 6px;
+    }
+
+    body.learning-page.plasma-page .discovery-panel {
+        width: min(320px, calc(100vw - 125px));
+    }
+}
+
+@media (max-width: 650px) {
+    body.learning-page.plasma-page {
+        --plasma-bubble-size: 60px;
+        --plasma-bubble-gap: 8px;
+        --plasma-rail-offset: 5px;
+    }
+
+    body.learning-page.plasma-page main.ocean-layout {
+        margin-left: 73px !important;
+        margin-right: 73px !important;
+    }
+
+    body.learning-page.plasma-page .nav-bubble,
+    body.learning-page.plasma-page .discovery-bubble {
+        font-size: 0.6rem;
+        padding: 4px;
+    }
+
+    body.learning-page.plasma-page .discovery-panel {
+        left: 73px;
+        width: calc(100vw - 146px);
+    }
+
+    body.plasma-page .plasma-chamber-label {
+        font-size: 0.55rem;
+        letter-spacing: 0;
+        padding: 5px 8px;
+    }
+}
+/* Reduce desktop bubbles by 25%. */
+@media (min-width: 1201px) {
+    body.learning-page.plasma-page {
+        --plasma-bubble-size: 132px;
+        --plasma-bubble-gap: 12px;
+    }
+
+    body.learning-page.plasma-page main.ocean-layout {
+        margin-left: 164px !important;
+        margin-right: 164px !important;
+    }
+
+    body.learning-page.plasma-page .nav-bubble,
+    body.learning-page.plasma-page .discovery-bubble {
+        font-size: 0.9rem;
+        padding: 10px;
+    }
+}
+/* ======================================================
+   LARGER LEARNING CARDS AND KNOWLEDGE CHALLENGE
+   ====================================================== */
+
+body.plasma-page .plasma-learning-section .plasma-container,
+body.plasma-page .plasma-discovery-section .plasma-container,
+body.plasma-page .plasma-challenge-section .plasma-container {
+    width: calc(100% - 40px);
+    max-width: 1800px;
+}
+
+body.plasma-page .plasma-learning-section .plasma-grid,
+body.plasma-page .plasma-discovery-section .plasma-grid {
+    gap: 26px;
+}
+
+body.plasma-page .plasma-learning-section .plasma-card,
+body.plasma-page .plasma-discovery-section .plasma-card {
+    min-height: 320px;
+    padding: 34px;
+    justify-content: center;
+}
+
+body.plasma-page .plasma-learning-section .plasma-card h3,
+body.plasma-page .plasma-discovery-section .plasma-card h3 {
+    margin-bottom: 20px;
+    font-size: 1.55rem;
+}
+
+body.plasma-page .plasma-learning-section .plasma-card p,
+body.plasma-page .plasma-discovery-section .plasma-card p {
+    font-size: 1.2rem;
+    line-height: 1.85;
+}
+
+body.plasma-page .plasma-state-icon,
+body.plasma-page .plasma-discovery-icon {
+    margin-bottom: 22px;
+    font-size: 3.8rem;
+}
+
+body.plasma-page .plasma-learning-section .plasma-intro,
+body.plasma-page .plasma-discovery-section .plasma-intro,
+body.plasma-page .plasma-challenge-section .plasma-intro {
+    max-width: 1200px;
+    font-size: 1.25rem;
+}
+
+body.plasma-page .plasma-quiz {
+    width: 100%;
+    max-width: 1400px;
+    padding: 44px;
+}
+
+body.plasma-page .plasma-quiz-progress {
+    font-size: 1.1rem;
+}
+
+body.plasma-page .plasma-quiz h3 {
+    margin-bottom: 28px;
+    font-size: 1.7rem;
+}
+
+body.plasma-page .plasma-quiz button {
+    min-height: 68px;
+    padding: 20px 24px;
+    font-size: 1.2rem;
+    line-height: 1.6;
+}
+
+body.plasma-page #plasma-quiz-result {
+    font-size: 1.2rem;
+    line-height: 1.8;
+}
+
+@media (max-width: 1400px) {
+    body.plasma-page .plasma-learning-section .plasma-grid,
+    body.plasma-page .plasma-discovery-section .plasma-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+}
+
+@media (max-width: 650px) {
+    body.plasma-page .plasma-learning-section .plasma-container,
+    body.plasma-page .plasma-discovery-section .plasma-container,
+    body.plasma-page .plasma-challenge-section .plasma-container {
+        width: calc(100% - 24px);
+    }
+
+    body.plasma-page .plasma-learning-section .plasma-grid,
+    body.plasma-page .plasma-discovery-section .plasma-grid {
+        grid-template-columns: 1fr;
+        gap: 18px;
+    }
+
+    body.plasma-page .plasma-learning-section .plasma-card,
+    body.plasma-page .plasma-discovery-section .plasma-card {
+        min-height: 0;
+        padding: 24px;
+    }
+
+    body.plasma-page .plasma-learning-section .plasma-card h3,
+    body.plasma-page .plasma-discovery-section .plasma-card h3 {
+        font-size: 1.3rem;
+    }
+
+    body.plasma-page .plasma-learning-section .plasma-card p,
+    body.plasma-page .plasma-discovery-section .plasma-card p {
+        font-size: 1.05rem;
+    }
+
+    body.plasma-page .plasma-quiz {
+        padding: 20px;
+    }
+
+    body.plasma-page .plasma-quiz h3 {
+        font-size: 1.35rem;
+    }
+
+    body.plasma-page .plasma-quiz button {
+        padding: 16px;
+        font-size: 1.05rem;
+    }
+}
+</style>
+
+<div class="plasma-world">
+
+    <!-- INTRODUCTION AND FOUR EDUCATIONAL CARDS -->
+    <section class="plasma-introduction"
+             aria-labelledby="plasma-title">
+        <div class="plasma-container">
+            <div class="plasma-introduction-heading">
+                <p class="plasma-eyebrow">
+                    The Science of Charged Matter
+                </p>
+
+                <h1 id="plasma-title">Plasma Laboratory</h1>
+
+                <p>
+                    From the heart of stars to the glow of neon,
+                    discover the extraordinary fourth familiar
+                    state of matter.
+                </p>
+
+                <p>
+                    Plasma is a gas-like state of matter containing
+                    free electrons and ions, often alongside
+                    neutral particles.
+                </p>
+
+                <p>
+                    Because charged particles respond collectively
+                    to electromagnetic fields, plasma behaves
+                    differently from ordinary neutral gas.
+                </p>
+            </div>
+
+            <h2 class="plasma-learning-heading">
+                How Does Plasma Form?
+            </h2>
+
+            <div class="plasma-grid">
+                <article class="plasma-card">
+                    <h3>01 · Neutral Gas</h3>
+                    <p>
+                        Atoms and molecules move freely.
+                        Most particles have no net electric charge.
+                    </p>
+                </article>
+
+                <article class="plasma-card">
+                    <h3>02 · Energy Input</h3>
+                    <p>
+                        Collisions with energetic electrons or
+                        other processes can remove electrons
+                        from atoms and molecules.
+                    </p>
+                </article>
+
+                <article class="plasma-card">
+                    <h3>03 · Ionization</h3>
+                    <p>
+                        Some particles become positively charged
+                        ions while free electrons move through
+                        the surrounding material.
+                    </p>
+                </article>
+
+                <article class="plasma-card">
+                    <h3>04 · Plasma Behavior</h3>
+                    <p>
+                        Charged particles interact with electric
+                        and magnetic fields, producing collective
+                        behavior and sometimes visible light.
+                    </p>
+                </article>
+            </div>
+
+            <div class="plasma-introduction-action">
+                <p class="plasma-eyebrow">
+                    Experiment. Observe. Discover.
+                </p>
+                <a href="#plasma-lab" class="plasma-button">
+                    Enter the Laboratory ↓
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- FULL, UNCROPPED INFOGRAPHIC -->
+    <section class="plasma-infographic-section"
+             aria-labelledby="plasma-infographic-title">
+        <div class="plasma-infographic-heading">
+            <h2 id="plasma-infographic-title"
+                class="plasma-section-title">
+                Plasma Throughout Our World
+            </h2>
+            <p>
+                From distant stars to technologies we use every day,
+                plasma reveals the extraordinary behavior of
+                charged matter.
+            </p>
+        </div>
+
+        <div class="plasma-infographic-frame">
+            <img
+                src="{% static 'images/PlasmaPage.png' %}"
+                alt="Illustrated plasma infographic exploring stellar plasma, atmospheric plasma, noble-gas discharges, and technological applications."
+                loading="lazy"
+            >
+        </div>
+    </section>
+
+    <!-- INTERACTIVE LABORATORY -->
+    <section id="plasma-lab"
+             class="plasma-section"
+             aria-labelledby="plasma-lab-title">
+        <div class="plasma-container">
+            <h2 id="plasma-lab-title" class="plasma-section-title">
+                Interactive Plasma Laboratory
+            </h2>
+
+            <p class="plasma-intro">
+                Choose a gas and experiment with energy, pressure,
+                and magnetic-field strength. Watch the educational
+                visualization respond to changing conditions.
+            </p>
+
+            <div class="plasma-laboratory">
+                <div class="plasma-lab-grid">
+                    <div class="plasma-controls">
+                        <h3>Experiment Controls</h3>
+
+                        <div class="plasma-control">
+                            <label for="plasma-gas">Select Gas</label>
+                            <select id="plasma-gas">
+                                <option value="neon">Neon (Ne)</option>
+                                <option value="argon">Argon (Ar)</option>
+                                <option value="xenon">Xenon (Xe)</option>
+                                <option value="krypton">Krypton (Kr)</option>
+                                <option value="hydrogen">Hydrogen (H)</option>
+                                <option value="helium">Helium (He)</option>
+                                <option value="nitrogen">Nitrogen (N₂)</option>
+                                <option value="oxygen">Oxygen (O₂)</option>
+                            </select>
+                        </div>
+
+                        <div class="plasma-control">
+                            <label for="plasma-energy">
+                                Energy Input:
+                                <output id="plasma-energy-value"
+                                        for="plasma-energy">50</output>%
+                            </label>
+                            <input type="range"
+                                   id="plasma-energy"
+                                   min="0"
+                                   max="100"
+                                   value="50">
+                        </div>
+
+                        <div class="plasma-control">
+                            <label for="plasma-pressure">
+                                Relative Pressure:
+                                <output id="plasma-pressure-value"
+                                        for="plasma-pressure">50</output>%
+                            </label>
+                            <input type="range"
+                                   id="plasma-pressure"
+                                   min="0"
+                                   max="100"
+                                   value="50">
+                        </div>
+
+                        <div class="plasma-control">
+                            <label for="plasma-magnetic">
+                                Magnetic Field:
+                                <output id="plasma-magnetic-value"
+                                        for="plasma-magnetic">0</output>%
+                            </label>
+                            <input type="range"
+                                   id="plasma-magnetic"
+                                   min="0"
+                                   max="100"
+                                   value="0">
+                        </div>
+
+                        <button type="button"
+                                class="plasma-button"
+                                id="plasma-reset">
+                            Reset Experiment
+                        </button>
+
+                        <button type="button"
+                                class="plasma-button"
+                                id="plasma-pause"
+                                aria-pressed="false">
+                            Pause Animation
+                        </button>
+
+                        <p class="plasma-model-note">
+                            Educational model: controls represent
+                            relative conditions, not calibrated
+                            laboratory measurements. Colors are
+                            representative; actual emission depends
+                            on the discharge conditions.
+                        </p>
+                    </div>
+
+                    <div class="plasma-chamber">
+                        <canvas
+                            id="plasma-canvas"
+                            role="img"
+                            aria-label="Educational plasma visualization controlled by the experiment settings">
+                            Your browser does not support the canvas
+                            visualization. The experiment readouts
+                            below still describe the model.
+                        </canvas>
+
+                        <div class="plasma-chamber-label">
+                            PLASMA VISUALIZATION ·
+                            <span id="plasma-gas-name">Neon</span>
+                        </div>
+
+                        <div class="plasma-chamber-glow"
+                             aria-hidden="true"></div>
+                    </div>
+                </div>
+
+                <div class="plasma-readouts">
+                    <div class="plasma-readout">
+                        Ionization Illustration
+                        <strong id="plasma-ionization">0%</strong>
+                    </div>
+
+                    <div class="plasma-readout">
+                        Glow Intensity
+                        <strong id="plasma-glow">0%</strong>
+                    </div>
+
+                    <div class="plasma-readout">
+                        Plasma Activity
+                        <strong id="plasma-activity">Low</strong>
+                    </div>
+                </div>
+
+                <p class="plasma-readout-note">
+                    These indicators are illustrative rather than
+                    measured physical quantities. Real ionization
+                    and emission depend on gas composition, electron
+                    energy, density, pressure, and other conditions.
+                    Curved motion represents magnetic influence
+                    artistically; light connections are decorative.
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- FOUR FAMILIAR STATES OF MATTER -->
+    <section class="plasma-section plasma-learning-section"
+             aria-labelledby="plasma-states-title">
+        <div class="plasma-container">
+            <h2 id="plasma-states-title" class="plasma-section-title">
+                The Four Familiar States of Matter
+            </h2>
+
+            <p class="plasma-intro">
+                Matter behaves differently depending on its conditions
+                and the interactions between its particles.
+            </p>
+
+            <div class="plasma-grid">
+                <article class="plasma-card">
+                    <div class="plasma-state-icon" aria-hidden="true">🧊</div>
+                    <h3>Solid</h3>
+                    <p>
+                        Particles remain close together, generally
+                        vibrating around relatively fixed positions.
+                    </p>
+                </article>
+
+                <article class="plasma-card">
+                    <div class="plasma-state-icon" aria-hidden="true">💧</div>
+                    <h3>Liquid</h3>
+                    <p>
+                        Particles remain close together but can move
+                        past one another.
+                    </p>
+                </article>
+
+                <article class="plasma-card">
+                    <div class="plasma-state-icon" aria-hidden="true">💨</div>
+                    <h3>Gas</h3>
+                    <p>
+                        Particles move freely and spread throughout
+                        their container.
+                    </p>
+                </article>
+
+                <article class="plasma-card">
+                    <div class="plasma-state-icon" aria-hidden="true">⚡</div>
+                    <h3>Plasma</h3>
+                    <p>
+                        A gas-like collection of charged and often
+                        neutral particles capable of collective
+                        electromagnetic behavior.
+                    </p>
+                </article>
+            </div>
+        </div>
+    </section>
+
+    <!-- PLASMA DISCOVERIES -->
+    <section class="plasma-section plasma-discovery-section"
+             aria-labelledby="plasma-discoveries-title">
+        <div class="plasma-container">
+            <h2 id="plasma-discoveries-title"
+                class="plasma-section-title">
+                Plasma Throughout Our Universe
+            </h2>
+
+            <p class="plasma-intro">
+                Plasma appears in extraordinary natural environments
+                and important technologies.
+            </p>
+
+            <div class="plasma-grid">
+                <article class="plasma-card plasma-discovery">
+                    <div class="plasma-discovery-icon"
+                         aria-hidden="true">☀️</div>
+                    <h3>Stellar Plasma</h3>
+                    <p>
+                        Stars contain enormous quantities of ionized
+                        matter. Their magnetic fields help shape
+                        dramatic activity.
+                    </p>
+                </article>
+
+                <article class="plasma-card plasma-discovery">
+                    <div class="plasma-discovery-icon"
+                         aria-hidden="true">🌌</div>
+                    <h3>Atmospheric Plasma</h3>
+                    <p>
+                        Lightning creates ionized channels.
+                        Auroras occur when energetic particles
+                        excite atmospheric gases.
+                    </p>
+                </article>
+
+                <article class="plasma-card plasma-discovery">
+                    <div class="plasma-discovery-icon"
+                         aria-hidden="true">💜</div>
+                    <h3>Noble-Gas Plasma</h3>
+                    <p>
+                        Electrical discharges in gases such as neon
+                        and argon can create beautiful characteristic
+                        light.
+                    </p>
+                </article>
+
+                <article class="plasma-card plasma-discovery">
+                    <div class="plasma-discovery-icon"
+                         aria-hidden="true">🚀</div>
+                    <h3>Technological Plasma</h3>
+                    <p>
+                        Plasma is used in manufacturing, lighting,
+                        materials processing, and certain spacecraft
+                        thrusters.
+                    </p>
+                </article>
+            </div>
+        </div>
+    </section>
+
+    <!-- KNOWLEDGE CHALLENGE -->
+    <section class="plasma-section plasma-challenge-section"
+             aria-labelledby="plasma-challenge-title">
+        <div class="plasma-container">
+            <h2 id="plasma-challenge-title"
+                class="plasma-section-title">
+                Test Your Discoveries
+            </h2>
+
+            <p class="plasma-intro">
+                You've explored the science of plasma.
+                Now see how much you've discovered!
+            </p>
+
+            <div class="plasma-quiz">
+                <p id="plasma-quiz-progress"
+                   class="plasma-quiz-progress"></p>
+
+                <h3 id="plasma-question" tabindex="-1">
+                    What distinguishes plasma from ordinary gas?
+                </h3>
+
+                <div id="plasma-answers"></div>
+
+                <p id="plasma-quiz-result"
+                   role="status"
+                   aria-live="polite"></p>
+
+                <button type="button"
+                        id="plasma-next"
+                        hidden>
+                    Next Question →
+                </button>
+
+                <noscript>
+                    Enable JavaScript to use the laboratory animation
+                    and knowledge challenge.
+                </noscript>
+            </div>
+        </div>
+    </section>
+
+    <footer class="plasma-footer">
+        Beyond the Elements · Built one discovery at a time.
+    </footer>
+</div>
+{% endblock %}
+
+{% block scripts %}
+{{ block.super }}
+<script>
+(() => {
+    "use strict";
+
+    /* ======================================================
+       LABORATORY REFERENCES AND STATE
+       ====================================================== */
+
+    const byId = id => document.getElementById(id);
+
+    const canvas = byId("plasma-canvas");
+    const ctx = canvas ? canvas.getContext("2d") : null;
+
+    const gasSelect = byId("plasma-gas");
+    const energyInput = byId("plasma-energy");
+    const pressureInput = byId("plasma-pressure");
+    const magneticInput = byId("plasma-magnetic");
+
+    const resetButton = byId("plasma-reset");
+    const pauseButton = byId("plasma-pause");
+    const reducedMotion = window.matchMedia(
+        "(prefers-reduced-motion: reduce)"
+    );
+
+    const gases = {
+        neon: { name: "Neon", color: "#ff4b20" },
+        argon: { name: "Argon", color: "#ad65ff" },
+        xenon: { name: "Xenon", color: "#b8d4ff" },
+        krypton: { name: "Krypton", color: "#88baff" },
+        hydrogen: { name: "Hydrogen", color: "#ff74bd" },
+        helium: { name: "Helium", color: "#ffb28a" },
+        nitrogen: { name: "Nitrogen", color: "#777dff" },
+        oxygen: { name: "Oxygen", color: "#5de4b5" }
+    };
+
+    let width = 1;
+    let height = 1;
+    let particles = [];
+    let animationFrame = null;
+    let previousTime = null;
+    let paused = reducedMotion.matches;
+
+    function getConditions() {
+        return {
+            gas: gases[gasSelect.value] || gases.neon,
+            energy: Number(energyInput.value),
+            pressure: Number(pressureInput.value),
+            magnetic: Number(magneticInput.value)
+        };
+    }
+
+    /* Illustrative values, not a physical plasma calculation. */
+    function calculateIllustration(conditions) {
+        const energy = conditions.energy / 100;
+        const pressure = conditions.pressure / 100;
+
+        return {
+            ionization: Math.round(
+                Math.pow(energy, 1.6) *
+                (0.75 + pressure * 0.25) * 100
+            ),
+            glow: Math.round(
+                energy * (0.4 + pressure * 0.6) * 100
+            ),
+            activity:
+                energy > 0.65 ? "High" :
+                energy > 0.25 ? "Moderate" : "Low"
+        };
+    }
+
+    function createParticles() {
+        particles = Array.from({ length: 100 }, () => {
+            const angle = Math.random() * Math.PI * 2;
+            const speed = 0.4 + Math.random() * 0.7;
+
+            return {
+                x: Math.random() * width,
+                y: Math.random() * height,
+                vx: Math.cos(angle) * speed,
+                vy: Math.sin(angle) * speed,
+                radius: 0.8 + Math.random() * 1.4
+            };
+        });
+    }
+
+    function resizeCanvas() {
+        if (!canvas || !ctx) return;
+
+        const rect = canvas.getBoundingClientRect();
+        width = Math.max(1, rect.width);
+        height = Math.max(1, rect.height);
+
+        const ratio = Math.min(window.devicePixelRatio || 1, 2);
+
+        canvas.width = Math.round(width * ratio);
+        canvas.height = Math.round(height * ratio);
+        ctx.setTransform(ratio, 0, 0, ratio, 0, 0);
+
+        createParticles();
+        renderFrame();
+    }
+
+    function updateReadouts() {
+        const conditions = getConditions();
+        const values = calculateIllustration(conditions);
+
+        byId("plasma-energy-value").textContent = conditions.energy;
+        byId("plasma-pressure-value").textContent = conditions.pressure;
+        byId("plasma-magnetic-value").textContent = conditions.magnetic;
+        byId("plasma-gas-name").textContent = conditions.gas.name;
+
+        byId("plasma-ionization").textContent = values.ionization + "%";
+        byId("plasma-glow").textContent = values.glow + "%";
+        byId("plasma-activity").textContent = values.activity;
+    }
+
+    function updateParticles(conditions, delta) {
+        const energy = conditions.energy / 100;
+        const magnetic = conditions.magnetic / 100;
+        const speed = (0.2 + energy * 3.2) * delta;
+        const turn = magnetic * 0.035 * delta;
+        const cosine = Math.cos(turn);
+        const sine = Math.sin(turn);
+
+        particles.forEach(particle => {
+            const vx = particle.vx;
+            const vy = particle.vy;
+
+            particle.vx = vx * cosine - vy * sine;
+            particle.vy = vx * sine + vy * cosine;
+
+            particle.x += particle.vx * speed;
+            particle.y += particle.vy * speed;
+
+            if (particle.x < 0 || particle.x > width) {
+                particle.vx *= -1;
+                particle.x = Math.max(0, Math.min(width, particle.x));
+            }
+
+            if (particle.y < 0 || particle.y > height) {
+                particle.vy *= -1;
+                particle.y = Math.max(0, Math.min(height, particle.y));
+            }
+        });
+    }
+
+    function drawBackground(color, intensity) {
+        ctx.clearRect(0, 0, width, height);
+        ctx.fillStyle = "#020612";
+        ctx.fillRect(0, 0, width, height);
+
+        if (intensity <= 0) return;
+
+        const gradient = ctx.createRadialGradient(
+            width / 2, height / 2, 0,
+            width / 2, height / 2,
+            Math.max(width, height) * 0.65
+        );
+
+        const alpha = Math.round(intensity * 80)
+            .toString(16)
+            .padStart(2, "0");
+
+        gradient.addColorStop(0, color + alpha);
+        gradient.addColorStop(1, color + "00");
+
+        ctx.fillStyle = gradient;
+        ctx.fillRect(0, 0, width, height);
+    }
+
+    function drawConnections(color, energy) {
+        if (energy < 0.15) return;
+
+        const maxDistance = 60 + energy * 45;
+        const maxDistanceSquared = maxDistance * maxDistance;
+
+        ctx.save();
+        ctx.strokeStyle = color;
+        ctx.lineWidth = 0.7;
+        ctx.globalAlpha = energy * 0.2;
+
+        for (let i = 0; i < particles.length; i++) {
+            for (let j = i + 1; j < particles.length; j++) {
+                const a = particles[i];
+                const b = particles[j];
+                const dx = a.x - b.x;
+                const dy = a.y - b.y;
+
+                if (dx * dx + dy * dy < maxDistanceSquared) {
+                    ctx.beginPath();
+                    ctx.moveTo(a.x, a.y);
+                    ctx.lineTo(b.x, b.y);
+                    ctx.stroke();
+                }
+            }
+        }
+
+        ctx.restore();
+    }
+
+    function drawParticle(particle, color, intensity, energy) {
+        if (energy <= 0) return;
+
+        const radius = particle.radius * (5 + intensity * 4);
+        const glow = ctx.createRadialGradient(
+            particle.x, particle.y, 0,
+            particle.x, particle.y, radius
+        );
+
+        glow.addColorStop(0, "#ffffff");
+        glow.addColorStop(0.12, color);
+        glow.addColorStop(1, color + "00");
+
+        ctx.save();
+        ctx.globalAlpha = 0.25 + energy * 0.75;
+        ctx.fillStyle = glow;
+        ctx.beginPath();
+        ctx.arc(particle.x, particle.y, radius, 0, Math.PI * 2);
+        ctx.fill();
+        ctx.restore();
+    }
+
+    function renderFrame() {
+        if (!ctx) return;
+
+        const conditions = getConditions();
+        const values = calculateIllustration(conditions);
+        const energy = conditions.energy / 100;
+        const intensity = values.glow / 100;
+
+        drawBackground(conditions.gas.color, intensity);
+        drawConnections(conditions.gas.color, energy);
+
+        particles.forEach(particle => {
+            drawParticle(
+                particle,
+                conditions.gas.color,
+                intensity,
+                energy
+            );
+        });
+    }
+
+    function animate(time) {
+        animationFrame = null;
+
+        if (paused || document.hidden || !ctx) return;
+
+        const delta = previousTime === null
+            ? 1
+            : Math.min((time - previousTime) / 16.667, 2);
+
+        previousTime = time;
+
+        updateParticles(getConditions(), delta);
+        renderFrame();
+
+        animationFrame = requestAnimationFrame(animate);
+    }
+
+    function syncAnimation() {
+        if (animationFrame !== null) {
+            cancelAnimationFrame(animationFrame);
+            animationFrame = null;
+        }
+
+        previousTime = null;
+
+        pauseButton.textContent = paused
+            ? "Resume Animation"
+            : "Pause Animation";
+
+        pauseButton.setAttribute("aria-pressed", String(paused));
+
+        if (!paused && !document.hidden && ctx) {
+            animationFrame = requestAnimationFrame(animate);
+        } else {
+            renderFrame();
+        }
+    }
+
+    function refresh() {
+        updateReadouts();
+        renderFrame();
+    }
+
+    [gasSelect, energyInput, pressureInput, magneticInput]
+        .forEach(control => {
+            control.addEventListener("input", refresh);
+        });
+
+    resetButton.addEventListener("click", () => {
+        gasSelect.value = "neon";
+        energyInput.value = "50";
+        pressureInput.value = "50";
+        magneticInput.value = "0";
+
+        createParticles();
+        refresh();
+    });
+
+    pauseButton.addEventListener("click", () => {
+        paused = !paused;
+        syncAnimation();
+    });
+
+    document.addEventListener("visibilitychange", syncAnimation);
+
+    reducedMotion.addEventListener("change", event => {
+        paused = event.matches;
+        syncAnimation();
+    });
+
+    if (ctx) {
+        if ("ResizeObserver" in window) {
+            const resizeObserver = new ResizeObserver(resizeCanvas);
+            resizeObserver.observe(canvas.parentElement);
+        } else {
+            window.addEventListener("resize", resizeCanvas);
+        }
+
+        resizeCanvas();
+    } else {
+        pauseButton.disabled = true;
+        pauseButton.textContent = "Animation Unavailable";
+    }
+
+    updateReadouts();
+    syncAnimation();
+
+    /* ======================================================
+       KNOWLEDGE CHALLENGE
+       ====================================================== */
+
+    const questions = [
+        {
+            question: "What distinguishes plasma from ordinary gas?",
+            answers: [
+                "Plasma always has a higher density.",
+                "Plasma contains charged particles with collective electromagnetic behavior.",
+                "Plasma is always hotter than the Sun."
+            ],
+            correct: 1,
+            explanation:
+                "Plasma contains free charges that can respond collectively to electromagnetic fields."
+        },
+        {
+            question:
+                "Which element produces the familiar reddish-orange glow in neon signs?",
+            answers: ["Neon", "Argon", "Helium"],
+            correct: 0,
+            explanation:
+                "Excited neon atoms emit characteristic light, including strong reddish-orange wavelengths."
+        },
+        {
+            question: "What can a magnetic field influence in plasma?",
+            answers: [
+                "The number of protons in each nucleus.",
+                "The paths of charged particles.",
+                "The identity of the chemical elements."
+            ],
+            correct: 1,
+            explanation:
+                "Magnetic fields can curve the motion of charged particles and influence collective plasma behavior."
+        },
+        {
+            question: "Can hydrogen exist as plasma?",
+            answers: [
+                "Yes, under suitable conditions.",
+                "No, hydrogen is always a gas.",
+                "Only when mixed with neon."
+            ],
+            correct: 0,
+            explanation:
+                "Hydrogen is a major constituent of stellar plasmas."
+        }
+    ];
+
+    const questionElement = byId("plasma-question");
+    const answersElement = byId("plasma-answers");
+    const resultElement = byId("plasma-quiz-result");
+    const progressElement = byId("plasma-quiz-progress");
+    const nextButton = byId("plasma-next");
+
+    let questionIndex = 0;
+    let score = 0;
+    let answered = false;
+    let quizComplete = false;
+
+    function showQuestion(moveFocus = false) {
+        const question = questions[questionIndex];
+
+        answered = false;
+        quizComplete = false;
+
+        progressElement.textContent =
+            `Question ${questionIndex + 1} of ${questions.length}`;
+
+        questionElement.textContent = question.question;
+        answersElement.replaceChildren();
+        resultElement.textContent = "";
+        nextButton.hidden = true;
+
+        question.answers.forEach((answer, index) => {
+            const button = document.createElement("button");
+
+            button.type = "button";
+            button.textContent = answer;
+
+            button.addEventListener("click", () => {
+                if (answered) return;
+
+                answered = true;
+                const correct = index === question.correct;
+
+                if (correct) score++;
+
+                resultElement.textContent =
+                    (correct ? "Correct! " : "Not quite. ") +
+                    question.explanation;
+
+                answersElement.querySelectorAll("button")
+                    .forEach((option, optionIndex) => {
+                        option.disabled = true;
+
+                        if (optionIndex === question.correct) {
+                            option.classList.add("is-correct");
+                        } else if (optionIndex === index) {
+                            option.classList.add("is-incorrect");
+                        }
+                    });
+
+                nextButton.textContent =
+                    questionIndex === questions.length - 1
+                        ? "See Results"
+                        : "Next Question →";
+
+                nextButton.hidden = false;
+                nextButton.focus();
+            });
+
+            answersElement.appendChild(button);
+        });
+
+        if (moveFocus) questionElement.focus();
+    }
+
+    function showResults() {
+        quizComplete = true;
+        progressElement.textContent = "Challenge complete";
+        questionElement.textContent = "Your Discoveries";
+        answersElement.replaceChildren();
+
+        resultElement.textContent =
+            `You answered ${score} of ${questions.length} questions correctly.`;
+
+        nextButton.textContent = "Try Again";
+        nextButton.hidden = false;
+        questionElement.focus();
+    }
+
+    nextButton.addEventListener("click", () => {
+        if (quizComplete) {
+            questionIndex = 0;
+            score = 0;
+            showQuestion(true);
+            return;
+        }
+
+        if (!answered) return;
+
+        questionIndex++;
+
+        if (questionIndex >= questions.length) {
+            showResults();
+        } else {
+            showQuestion(true);
+        }
+    });
+
+    showQuestion();
+})();
+</script>
+{% endblock %}

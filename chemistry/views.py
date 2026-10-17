@@ -34,3 +34,6 @@ def element_classes(request):
 
 def history(request):
     return render(request, "chemistry/history.html")
+
+def plasma(request):
+    return render(request, "chemistry/plasma.html")

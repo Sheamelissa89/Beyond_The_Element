@@ -1,15 +1,9 @@
 /* ==========================================================
-   BEYOND THE ELEMENTS
-   MAIN STYLESHEET — style.css
-
-   Shared design, homepage, periodic table, and element dialogs.
-   Page-specific learning layouts and the Atomic Architect background remain in learning.css.
+   BEYOND THE ELEMENTS — style.css
+   Global design, cards, periodic artwork, and element dialogs.
    ========================================================== */
 
-
-/* ==========================================================
-   1. GLOBAL FOUNDATION
-   ========================================================== */
+/* 1. GLOBAL FOUNDATION */
 
 :root {
     color-scheme: dark;
@@ -27,7 +21,6 @@
 body {
     margin: 0;
     min-height: 100vh;
-
     background:
         linear-gradient(
             rgba(3, 12, 22, 0.45),
@@ -35,7 +28,6 @@ body {
         ),
         url("../images/Ocean_Veil.png")
         center top / cover no-repeat;
-
     background-color: #03101c;
 }
 
@@ -46,10 +38,7 @@ main {
     padding: 48px 24px 80px;
 }
 
-
-/* ==========================================================
-   2. SHARED HEADER AND FOOTER
-   ========================================================== */
+/* 2. SHARED HEADER AND FOOTER */
 
 header {
     display: flex;
@@ -89,8 +78,6 @@ footer {
     text-shadow: 0 2px 5px #000000;
 }
 
-/* Panels for headers and footers directly inside main */
-
 main > header,
 main > footer {
     padding: 20px 24px;
@@ -99,10 +86,7 @@ main > footer {
     background: rgba(5, 12, 22, 0.85);
 }
 
-
-/* ==========================================================
-   3. TYPOGRAPHY
-   ========================================================== */
+/* 3. TYPOGRAPHY */
 
 h1 {
     margin: 20px 0;
@@ -110,7 +94,6 @@ h1 {
     line-height: 1.05;
     letter-spacing: -2px;
     color: #ffffff;
-
     text-shadow:
         0 3px 8px #000000,
         0 0 24px #000000;
@@ -137,9 +120,7 @@ h2 {
     text-shadow: 0 2px 5px #000000;
 }
 
-/* ==========================================================
-   4. HERO SECTIONS AND CONTENT PANELS
-   ========================================================== */
+/* 4. HERO SECTIONS AND CONTENT PANELS */
 
 .hero {
     max-width: 760px;
@@ -164,16 +145,12 @@ h2 {
     background: rgba(5, 12, 22, 0.85);
 }
 
-/* Intro text belongs inside its parent hero panel */
-
 .home-hero .intro,
 .hero:not(.home-hero) .intro {
     padding: 0;
     border: 0;
     background: none;
 }
-
-/* Homepage-specific header and footer panels */
 
 .home-page header,
 .home-page footer {
@@ -183,10 +160,7 @@ h2 {
     background: rgba(5, 12, 22, 0.85);
 }
 
-
-/* ==========================================================
-   5. CARDS AND GRID
-   ========================================================== */
+/* 5. CARDS AND GRID */
 
 .cards {
     display: grid;
@@ -225,15 +199,12 @@ h2 {
 .symbol {
     display: inline-grid;
     place-items: center;
-
     width: 52px;
     height: 52px;
     border-radius: 14px;
-
     background: #78cfff12;
     color: #9edfff;
     font-size: 1.25rem;
-
     box-shadow: 0 0 24px #78cfff12;
 }
 
@@ -253,19 +224,14 @@ h2 {
     font-size: 0.8rem;
 }
 
-
-/* ==========================================================
-   6. PERIODIC TABLE SECTION
-   ========================================================== */
+/* 6. PERIODIC TABLE SECTION */
 
 .elements-section {
     margin-top: 64px;
     padding: 32px 24px;
-
     border: 1px solid #8ccbe340;
     border-radius: 24px;
     background: #030810e8;
-
     box-shadow: 0 20px 60px #00000055;
 }
 
@@ -285,10 +251,8 @@ h2 {
     width: 100%;
     max-width: 440px;
     padding: 14px 16px;
-
     border: 1px solid #91e6d060;
     border-radius: 12px;
-
     background: #0c1929;
     color: #ffffff;
     font: inherit;
@@ -320,24 +284,15 @@ h2 {
     outline-offset: 4px;
 }
 
-
-/* ==========================================================
-   7. GRID-BASED PERIODIC TABLE
-   ========================================================== */
+/* 7. GRID-BASED PERIODIC TABLE */
 
 .periodic-table {
     display: grid;
-
-    grid-template-columns: repeat(
-        18,
-        minmax(48px, 1fr)
-    );
-
+    grid-template-columns: repeat(18, minmax(48px, 1fr));
     grid-template-rows:
         repeat(7, 82px)
         20px
         repeat(2, 82px);
-
     gap: 5px;
     min-width: 950px;
 }
@@ -347,19 +302,14 @@ h2 {
     flex-direction: column;
     justify-content: center;
     align-items: center;
-
     min-width: 0;
     padding: 5px 2px;
-
     border: 1px solid var(--element-color, #91e6d0);
     border-radius: 9px;
-
     background: #0c1929;
     color: #ffffff;
     font: inherit;
-
     cursor: pointer;
-
     transition:
         transform 160ms ease,
         background 160ms ease,
@@ -414,27 +364,15 @@ h2 {
 .series-marker {
     display: grid;
     place-content: center;
-
     text-align: center;
     border: 1px dashed #ffffff60;
     border-radius: 9px;
-
     color: #d5def0;
     font-size: 0.65rem;
     line-height: 1.6;
 }
 
-
-/* ==========================================================
-   8. PERIODIC TABLE ARTWORK AND CLICKABLE OVERLAYS
-   ========================================================== */
-
-/*
-   Artwork mode uses the periodic table image with
-   absolutely positioned clickable element buttons.
-
-   The artwork container remains responsive.
-*/
+/* 8. PERIODIC ARTWORK AND CLICKABLE OVERLAYS */
 
 .periodic-table.artwork-table {
     position: relative;
@@ -454,18 +392,14 @@ h2 {
 .artwork-table .element-tile {
     position: absolute;
     display: block;
-
     min-width: 0;
     margin: 0;
     padding: 0;
-
     border: 2px solid transparent;
     border-radius: 3px;
-
     background: transparent;
     box-shadow: none;
     transform: none;
-
     z-index: 1;
 }
 
@@ -474,7 +408,6 @@ h2 {
     background: #91e6d025;
     border-color: #ffe2a3;
     box-shadow: 0 0 14px #ffe2a380;
-
     outline: none;
     transform: none;
 }
@@ -490,27 +423,19 @@ h2 {
     opacity: 1;
 }
 
-
-/* ==========================================================
-   9. ELEMENT INFORMATION DIALOG
-   ========================================================== */
+/* 9. ELEMENT INFORMATION DIALOG */
 
 .element-dialog {
     position: fixed;
-
     width: calc(100% - 32px);
     max-width: 700px;
     max-height: calc(100dvh - 40px);
-
     overflow-y: auto;
     padding: 32px;
-
     border: 1px solid #91e6d080;
     border-radius: 24px;
-
     background: #081322;
     color: #e5efff;
-
     box-shadow: 0 24px 100px #00000090;
 }
 
@@ -523,16 +448,12 @@ h2 {
     position: absolute;
     top: 12px;
     right: 12px;
-
-    width: 40px;
-    height: 40px;
-
+    width: 44px;
+    height: 44px;
     border: 1px solid #ffffff40;
     border-radius: 50%;
-
     background: #142238;
     color: #ffffff;
-
     font-size: 1.6rem;
     cursor: pointer;
 }
@@ -562,7 +483,6 @@ h2 {
     display: flex;
     justify-content: space-between;
     gap: 20px;
-
     padding: 12px 0;
     border-bottom: 1px solid #ffffff20;
 }
@@ -572,6 +492,8 @@ h2 {
 }
 
 .element-facts dd {
+    overflow-wrap: anywhere;
+    min-width: 0;
     margin: 0;
     font-weight: 600;
 }
@@ -589,10 +511,7 @@ h2 {
     font-size: 0.9rem;
 }
 
-
-/* ==========================================================
-   10. EXPANDED ELEMENT DETAILS
-   ========================================================== */
+/* 10. EXPANDED ELEMENT DETAILS */
 
 .element-detail-section {
     margin-top: 26px;
@@ -619,7 +538,6 @@ h2 {
 .reaction-card {
     margin-top: 12px;
     padding: 16px;
-
     border: 1px solid #91e6d030;
     border-radius: 14px;
     background: #ffffff05;
@@ -633,14 +551,11 @@ h2 {
 .reaction-card .reaction-equation {
     margin: 14px 0;
     padding: 14px;
-
     border-radius: 10px;
     background: #030810;
-
     color: #91e6d0;
     font-size: clamp(1rem, 3vw, 1.3rem);
     font-weight: 700;
-
     overflow-wrap: anywhere;
 }
 
@@ -649,10 +564,7 @@ h2 {
     font-size: 0.9rem;
 }
 
-
-/* ==========================================================
-   11. RELATED ELEMENT BUTTONS
-   ========================================================== */
+/* 11. RELATED ELEMENT BUTTONS */
 
 .related-elements {
     display: flex;
@@ -662,13 +574,10 @@ h2 {
 
 .related-element-button {
     padding: 10px 14px;
-
     border: 1px solid #91e6d070;
     border-radius: 10px;
-
     background: #11263a;
     color: #e5efff;
-
     font: inherit;
     cursor: pointer;
 }
@@ -692,10 +601,7 @@ h2 {
     outline-offset: 3px;
 }
 
-
-/* ==========================================================
-   12. RESPONSIVE STYLING
-   ========================================================== */
+/* 12. RESPONSIVE STYLING */
 
 @media (max-width: 900px) {
     .cards {
@@ -734,10 +640,7 @@ h2 {
     }
 }
 
-
-/* ==========================================================
-   13. ACCESSIBILITY
-   ========================================================== */
+/* 13. ACCESSIBILITY */
 
 @media (prefers-reduced-motion: reduce) {
     .element-tile {

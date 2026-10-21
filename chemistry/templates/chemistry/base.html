@@ -7,286 +7,20 @@
 
     <title>{% block title %}Beyond the Elements{% endblock %}</title>
 
-    <link rel="stylesheet" href="{% static 'css/style.css' %}?v=7">
-    <link rel="stylesheet" href="{% static 'css/learning.css' %}?v=9">
+    <!-- Shared foundation and navigation -->
+    <link rel="stylesheet" href="{% static 'core/base.css' %}?v=1">
+    <link rel="stylesheet" href="{% static 'core/navigation.css' %}?v=3">
 
-    <style>
-        /* Plasma page only: larger existing vertical bubbles. */
-        body.learning-page.plasma-page {
-            --plasma-bubble-size: 88px;
-            --plasma-bubble-gap: 10px;
-            --plasma-rail-offset: 10px;
-        }
+    <!-- Keep until the remaining styles have been migrated -->
+    <link rel="stylesheet" href="{% static 'css/style.css' %}?v=10">
+    <link rel="stylesheet" href="{% static 'css/learning.css' %}?v=10">
 
-        body.learning-page.plasma-page .discovery-sidebar,
-        body.learning-page.plasma-page .bubble-navigation {
-            position: fixed;
-            top: 16px;
-            bottom: auto;
-            display: flex !important;
-            flex-direction: column;
-            align-items: center;
-            gap: var(--plasma-bubble-gap);
-            width: var(--plasma-bubble-size);
-            max-width: none;
-            max-height: calc(100dvh - 32px);
-            margin: 0;
-            padding: 0;
-            background: transparent;
-            z-index: 100;
-        }
-
-        body.learning-page.plasma-page .discovery-sidebar {
-            left: var(--plasma-rail-offset);
-            right: auto;
-            overflow: visible;
-        }
-
-        body.learning-page.plasma-page .bubble-navigation {
-            right: var(--plasma-rail-offset);
-            left: auto;
-            overflow-x: hidden;
-            overflow-y: auto;
-            scrollbar-width: thin;
-        }
-
-        body.learning-page.plasma-page .bubble-heading {
-            display: none;
-        }
-
-        body.learning-page.plasma-page .discovery-item {
-            position: relative;
-            flex: 0 0 auto;
-            width: var(--plasma-bubble-size);
-            margin: 0;
-            padding: 0;
-        }
-
-        body.learning-page.plasma-page .nav-bubble,
-        body.learning-page.plasma-page .discovery-bubble {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            flex: 0 0 var(--plasma-bubble-size);
-            width: var(--plasma-bubble-size);
-            height: var(--plasma-bubble-size);
-            min-width: var(--plasma-bubble-size);
-            min-height: var(--plasma-bubble-size);
-            max-width: none;
-            margin: 0;
-            padding: 8px;
-            box-sizing: border-box;
-            border-radius: 50%;
-            font-size: 0.8rem;
-            line-height: 1.2;
-            text-align: center;
-            text-decoration: none;
-            cursor: pointer;
-            list-style: none;
-        }
-
-        body.learning-page.plasma-page
-        .discovery-bubble::-webkit-details-marker {
-            display: none;
-        }
-
-        body.learning-page.plasma-page
-        .discovery-bubble::marker {
-            content: "";
-        }
-
-        body.learning-page.plasma-page .nav-bubble[aria-current="page"] {
-            border-color: #c69aff;
-            color: #fff;
-            background:
-                radial-gradient(
-                    circle at 35% 25%,
-                    rgba(177, 111, 255, 0.5),
-                    rgba(48, 19, 90, 0.95)
-                );
-            box-shadow:
-                inset 0 0 18px rgba(189, 133, 255, 0.2),
-                0 0 18px rgba(157, 88, 255, 0.45);
-        }
-
-        body.learning-page.plasma-page .discovery-panel {
-            position: absolute;
-            top: 0;
-            left: calc(100% + 14px);
-            right: auto;
-            bottom: auto;
-            width: min(340px, calc(100vw - 130px));
-            max-height: min(65dvh, 520px);
-            overflow-y: auto;
-            padding: 20px;
-            box-sizing: border-box;
-            border: 1px solid rgba(143, 190, 255, 0.55);
-            border-radius: 16px;
-            color: #eaf4ff;
-            background: rgba(4, 12, 31, 0.98);
-            box-shadow: 0 12px 35px rgba(0, 0, 0, 0.5);
-            z-index: 110;
-        }
-
-        body.learning-page.plasma-page .discovery-panel a {
-            color: #a7ecff;
-        }
-
-        body.learning-page.plasma-page .discovery-panel p:first-child {
-            margin-top: 0;
-        }
-
-        body.learning-page.plasma-page .discovery-panel ul {
-            padding-left: 20px;
-        }
-
-        body.learning-page.plasma-page .discovery-panel li {
-            margin-bottom: 10px;
-        }
-
-        body.learning-page.plasma-page .nav-bubble:focus-visible,
-        body.learning-page.plasma-page .discovery-bubble:focus-visible {
-            outline: 3px solid #b8f3ff;
-            outline-offset: -4px;
-        }
-
-        /* The Plasma template supplies its own introduction/footer. */
-        body.learning-page.plasma-page main.ocean-layout > header,
-        body.learning-page.plasma-page main.ocean-layout > footer {
-            display: none;
-        }
-
-        @media (max-width: 850px) {
-            body.learning-page.plasma-page {
-                --plasma-bubble-size: 68px;
-                --plasma-bubble-gap: 9px;
-                --plasma-rail-offset: 8px;
-            }
-
-            body.learning-page.plasma-page .nav-bubble,
-            body.learning-page.plasma-page .discovery-bubble {
-                font-size: 0.65rem;
-                padding: 5px;
-            }
-
-            body.learning-page.plasma-page .discovery-panel {
-                width: min(320px, calc(100vw - 105px));
-            }
-        }
-
-        @media (max-width: 650px) {
-            body.learning-page.plasma-page {
-                --plasma-bubble-size: 54px;
-                --plasma-bubble-gap: 8px;
-                --plasma-rail-offset: 6px;
-            }
-
-            body.learning-page.plasma-page .nav-bubble,
-            body.learning-page.plasma-page .discovery-bubble {
-                font-size: 0.57rem;
-                padding: 4px;
-            }
-
-            body.learning-page.plasma-page .discovery-panel {
-                position: fixed;
-                top: 16px;
-                left: 70px;
-                width: calc(100vw - 140px);
-                max-height: calc(100dvh - 32px);
-                padding: 14px;
-            }
-        }
-       /* Larger vertical bubbles on all other learning pages. */
-body.learning-page:not(.plasma-page) {
-    --shared-bubble-size: 132px;
-}
-
-body.learning-page:not(.plasma-page) .discovery-sidebar,
-body.learning-page:not(.plasma-page) .bubble-navigation {
-    width: var(--shared-bubble-size);
-    gap: 12px;
-}
-
-body.learning-page:not(.plasma-page) .discovery-item {
-    position: relative;
-    width: var(--shared-bubble-size);
-    margin: 0;
-}
-
-body.learning-page:not(.plasma-page) .nav-bubble,
-body.learning-page:not(.plasma-page) .discovery-bubble {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-
-    width: var(--shared-bubble-size);
-    height: var(--shared-bubble-size);
-    min-width: var(--shared-bubble-size);
-    min-height: var(--shared-bubble-size);
-    flex: 0 0 var(--shared-bubble-size);
-
-    margin: 0;
-    padding: 10px;
-    box-sizing: border-box;
-    border-radius: 50%;
-
-    font-size: 0.9rem;
-    line-height: 1.3;
-    text-align: center;
-}
-
-body.learning-page:not(.plasma-page) .bubble-navigation {
-    max-height: calc(100dvh - 32px);
-    overflow-x: hidden;
-    overflow-y: auto;
-    scrollbar-width: thin;
-}
-
-body.learning-page:not(.plasma-page) .discovery-panel {
-    left: calc(100% + 14px);
-    right: auto;
-}
-
-@media (max-width: 1200px) {
-    body.learning-page:not(.plasma-page) {
-        --shared-bubble-size: 100px;
-    }
-
-    body.learning-page:not(.plasma-page) .nav-bubble,
-    body.learning-page:not(.plasma-page) .discovery-bubble {
-        font-size: 0.8rem;
-    }
-}
-
-@media (max-width: 850px) {
-    body.learning-page:not(.plasma-page) {
-        --shared-bubble-size: 76px;
-    }
-
-    body.learning-page:not(.plasma-page) .nav-bubble,
-    body.learning-page:not(.plasma-page) .discovery-bubble {
-        padding: 6px;
-        font-size: 0.68rem;
-    }
-}
-
-@media (max-width: 650px) {
-    body.learning-page:not(.plasma-page) {
-        --shared-bubble-size: 60px;
-    }
-
-    body.learning-page:not(.plasma-page) .nav-bubble,
-    body.learning-page:not(.plasma-page) .discovery-bubble {
-        padding: 4px;
-        font-size: 0.6rem;
-    }
-}
-    </style>
+    <!-- Page-specific styles -->
+    {% block extra_css %}{% endblock %}
 </head>
 
 <body class="{% block body_class %}learning-page{% endblock %}">
     <main class="ocean-layout">
-
         <header>
             <a class="brand" href="{% url 'chemistry:home' %}">
                 BEYOND THE ELEMENTS
@@ -295,16 +29,12 @@ body.learning-page:not(.plasma-page) .discovery-panel {
         </header>
 
         <div class="ocean-columns">
-
-            <aside class="discovery-sidebar"
-                   aria-label="Extra discoveries">
+            <aside class="discovery-sidebar" aria-label="Extra discoveries">
                 <p class="bubble-heading">Discover</p>
 
                 {% block discoveries %}
                 <details class="discovery-item">
-                    <summary class="discovery-bubble">
-                        History
-                    </summary>
+                    <summary class="discovery-bubble">History</summary>
                     <div class="discovery-panel">
                         <p>
                             Follow the journey from classical ideas
@@ -317,9 +47,7 @@ body.learning-page:not(.plasma-page) .discovery-panel {
                 </details>
 
                 <details class="discovery-item">
-                    <summary class="discovery-bubble">
-                        Quick<br>Fact
-                    </summary>
+                    <summary class="discovery-bubble">Quick<br>Fact</summary>
                     <div class="discovery-panel">
                         <p>
                             An element's atomic number is its number
@@ -329,12 +57,9 @@ body.learning-page:not(.plasma-page) .discovery-panel {
                 </details>
 
                 <details class="discovery-item">
-                    <summary class="discovery-bubble">
-                        Quiz
-                    </summary>
+                    <summary class="discovery-bubble">Quiz</summary>
                     <div class="discovery-panel">
                         <p>Is water an element or a compound?</p>
-
                         <details class="discovery-answer">
                             <summary>Reveal answer</summary>
                             <p>
@@ -354,7 +79,6 @@ body.learning-page:not(.plasma-page) .discovery-panel {
                             Our bodies contain many chemical elements.
                             These six account for roughly 99% of body mass:
                         </p>
-
                         <ul>
                             <li>
                                 <strong>Oxygen (O)</strong> — in water
@@ -381,13 +105,11 @@ body.learning-page:not(.plasma-page) .discovery-panel {
                                 DNA, and energy-carrying ATP.
                             </li>
                         </ul>
-
                         <p>
                             Smaller amounts of elements such as iron,
                             sodium, potassium, and magnesium also play
                             essential roles.
                         </p>
-
                         <a href="{% url 'chemistry:elements' %}?group=human#periodic-table">
                             Highlight the six main human elements →
                         </a>
@@ -395,64 +117,69 @@ body.learning-page:not(.plasma-page) .discovery-panel {
                 </details>
                 {% endblock %}
             </aside>
+            
+            <details class="mobile-explore">
+                <summary>Explore Pages ☰</summary>
 
-            <nav class="bubble-navigation"
-                 aria-label="Main navigation">
+            <nav class="bubble-navigation" aria-label="Main navigation">
+                </details>
                 <p class="bubble-heading">Explore</p>
 
+                {% with current_page=request.resolver_match.url_name %}
                 <a class="nav-bubble"
                    href="{% url 'chemistry:home' %}"
-                   {% if request.resolver_match.url_name == 'home' %}aria-current="page"{% endif %}>
+                   {% if current_page == 'home' %}aria-current="page"{% endif %}>
                     Home
                 </a>
 
                 <a class="nav-bubble"
                    href="{% url 'chemistry:elements' %}"
-                   {% if request.resolver_match.url_name == 'elements' %}aria-current="page"{% endif %}>
+                   {% if current_page == 'elements' %}aria-current="page"{% endif %}>
                     Periodic<br>Table
                 </a>
 
                 <a class="nav-bubble"
                    href="{% url 'chemistry:element_classes' %}"
-                   {% if request.resolver_match.url_name == 'element_classes' %}aria-current="page"{% endif %}>
+                   {% if current_page == 'element_classes' %}aria-current="page"{% endif %}>
                     Element<br>Classes
                 </a>
 
                 <a class="nav-bubble"
                    href="{% url 'chemistry:states_matter' %}"
-                   {% if request.resolver_match.url_name == 'states_matter' %}aria-current="page"{% endif %}>
+                   {% if current_page == 'states_matter' %}aria-current="page"{% endif %}>
                     States of<br>Matter
                 </a>
 
                 <a class="nav-bubble"
                    href="{% url 'chemistry:plasma' %}"
-                   {% if request.resolver_match.url_name == 'plasma' %}aria-current="page"{% endif %}>
+                   {% if current_page == 'plasma' %}aria-current="page"{% endif %}>
                     Plasma<br>Laboratory
                 </a>
 
                 <a class="nav-bubble"
                    href="{% url 'chemistry:classical_elements' %}"
-                   {% if request.resolver_match.url_name == 'classical_elements' %}aria-current="page"{% endif %}>
+                   {% if current_page == 'classical_elements' %}aria-current="page"{% endif %}>
                     Classical<br>Elements
                 </a>
 
                 <a class="nav-bubble"
                    href="{% url 'chemistry:history' %}"
-                   {% if request.resolver_match.url_name == 'history' %}aria-current="page"{% endif %}>
+                   {% if current_page == 'history' %}aria-current="page"{% endif %}>
                     History
                 </a>
 
                 <a class="nav-bubble"
                    href="{% url 'chemistry:interactive_learning' %}"
-                   {% if request.resolver_match.url_name == 'interactive_learning' or request.resolver_match.url_name == 'notes' %}aria-current="page"{% endif %}>
+                   {% if current_page == 'interactive_learning' or current_page == 'notes' %}aria-current="page"{% endif %}>
                     Interactive<br>Learning
                 </a>
 
                 <a class="nav-bubble"
                    href="{% url 'chemistry:atomic_architect' %}"
-                   {% if request.resolver_match.url_name == 'atomic_architect' %}aria-current="page"{% endif %}>
+                   {% if current_page == 'atomic_architect' %}aria-current="page"{% endif %}>
                     Atomic<br>Architect
                 </a>
+                {% endwith %}
             </nav>
 
             <div class="ocean-content">

@@ -1,0 +1,540 @@
+/* ==========================================================
+   BEYOND THE ELEMENTS
+   PERIODIC TABLE — PAGE STYLESHEET
+
+   Desktop:
+   - Full-width cosmic artwork
+   - Search box floating over the artwork
+   - Navigation bubbles remain outside the artwork
+
+   Mobile:
+   - Search box above the artwork
+   - Horizontal scrolling contained within the table
+   - Element targets remain large enough to explore
+
+   Page-specific styling only.
+   ========================================================== */
+
+
+/* ==========================================================
+   1. PAGE FOUNDATION
+   ========================================================== */
+
+body.learning-page.periodic-page {
+    background: #030810;
+}
+
+body.learning-page.periodic-page main.ocean-layout {
+    width: 100%;
+    max-width: none;
+    margin: 0;
+    padding: 8px 110px 30px;
+}
+
+body.learning-page.periodic-page main.ocean-layout > header,
+body.learning-page.periodic-page main.ocean-layout > footer {
+    display: none;
+}
+
+body.learning-page.periodic-page .ocean-columns {
+    display: block;
+}
+
+body.learning-page.periodic-page .ocean-columns > .ocean-content {
+    width: 100%;
+    max-width: none;
+    min-width: 0;
+    margin: 0;
+}
+
+
+/* ==========================================================
+   2. PERIODIC TABLE SECTION
+   ========================================================== */
+
+body.learning-page.periodic-page .elements-section {
+    margin: 0;
+    padding: 0;
+    border: 0;
+    border-radius: 0;
+    background: none;
+    box-shadow: none;
+    min-width: 0;
+}
+
+
+/* ==========================================================
+   3. PAGE HEADING
+   ========================================================== */
+
+body.learning-page.periodic-page .periodic-heading {
+    text-align: center;
+}
+
+body.learning-page.periodic-page .periodic-heading .eyebrow {
+    margin: 0 0 4px;
+}
+
+body.learning-page.periodic-page .periodic-heading h1 {
+    margin: 4px 0 8px;
+    color: #fff0cf;
+    font-family: Georgia, serif;
+    font-size: clamp(2rem, 4vw, 3.5rem);
+    letter-spacing: 0;
+}
+
+body.learning-page.periodic-page .periodic-heading .intro {
+    max-width: 700px;
+    margin: 0 auto;
+    padding: 0;
+    border: 0;
+    background: none;
+    font-size: 1rem;
+}
+
+
+/* ==========================================================
+   4. ARTWORK STAGE
+   ========================================================== */
+
+body.learning-page.periodic-page .periodic-artwork-stage {
+    position: relative;
+    width: 100%;
+    min-width: 0;
+}
+
+body.learning-page.periodic-page .periodic-table-scroll {
+    box-sizing: border-box;
+    width: 100%;
+    max-width: 100%;
+    min-width: 0;
+    padding: 0;
+    overflow-x: auto;
+}
+
+body.learning-page.periodic-page .periodic-table.artwork-table {
+    position: relative;
+    display: block;
+    width: 100%;
+    min-width: 0;
+    margin: 0;
+    padding: 0;
+    border: 0;
+}
+
+body.learning-page.periodic-page .periodic-artwork {
+    display: block;
+    width: 100%;
+    max-width: none;
+    height: auto;
+    border-radius: 0;
+}
+
+
+/* ==========================================================
+   5. ELEMENT SEARCH — SHARED APPEARANCE
+   ========================================================== */
+
+body.learning-page.periodic-page .periodic-search {
+    box-sizing: border-box;
+    z-index: 5;
+    text-align: center;
+
+    padding: 18px 20px;
+
+    border: 1px solid rgba(233, 199, 128, 0.45);
+    border-radius: 16px;
+
+    background: rgba(3, 15, 28, 0.88);
+
+    box-shadow:
+        0 8px 24px rgba(0, 0, 0, 0.35);
+}
+
+body.learning-page.periodic-page .element-search-label {
+    display: block;
+
+    margin: 0 0 10px;
+
+    color: #ffe4ad;
+
+    font-size: 20px;
+    font-weight: 600;
+    line-height: 1.4;
+}
+
+body.learning-page.periodic-page .element-search {
+    display: block;
+
+    box-sizing: border-box;
+
+    width: 100%;
+    max-width: none;
+    min-height: 48px;
+
+    margin: 0;
+    padding: 12px 14px;
+
+    color: #ffffff;
+    background: #0b202e;
+
+    border: 1px solid #92b9c9;
+    border-radius: 10px;
+
+    font-size: 18px;
+    line-height: 1.4;
+}
+
+body.learning-page.periodic-page .element-search::placeholder {
+    color: #d3e0e8;
+    opacity: 1;
+}
+
+body.learning-page.periodic-page .element-search:focus-visible {
+    outline: 2px solid #ffe0a0;
+    outline-offset: 3px;
+}
+
+body.learning-page.periodic-page .table-hint {
+    margin: 10px 0 0;
+
+    color: #edf3f7;
+
+    font-size: 16px;
+    line-height: 1.5;
+}
+
+
+/* ==========================================================
+   6. DESKTOP LAYOUT
+   Screens 1201px and wider.
+
+   Preserve the original full-width artwork.
+   ========================================================== */
+
+@media (min-width: 1201px) {
+
+    body.learning-page.periodic-page main.ocean-layout {
+        width: 100%;
+        max-width: none;
+
+        padding-left: 110px;
+        padding-right: 110px;
+    }
+
+    body.learning-page.periodic-page .ocean-columns > .ocean-content {
+        width: 100%;
+        max-width: none;
+        margin: 0;
+    }
+
+    body.learning-page.periodic-page .elements-section {
+        display: grid;
+
+        grid-template-columns:
+            minmax(0, 1fr)
+            minmax(0, 600px)
+            minmax(300px, 420px)
+            minmax(0, 1fr);
+
+        gap: 6px 20px;
+        align-items: center;
+    }
+
+    body.learning-page.periodic-page .periodic-heading {
+        grid-column: 2;
+        text-align: center;
+    }
+
+    body.learning-page.periodic-page .periodic-heading h1 {
+        font-size: clamp(30px, 2.5vw, 44px);
+        margin: 3px 0 5px;
+    }
+
+    body.learning-page.periodic-page .periodic-heading .intro {
+        margin: 0 auto;
+    }
+
+    body.learning-page.periodic-page .periodic-artwork-stage {
+        grid-column: 1 / -1;
+        width: 100%;
+    }
+
+    body.learning-page.periodic-page #periodic-table {
+        width: 100%;
+        max-width: none;
+    }
+
+    /* Search box floats over the artwork. */
+
+    body.learning-page.periodic-page
+    .periodic-artwork-stage > .periodic-search {
+        position: absolute;
+
+        top: 12%;
+        left: 43%;
+
+        transform: translateX(-50%);
+
+        width: 34%;
+        max-width: 520px;
+
+        margin: 0;
+    }
+
+}
+
+
+/* ==========================================================
+   7. MEDIUM DESKTOP / TABLET
+   Screens 1000px–1200px.
+   ========================================================== */
+
+@media (min-width: 1000px) and (max-width: 1200px) {
+
+    body.learning-page.periodic-page main.ocean-layout {
+        padding: 8px 16px 30px;
+    }
+
+    body.learning-page.periodic-page .elements-section {
+        display: grid;
+
+        grid-template-columns:
+            minmax(0, 1fr)
+            minmax(0, 600px)
+            minmax(300px, 420px)
+            minmax(0, 1fr);
+
+        gap: 6px 20px;
+        align-items: center;
+    }
+
+    body.learning-page.periodic-page .periodic-heading {
+        grid-column: 2;
+        text-align: center;
+    }
+
+    body.learning-page.periodic-page .periodic-heading h1 {
+        font-size: clamp(30px, 2.5vw, 44px);
+    }
+
+    body.learning-page.periodic-page .periodic-artwork-stage {
+        grid-column: 1 / -1;
+        width: 100%;
+    }
+
+    body.learning-page.periodic-page
+    .periodic-artwork-stage > .periodic-search {
+        position: absolute;
+
+        top: 4%;
+        left: 43%;
+
+        transform: translateX(-50%);
+
+        width: 34%;
+        max-width: 520px;
+
+        margin: 0;
+        padding: 10px 12px;
+    }
+
+    body.learning-page.periodic-page .element-search-label {
+        font-size: 17px;
+        margin-bottom: 6px;
+    }
+
+    body.learning-page.periodic-page .element-search {
+        font-size: 16px;
+        min-height: 44px;
+        padding: 8px 10px;
+    }
+
+    body.learning-page.periodic-page .table-hint {
+        font-size: 14px;
+        line-height: 1.35;
+        margin-top: 6px;
+    }
+
+}
+
+
+/* ==========================================================
+   8. TABLET AND MOBILE LAYOUT
+   Screens below 1000px.
+
+   The search moves above the artwork.
+   The artwork scrolls horizontally inside its own container.
+   ========================================================== */
+
+@media (max-width: 999px) {
+
+    body.learning-page.periodic-page main.ocean-layout {
+        width: 100%;
+        max-width: none;
+
+        padding: 8px 16px 30px;
+    }
+
+    body.learning-page.periodic-page .ocean-columns {
+        display: flex;
+        flex-direction: column;
+        gap: 20px;
+    }
+
+    body.learning-page.periodic-page .ocean-content {
+        width: 100%;
+        max-width: 100%;
+        min-width: 0;
+    }
+
+    body.learning-page.periodic-page .elements-section {
+        display: block;
+
+        width: 100%;
+        max-width: 100%;
+        min-width: 0;
+    }
+
+    body.learning-page.periodic-page .periodic-heading {
+        text-align: center;
+        margin-bottom: 16px;
+    }
+
+    body.learning-page.periodic-page .periodic-heading h1 {
+        font-size: clamp(1.8rem, 6vw, 2.8rem);
+    }
+
+    body.learning-page.periodic-page .periodic-heading .intro {
+        max-width: 100%;
+        margin: 0 auto;
+    }
+
+    /* The stage stays within the available screen width. */
+
+    body.learning-page.periodic-page .periodic-artwork-stage {
+        display: flex;
+        flex-direction: column;
+
+        box-sizing: border-box;
+
+        width: 100%;
+        max-width: 100%;
+        min-width: 0;
+    }
+
+    /* Search appears before the artwork. */
+
+    body.learning-page.periodic-page
+    .periodic-artwork-stage > .periodic-search {
+        position: static;
+
+        order: -1;
+
+        top: auto;
+        left: auto;
+
+        transform: none;
+
+        box-sizing: border-box;
+
+        width: 100%;
+        max-width: 100%;
+
+        margin: 0 0 12px;
+        padding: 12px;
+    }
+
+    body.learning-page.periodic-page .element-search-label {
+        font-size: 17px;
+        margin-bottom: 6px;
+    }
+
+    body.learning-page.periodic-page .element-search {
+        width: 100%;
+        max-width: none;
+
+        min-height: 44px;
+
+        padding: 8px 10px;
+
+        font-size: 16px;
+    }
+
+    body.learning-page.periodic-page .table-hint {
+        font-size: 14px;
+        line-height: 1.4;
+        margin-top: 6px;
+    }
+
+    /* Only this section scrolls sideways. */
+
+    body.learning-page.periodic-page .periodic-table-scroll {
+        display: block;
+
+        box-sizing: border-box;
+
+        width: 100%;
+        max-width: 100%;
+        min-width: 0;
+
+        overflow-x: auto;
+        overflow-y: hidden;
+
+        -webkit-overflow-scrolling: touch;
+    }
+
+    /*
+       Preserve readable element targets.
+
+       The table itself remains 900px wide,
+       but its parent is limited to the mobile screen.
+    */
+
+    body.learning-page.periodic-page
+    .periodic-table.artwork-table {
+        width: 900px;
+        min-width: 900px;
+        max-width: none;
+    }
+
+    body.learning-page.periodic-page .periodic-artwork {
+        display: block;
+
+        width: 100%;
+        max-width: none;
+        height: auto;
+    }
+
+}
+
+
+/* ==========================================================
+   9. SMALL MOBILE SCREENS
+   ========================================================== */
+
+@media (max-width: 600px) {
+
+    body.learning-page.periodic-page .periodic-heading {
+        margin-bottom: 12px;
+    }
+
+    body.learning-page.periodic-page .periodic-heading h1 {
+        font-size: clamp(1.7rem, 7vw, 2.2rem);
+    }
+
+    body.learning-page.periodic-page
+    .periodic-artwork-stage > .periodic-search {
+        padding: 12px;
+        border-radius: 14px;
+    }
+
+    body.learning-page.periodic-page .element-search-label {
+        font-size: 16px;
+    }
+
+    body.learning-page.periodic-page .table-hint {
+        font-size: 13px;
+    }
+
+}

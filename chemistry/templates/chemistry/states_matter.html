@@ -5,395 +5,7 @@
 {% block body_class %}learning-page matter-page{% endblock %}
 
 {% block content %}
-<style>
-    body.matter-page .matter-experience {
-        position: relative;
-        left: 50%;
-        transform: translateX(-50%);
-        width: calc(100vw - 160px);
-        max-width: none;
-        min-height: 100vh;
-        padding: 24px 0 40px;
-        box-sizing: border-box;
-        color: #eef4f7;
-    }
-
-    .matter-experience *,
-    #matter-dialog * {
-        box-sizing: border-box;
-    }
-
-    body.matter-page .matter-heading {
-        display: block;
-        width: 100%;
-        max-width: 950px;
-        margin: 0 auto 30px;
-        text-align: center;
-    }
-
-    .matter-heading .eyebrow {
-        color: #e9c780;
-        font-size: 14px;
-        letter-spacing: .15em;
-        text-transform: uppercase;
-    }
-
-    .matter-heading h1 {
-        margin: 12px 0 18px;
-        color: #ffe4ad;
-        font: 400 clamp(36px, 4vw, 62px)/1.15 Georgia, serif;
-        text-shadow: 0 3px 14px #000;
-    }
-
-    .matter-heading .matter-intro {
-        margin: 0;
-        color: #f0f4f7;
-        font-size: 20px;
-        line-height: 1.7;
-    }
-
-    .matter-portals {
-        display: grid;
-        grid-template-columns: repeat(3, minmax(0, 1fr));
-        gap: 24px;
-    }
-
-    .matter-portal {
-        min-width: 0;
-        overflow: hidden;
-        border: 1px solid rgba(233, 199, 128, .55);
-        border-radius: 20px;
-        background: rgba(4, 20, 32, .95);
-        box-shadow: 0 16px 35px rgba(0, 0, 0, .3);
-    }
-
-    .matter-open {
-        display: block;
-        width: 100%;
-        height: 100%;
-        padding: 0;
-        border: 0;
-        border-radius: 0;
-        background: transparent;
-        color: inherit;
-        text-align: left;
-        cursor: pointer;
-    }
-
-    .matter-open img {
-        display: block;
-        width: 100%;
-        max-width: none;
-        height: auto;
-        margin: 0;
-        border-radius: 0;
-        object-fit: contain;
-        transition: filter .2s;
-    }
-
-    .matter-open:hover img {
-        filter: brightness(1.12);
-    }
-
-    .matter-portal-copy {
-        display: block;
-        padding: 32px;
-    }
-
-    .matter-portal-title {
-        display: block;
-        margin-bottom: 14px;
-        color: #ffe4ad;
-        font: 400 38px/1.2 Georgia, serif;
-    }
-
-    .matter-portal-summary {
-        display: block;
-        min-height: 120px;
-        color: #e0eaf0;
-        font: 22px/1.7 Arial, sans-serif;
-    }
-
-    .matter-portal-action {
-        display: inline-block;
-        margin-top: 28px;
-        padding: 14px 24px;
-        border: 1px solid #e9c780;
-        border-radius: 28px;
-        color: #ffe4ad;
-        font: 20px/1.4 Arial, sans-serif;
-    }
-
-    .matter-actions {
-        display: flex;
-        justify-content: center;
-        flex-wrap: wrap;
-        gap: 16px;
-        margin: 30px 0 22px;
-    }
-
-    .matter-actions > *,
-    #matter-dialog button,
-    #matter-dialog .matter-topic-link {
-        display: inline-flex;
-        align-items: center;
-        justify-content: center;
-        min-height: 48px;
-        padding: 12px 20px;
-        border: 1px solid #e9c780;
-        border-radius: 28px;
-        background: #102c3b;
-        color: #ffe4ad;
-        font: 18px/1.45 Arial, sans-serif;
-        text-decoration: none;
-        cursor: pointer;
-    }
-
-    .matter-actions > :hover,
-    #matter-dialog button:hover,
-    #matter-dialog .matter-topic-link:hover {
-        background: #244b5e;
-    }
-
-    .matter-note {
-        max-width: 1000px;
-        margin: 0 auto;
-        color: #dce8ee;
-        font-size: 16px;
-        line-height: 1.7;
-        text-align: center;
-    }
-
-    #matter-dialog {
-        box-sizing: border-box;
-        width: min(1050px, calc(100vw - 32px));
-        max-width: calc(100vw - 32px);
-        max-height: 88dvh;
-        overflow-y: auto;
-        padding: clamp(24px, 4vw, 48px);
-        border: 2px solid #e9c780;
-        border-radius: 22px;
-        background: #091e2b;
-        color: #f0f4f7;
-        font: 20px/1.7 Arial, sans-serif;
-        text-align: left;
-        box-shadow: 0 24px 100px #000;
-    }
-
-    #matter-dialog::backdrop {
-        background: rgba(0, 8, 15, .85);
-        backdrop-filter: blur(5px);
-    }
-
-    .matter-dialog-top {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        flex-wrap: wrap;
-        gap: 14px;
-        margin-bottom: 24px;
-    }
-
-    #matter-dialog .matter-dialog-label {
-        margin: 0;
-        color: #e9c780;
-        font-size: 15px;
-        letter-spacing: .1em;
-        text-transform: uppercase;
-    }
-
-    #matter-dialog h2 {
-        margin: 0 0 24px;
-        color: #ffe4ad;
-        font: 400 clamp(32px, 3.5vw, 46px)/1.2 Georgia, serif;
-        text-shadow: none;
-    }
-
-    #matter-dialog h3 {
-        margin: 28px 0 12px;
-        color: #f6d89c;
-        font-size: 23px;
-    }
-
-    #matter-dialog p,
-    #matter-dialog li {
-        color: #edf3f7;
-        font-size: 21px;
-        line-height: 1.75;
-    }
-
-    #matter-dialog ul {
-        padding-left: 26px;
-    }
-
-    .matter-example-buttons,
-    .matter-dialog-navigation {
-        display: flex;
-        flex-wrap: wrap;
-        gap: 12px;
-        margin: 20px 0;
-    }
-
-    #matter-dialog .matter-callout {
-        padding: 18px 22px;
-        border-left: 4px solid #e9c780;
-        background: #163342;
-    }
-
-    .matter-table-scroll {
-        overflow-x: auto;
-    }
-
-    #matter-dialog table {
-        width: 100%;
-        min-width: 720px;
-        border-collapse: collapse;
-        font-size: 18px;
-        line-height: 1.6;
-    }
-
-    #matter-dialog caption {
-        margin-bottom: 16px;
-        color: #dce8ee;
-        text-align: left;
-    }
-
-    #matter-dialog th,
-    #matter-dialog td {
-        padding: 16px;
-        border: 1px solid #52616a;
-        vertical-align: top;
-        text-align: left;
-    }
-
-    #matter-dialog th {
-        background: #173746;
-        color: #ffe4ad;
-    }
-
-    .matter-experience :focus-visible,
-    #matter-dialog :focus-visible {
-        outline: 3px solid #fff0c8;
-        outline-offset: 5px;
-    }
-
-    @media (max-width: 1000px) {
-        .matter-portals {
-            grid-template-columns: 1fr;
-        }
-
-        .matter-portal-summary {
-            min-height: 0;
-        }
-    }
-
-    @media (max-width: 650px) {
-        body.matter-page .matter-experience {
-            width: calc(100vw - 130px);
-        }
-
-        .matter-portal-copy {
-            padding: 22px;
-        }
-
-        .matter-portal-summary {
-            font-size: 20px;
-        }
-
-        #matter-dialog p,
-        #matter-dialog li {
-            font-size: 18px;
-        }
-    }
-
-    @media (prefers-reduced-motion: reduce) {
-        .matter-open img {
-            transition: none;
-        }
-    }
-    /* Four equally sized discovery panels. */
-body.matter-page .matter-portals {
-    grid-template-columns: repeat(4, minmax(0, 1fr));
-    gap: 20px;
-}
-
-body.matter-page .matter-open {
-    display: flex;
-    flex-direction: column;
-}
-
-body.matter-page .matter-open img {
-    width: 100%;
-    height: auto;
-    aspect-ratio: 16 / 9;
-    object-fit: contain;
-}
-
-body.matter-page .matter-portal-copy {
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-    flex: 1;
-    padding: 26px;
-}
-
-body.matter-page .matter-portal-title {
-    font-size: 34px;
-}
-
-body.matter-page .matter-portal-summary {
-    min-height: 0;
-    margin-bottom: 28px;
-    font-size: 20px;
-    line-height: 1.7;
-}
-
-body.matter-page .matter-portal-action {
-    margin-top: auto;
-    padding: 12px 18px;
-    font-size: 18px;
-}
-
-@media (max-width: 1200px) {
-    body.matter-page .matter-portals {
-        grid-template-columns: repeat(2, minmax(0, 1fr));
-    }
-}
-
-@media (max-width: 700px) {
-    body.matter-page .matter-portals {
-        grid-template-columns: 1fr;
-    }
-}
-body.matter-page .matter-portal {
-    min-height: 60vh;
-}
-
-body.matter-page .matter-open {
-    display: flex;
-    flex-direction: column;
-    height: 100%;
-}
-
-body.matter-page .matter-portal-copy {
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-    flex: 1;
-    width: 100%;
-    padding: 30px 26px;
-}
-
-body.matter-page .matter-portal-action {
-    margin-top: auto;
-}
-
-@media (max-width: 700px) {
-    body.matter-page .matter-portal {
-        min-height: 560px;
-    }
-}
-</style>
+<link rel="stylesheet" href="{% static 'pages/states-matter.css' %}">
 
 <div class="matter-experience">
     <header class="matter-heading">
@@ -408,12 +20,14 @@ body.matter-page .matter-portal-action {
 
     <div class="matter-portals">
         <article class="matter-portal" id="solids">
-            <button type="button" class="matter-open"
+            <button type="button"
+                    class="matter-open"
                     data-state="solids"
                     aria-haspopup="dialog"
                     aria-controls="matter-dialog">
                 <img src="{% static 'images/Solids.png' %}"
                      alt="Artwork illustrating solid matter.">
+
                 <span class="matter-portal-copy">
                     <span class="matter-portal-title">Solids</span>
                     <span class="matter-portal-summary">
@@ -428,12 +42,14 @@ body.matter-page .matter-portal-action {
         </article>
 
         <article class="matter-portal" id="liquids">
-            <button type="button" class="matter-open"
+            <button type="button"
+                    class="matter-open"
                     data-state="liquids"
                     aria-haspopup="dialog"
                     aria-controls="matter-dialog">
                 <img src="{% static 'images/Liquids.png' %}"
                      alt="Artwork illustrating liquid matter.">
+
                 <span class="matter-portal-copy">
                     <span class="matter-portal-title">Liquids</span>
                     <span class="matter-portal-summary">
@@ -448,13 +64,14 @@ body.matter-page .matter-portal-action {
         </article>
 
         <article class="matter-portal" id="gases">
-            <button type="button" class="matter-open"
+            <button type="button"
+                    class="matter-open"
                     data-state="gases"
                     aria-haspopup="dialog"
                     aria-controls="matter-dialog">
                 <img src="{% static 'images/Gases.png' %}"
-                     alt="Stylized artwork representing gases;
-                          the colors are illustrative.">
+                     alt="Stylized artwork representing gases; the colors are illustrative.">
+
                 <span class="matter-portal-copy">
                     <span class="matter-portal-title">Gases</span>
                     <span class="matter-portal-summary">
@@ -466,29 +83,23 @@ body.matter-page .matter-portal-action {
                     </span>
                 </span>
             </button>
-                </article>
+        </article>
 
-        <!-- Fourth card: Plasma -->
         <article class="matter-portal" id="plasma">
             <button type="button"
                     class="matter-open"
                     data-state="plasma"
                     aria-haspopup="dialog"
                     aria-controls="matter-dialog">
-
-                <img
-                    src="{% static 'images/Plasma.png' %}"
-                    alt="Luminous plasma filaments inside a plasma globe."
-                >
+                <img src="{% static 'images/Plasma.png' %}"
+                     alt="Luminous plasma filaments inside a plasma globe.">
 
                 <span class="matter-portal-copy">
                     <span class="matter-portal-title">Plasma</span>
-
                     <span class="matter-portal-summary">
                         Explore freely moving charged particles
                         and the luminous displays they can produce.
                     </span>
-
                     <span class="matter-portal-action">
                         Discover Plasma →
                     </span>
@@ -498,20 +109,28 @@ body.matter-page .matter-portal-action {
     </div>
 
     <nav class="matter-actions" aria-label="Explore states of matter">
-
-    <nav class="matter-actions" aria-label="Explore states of matter">
-        <button type="button" id="matter-compare"
-                aria-haspopup="dialog" aria-controls="matter-dialog">
+        <button type="button"
+                id="matter-compare"
+                aria-haspopup="dialog"
+                aria-controls="matter-dialog">
             Compare the States
         </button>
-        <button type="button" data-state="plasma" id="plasma"
-                aria-haspopup="dialog" aria-controls="matter-dialog">
+
+        <button type="button"
+                id="matter-plasma"
+                data-state="plasma"
+                aria-haspopup="dialog"
+                aria-controls="matter-dialog">
             Beyond the Familiar: Plasma →
         </button>
-        <button type="button" id="matter-connect"
-                aria-haspopup="dialog" aria-controls="matter-dialog">
-            Connect State & Classification
+
+        <button type="button"
+                id="matter-connect"
+                aria-haspopup="dialog"
+                aria-controls="matter-dialog">
+            Connect State &amp; Classification
         </button>
+
         <a href="{% url 'chemistry:history' %}">
             Explore the Living Timeline →
         </a>
@@ -539,12 +158,15 @@ body.matter-page .matter-portal-action {
 </dialog>
 
 <template id="matter-comparison">
-    <div class="matter-table-scroll" tabindex="0" role="region"
+    <div class="matter-table-scroll"
+         tabindex="0"
+         role="region"
          aria-label="State comparison table, scroll horizontally if needed">
         <table>
             <caption>
                 A simple particle model for four familiar states of matter.
             </caption>
+
             <thead>
                 <tr>
                     <th scope="col">Property</th>
@@ -554,33 +176,47 @@ body.matter-page .matter-portal-action {
                     <th scope="col">Plasma</th>
                 </tr>
             </thead>
+
             <tbody>
                 <tr>
                     <th scope="row">Shape</th>
                     <td>Definite shape.</td>
                     <td>Takes the container’s shape.</td>
                     <td>Fills the available space.</td>
-                    <td>No fixed shape; electric and magnetic fields
-                        can influence its form.</td>
+                    <td>
+                        No fixed shape; electric and magnetic fields
+                        can influence its form.
+                    </td>
                 </tr>
+
                 <tr>
                     <th scope="row">Volume</th>
                     <td>Approximately fixed under ordinary conditions.</td>
                     <td>Approximately fixed under ordinary conditions.</td>
                     <td>Depends strongly on pressure and temperature.</td>
-                    <td>No fixed volume independent of its conditions
-                        and confinement.</td>
+                    <td>
+                        No fixed volume independent of its conditions
+                        and confinement.
+                    </td>
                 </tr>
+
                 <tr>
                     <th scope="row">Particle behavior</th>
-                    <td>Particles remain close and vibrate around
-                        relatively fixed positions.</td>
+                    <td>
+                        Particles remain close and vibrate around
+                        relatively fixed positions.
+                    </td>
                     <td>Particles remain close but move past one another.</td>
-                    <td>Particles move freely, with large separations
-                        compared with their size.</td>
-                    <td>Includes freely moving electrons and ions;
-                        neutral particles may also be present.</td>
+                    <td>
+                        Particles move freely, with large separations
+                        compared with their size.
+                    </td>
+                    <td>
+                        Includes freely moving electrons and ions;
+                        neutral particles may also be present.
+                    </td>
                 </tr>
+
                 <tr>
                     <th scope="row">Examples</th>
                     <td>Iron, copper, solid carbon.</td>
@@ -632,6 +268,7 @@ body.matter-page .matter-portal-action {
                 ["Sulfur", "S", 16]
             ]
         },
+
         liquids: {
             name: "Liquids",
             introduction:
@@ -654,6 +291,7 @@ body.matter-page .matter-portal-action {
                 ["Bromine", "Br", 35]
             ]
         },
+
         gases: {
             name: "Gases",
             introduction:
@@ -678,6 +316,7 @@ body.matter-page .matter-portal-action {
                 ["Helium", "He", 2]
             ]
         },
+
         plasma: {
             name: "Beyond the Familiar: Plasma",
             introduction:
@@ -701,7 +340,11 @@ body.matter-page .matter-portal-action {
     function paragraph(text, className = "") {
         const p = document.createElement("p");
         p.textContent = text;
-        if (className) p.className = className;
+
+        if (className) {
+            p.className = className;
+        }
+
         body.append(p);
     }
 
@@ -717,7 +360,10 @@ body.matter-page .matter-portal-action {
     }
 
     function openDialog() {
-        if (!dialog.open) dialog.showModal();
+        if (!dialog.open) {
+            dialog.showModal();
+        }
+
         dialog.scrollTop = 0;
         title.focus({ preventScroll: true });
     }
@@ -735,6 +381,7 @@ body.matter-page .matter-portal-action {
 
         present(`${name} · ${symbol}`);
         paragraph(`Atomic number: ${number}`);
+
         paragraph(
             `Every ${name.toLowerCase()} atom has ${number} protons. ` +
             `A neutral atom has ${number} electrons.`
@@ -771,19 +418,26 @@ body.matter-page .matter-portal-action {
         back.type = "button";
         back.textContent = `← Back to ${states[key].name}`;
         back.addEventListener("click", () => showState(key));
+
         navigation.append(back);
         body.append(navigation);
 
-        topicLink("Open the Periodic Table →", "{% url 'chemistry:elements' %}");
+        topicLink(
+            "Open the Periodic Table →",
+            "{% url 'chemistry:elements' %}"
+        );
+
         openDialog();
     }
 
     function showState(key) {
         const data = states[key];
+
         present(data.name);
         paragraph(data.introduction);
 
         heading("How it behaves");
+
         const list = document.createElement("ul");
 
         data.properties.forEach(text => {
@@ -793,6 +447,7 @@ body.matter-page .matter-portal-action {
         });
 
         body.append(list);
+
         heading("Make a connection");
         paragraph(data.everyday);
 
@@ -807,7 +462,10 @@ body.matter-page .matter-portal-action {
                 const button = document.createElement("button");
                 button.type = "button";
                 button.textContent = `${element[0]} · ${element[1]}`;
-                button.addEventListener("click", () => showElement(key, element));
+                button.addEventListener("click", () => {
+                    showElement(key, element);
+                });
+
                 examples.append(button);
             });
 
@@ -815,20 +473,29 @@ body.matter-page .matter-portal-action {
         }
 
         paragraph(data.note, "matter-callout");
-        topicLink("Open the Periodic Table →", "{% url 'chemistry:elements' %}");
+
+        topicLink(
+            "Open the Periodic Table →",
+            "{% url 'chemistry:elements' %}"
+        );
+
         openDialog();
     }
 
     document.querySelectorAll("[data-state]").forEach(button => {
-        button.addEventListener("click", () => showState(button.dataset.state));
+        button.addEventListener("click", () => {
+            showState(button.dataset.state);
+        });
     });
 
     document.getElementById("matter-compare").addEventListener("click", () => {
         present("Compare the States");
+
         body.append(
             document.getElementById("matter-comparison")
                 .content.cloneNode(true)
         );
+
         openDialog();
     });
 
@@ -841,6 +508,7 @@ body.matter-page .matter-portal-action {
         );
 
         heading("Two descriptions, one element");
+
         paragraph(
             "Mercury is both a metal and a liquid. " +
             "Oxygen is both a nonmetal and a gas at approximately 20°C " +
@@ -866,16 +534,21 @@ body.matter-page .matter-portal-action {
     });
 
     dialog.addEventListener("click", event => {
-        if (event.target !== dialog) return;
+        if (event.target !== dialog) {
+            return;
+        }
 
         const bounds = dialog.getBoundingClientRect();
+
         const inside =
             event.clientX >= bounds.left &&
             event.clientX <= bounds.right &&
             event.clientY >= bounds.top &&
             event.clientY <= bounds.bottom;
 
-        if (!inside) dialog.close();
+        if (!inside) {
+            dialog.close();
+        }
     });
 })();
 </script>

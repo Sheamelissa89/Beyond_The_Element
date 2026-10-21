@@ -353,3 +353,34 @@
         min-width: 0;
     }
 }
+
+/* Shared Explore menu wrapper */
+
+.learning-page .mobile-explore {
+    display: contents;
+}
+
+.learning-page .mobile-explore > summary {
+    display: none;
+}
+
+@media (max-width: 600px) {
+    .learning-page .mobile-explore {
+        display: block;
+        order: 0;
+        width: 100%;
+        min-width: 0;
+    }
+
+    .learning-page .mobile-explore > summary {
+        display: block;
+    }
+}
+
+/* Atomic Architect provides its own navigation and discoveries. */
+
+body.learning-page.atomic-builder-page .mobile-explore,
+body.learning-page.atomic-builder-page .bubble-navigation,
+body.learning-page.atomic-builder-page .discovery-sidebar {
+    display: none !important;
+}

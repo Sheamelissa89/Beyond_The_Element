@@ -1,0 +1,586 @@
+/* ==========================================================
+   Discovery Lab
+   Page-specific styles for interactive_learning.html.
+   Shared navigation remains in core/navigation.css.
+   ========================================================== */
+
+/* Page container */
+
+body.discovery-lab-page .discovery-lab {
+    width: 100%;
+    max-width: 1400px;
+    min-width: 0;
+    margin: 0 auto;
+    padding: 32px 0 40px;
+    color: #e5efff;
+    font: 18px / 1.7 "Segoe UI", Arial, sans-serif;
+    overflow-wrap: anywhere;
+}
+
+.discovery-lab,
+.discovery-lab *,
+.discovery-lab *::before,
+.discovery-lab *::after {
+    box-sizing: border-box;
+}
+
+.discovery-lab [hidden] {
+    display: none !important;
+}
+
+/* Heading */
+
+body.discovery-lab-page .discovery-lab > .lab-heading {
+    display: block;
+    margin: 0 auto 36px;
+    padding: 0;
+    max-width: 1000px;
+    border: 0;
+    background: transparent;
+    text-align: center;
+}
+
+.discovery-lab .lab-eyebrow {
+    margin: 0 0 14px;
+    color: #e9c780;
+    font-size: 14px;
+    font-weight: 600;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+}
+
+.discovery-lab .lab-heading h1 {
+    margin: 0 0 22px;
+    color: #ffe4ad;
+    font: 400 clamp(36px, 4vw, 62px) / 1.15 Georgia, serif;
+    letter-spacing: normal;
+    text-shadow: 0 3px 14px #000;
+}
+
+.discovery-lab .lab-heading > p:not(.lab-eyebrow) {
+    margin: 0;
+    color: #e5efff;
+    font-size: 20px;
+    line-height: 1.8;
+}
+
+/* Activity cards */
+
+.discovery-lab .lab-portals {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 24px;
+    margin: 0 0 36px;
+    padding: 0;
+}
+
+.discovery-lab .lab-portal {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    min-width: 0;
+    min-height: 360px;
+    margin: 0;
+    padding: 30px;
+    border: 1px solid rgba(233, 199, 128, 0.65);
+    border-radius: 22px;
+    background:
+        radial-gradient(
+            circle at 15% 0,
+            rgba(94, 157, 194, 0.16),
+            transparent 65%
+        ),
+        rgba(4, 20, 32, 0.96);
+    color: #e5efff;
+    font: inherit;
+    text-align: left;
+    white-space: normal;
+    cursor: pointer;
+    box-shadow: 0 16px 35px rgba(0, 0, 0, 0.3);
+    transition:
+        border-color 0.2s ease,
+        background-color 0.2s ease,
+        transform 0.2s ease;
+}
+
+.discovery-lab .lab-portal:hover {
+    transform: translateY(-3px);
+    border-color: #ffe4ad;
+    background-color: #123345;
+}
+
+.discovery-lab .lab-portal[aria-expanded="true"] {
+    border-color: #91e6d0;
+    box-shadow:
+        0 0 0 1px #91e6d0,
+        0 16px 35px rgba(0, 0, 0, 0.3);
+}
+
+.discovery-lab .lab-art {
+    display: grid;
+    place-items: center;
+    width: 70px;
+    height: 70px;
+    margin-bottom: 24px;
+    border: 1px solid rgba(145, 230, 208, 0.55);
+    border-radius: 50%;
+    background: rgba(145, 230, 208, 0.08);
+    color: #b8f3ff;
+    font: 36px / 1 Georgia, serif;
+}
+
+.discovery-lab .lab-portal-title {
+    display: block;
+    margin-bottom: 16px;
+    color: #ffe4ad;
+    font: 400 28px / 1.25 Georgia, serif;
+}
+
+.discovery-lab .lab-portal-description {
+    display: block;
+    margin-bottom: 28px;
+    color: #dce8f2;
+    font-size: 18px;
+    line-height: 1.75;
+}
+
+.discovery-lab .lab-enter {
+    display: inline-block;
+    margin-top: auto;
+    padding: 10px 16px;
+    border: 1px solid #e9c780;
+    border-radius: 24px;
+    color: #ffe4ad;
+    font-size: 16px;
+    line-height: 1.5;
+}
+
+/* Open activity panels */
+
+.discovery-lab .lab-panel {
+    min-width: 0;
+    margin: 30px 0;
+    padding: clamp(20px, 3vw, 40px);
+    border: 1px solid rgba(233, 199, 128, 0.65);
+    border-radius: 22px;
+    background: rgba(4, 18, 31, 0.97);
+    box-shadow: 0 16px 40px rgba(0, 0, 0, 0.3);
+    scroll-margin-top: 24px;
+}
+
+.discovery-lab .lab-panel h2 {
+    margin: 0 0 22px;
+    color: #ffe4ad;
+    font: 400 clamp(28px, 3vw, 40px) / 1.25 Georgia, serif;
+    text-shadow: none;
+}
+
+.discovery-lab .lab-panel h3 {
+    margin: 24px 0 14px;
+    color: #f6d89c;
+    font-size: 23px;
+    line-height: 1.4;
+}
+
+.discovery-lab .lab-panel p {
+    margin: 0 0 20px;
+}
+
+.discovery-lab .lab-note {
+    color: #bdcfdf;
+    font-size: 16px;
+    line-height: 1.7;
+}
+
+.discovery-lab .lab-callout {
+    padding: 18px 22px;
+    border-left: 4px solid #e9c780;
+    border-radius: 8px;
+    background: #163342;
+    color: #e5efff;
+}
+
+/* Forms */
+
+.discovery-lab form {
+    margin: 0;
+}
+
+.discovery-lab label {
+    display: block;
+    margin: 18px 0 8px;
+    color: #e5efff;
+    font-weight: 600;
+}
+
+.discovery-lab input[type="text"],
+.discovery-lab textarea,
+.discovery-lab select {
+    display: block;
+    width: 100%;
+    max-width: 100%;
+    min-width: 0;
+    padding: 13px 16px;
+    border: 1px solid #57778d;
+    border-radius: 10px;
+    background: #081b2c;
+    color: #f0f4f7;
+    font: inherit;
+    line-height: 1.5;
+}
+
+.discovery-lab input::placeholder,
+.discovery-lab textarea::placeholder {
+    color: #aabed0;
+    opacity: 1;
+}
+
+.discovery-lab textarea {
+    min-height: 140px;
+    resize: vertical;
+}
+
+.discovery-lab select {
+    margin-top: 8px;
+}
+
+.discovery-lab input[type="checkbox"],
+.discovery-lab input[type="radio"] {
+    width: 20px;
+    height: 20px;
+    margin: 0 10px 0 0;
+    vertical-align: middle;
+    accent-color: #91e6d0;
+}
+
+.discovery-lab .lab-row {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: flex-end;
+    gap: 14px;
+    margin: 22px 0;
+}
+
+.discovery-lab .lab-row > label {
+    flex: 1 1 220px;
+    min-width: 0;
+    margin: 0;
+}
+
+/* Buttons and links */
+
+.discovery-lab .lab-panel button,
+.discovery-lab .lab-link,
+.discovery-lab .lab-footer-links a {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    max-width: 100%;
+    min-height: 48px;
+    padding: 12px 20px;
+    border: 1px solid #e9c780;
+    border-radius: 24px;
+    background: #102c3b;
+    color: #ffe4ad;
+    font: inherit;
+    font-size: 17px;
+    line-height: 1.5;
+    text-align: center;
+    text-decoration: none;
+    white-space: normal;
+    cursor: pointer;
+}
+
+.discovery-lab .lab-panel button:hover:not(:disabled),
+.discovery-lab .lab-link:hover,
+.discovery-lab .lab-footer-links a:hover {
+    background: #244b5e;
+}
+
+.discovery-lab .lab-panel .lab-primary {
+    border-color: #91e6d0;
+    background: #153b43;
+    color: #e1fff5;
+}
+
+.discovery-lab .lab-panel button:disabled {
+    opacity: 0.55;
+    cursor: not-allowed;
+}
+
+.discovery-lab .lab-panel a:not(.lab-link) {
+    color: #b8f3ff;
+    text-underline-offset: 4px;
+}
+
+/* Quiz */
+
+.discovery-lab #quiz-progress {
+    display: block;
+    width: 100%;
+    height: 16px;
+    margin: 12px 0 28px;
+    accent-color: #91e6d0;
+}
+
+.discovery-lab #quiz-fieldset {
+    min-width: 0;
+    margin: 0 0 20px;
+    padding: 20px;
+    border: 1px solid #57778d;
+    border-radius: 14px;
+}
+
+.discovery-lab #quiz-question {
+    max-width: 100%;
+    padding: 0 10px;
+    color: #ffe4ad;
+    font-size: 23px;
+    font-weight: 600;
+    line-height: 1.6;
+}
+
+.discovery-lab #quiz-options {
+    display: grid;
+    gap: 12px;
+    margin-top: 12px;
+}
+
+.discovery-lab #quiz-options label {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    margin: 0;
+    padding: 16px;
+    border: 1px solid #425f75;
+    border-radius: 12px;
+    background: #0b2234;
+    font-weight: 400;
+    cursor: pointer;
+}
+
+.discovery-lab #quiz-options input[type="radio"] {
+    flex: 0 0 20px;
+    margin: 5px 0 0;
+}
+
+.discovery-lab #quiz-options label:has(input:checked) {
+    border-color: #91e6d0;
+    background: #173b46;
+}
+
+.discovery-lab #quiz-options button {
+    width: 100%;
+    justify-content: flex-start;
+    border-radius: 12px;
+    text-align: left;
+}
+
+.discovery-lab .lab-feedback {
+    margin: 24px 0;
+    padding: 22px;
+    border-left: 4px solid #91e6d0;
+    border-radius: 10px;
+    background: #12323d;
+}
+
+.discovery-lab .lab-feedback h3 {
+    margin-top: 0;
+}
+
+.discovery-lab .lab-feedback .lab-note {
+    margin: 12px 0 0;
+}
+
+.discovery-lab .lab-score {
+    color: #ffe4ad;
+    font-size: clamp(28px, 4vw, 42px);
+    font-weight: 700;
+    line-height: 1.3;
+}
+
+.discovery-lab #quiz-review {
+    margin-top: 24px;
+}
+
+.discovery-lab #quiz-review > * {
+    margin-bottom: 20px;
+}
+
+.discovery-lab #quiz-review > article,
+.discovery-lab #quiz-review > section,
+.discovery-lab #quiz-review > div {
+    padding: 20px;
+    border: 1px solid #425f75;
+    border-radius: 12px;
+    background: #0b2234;
+}
+
+/* Discovery missions */
+
+.discovery-lab #missions {
+    display: grid;
+    gap: 18px;
+    margin: 24px 0;
+}
+
+.discovery-lab #missions > * {
+    min-width: 0;
+    padding: 20px;
+    border: 1px solid #425f75;
+    border-radius: 14px;
+    background: #0b2234;
+}
+
+.discovery-lab #missions h3 {
+    margin-top: 0;
+}
+
+.discovery-lab #missions label {
+    font-weight: 400;
+}
+
+.discovery-lab #mission-topic {
+    max-width: 480px;
+}
+
+/* Learning-page links */
+
+.discovery-lab .lab-footer-links {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 14px;
+    margin: 32px 0 0;
+}
+
+/* Keyboard focus */
+
+body.discovery-lab-page .discovery-lab :is(
+    button,
+    a,
+    input,
+    textarea,
+    select
+):focus-visible {
+    outline: 3px solid #b8f3ff;
+    outline-offset: 4px;
+}
+
+/* Responsive layout */
+
+@media (max-width: 1000px) {
+    .discovery-lab .lab-portals {
+        grid-template-columns: minmax(0, 1fr);
+        gap: 20px;
+    }
+
+    .discovery-lab .lab-portal {
+        min-height: 0;
+        padding: 26px;
+    }
+}
+
+@media (max-width: 600px) {
+    body.discovery-lab-page .discovery-lab {
+        padding-top: 20px;
+        font-size: 17px;
+    }
+
+    .discovery-lab .lab-heading > p:not(.lab-eyebrow) {
+        font-size: 18px;
+    }
+
+    .discovery-lab .lab-portal {
+        padding: 22px;
+    }
+
+    .discovery-lab .lab-portal-title {
+        font-size: 26px;
+    }
+
+    .discovery-lab .lab-portal-description {
+        font-size: 17px;
+    }
+
+    .discovery-lab .lab-row {
+        align-items: stretch;
+    }
+
+    .discovery-lab .lab-row > button,
+    .discovery-lab .lab-row > label {
+        flex: 1 1 100%;
+    }
+
+    .discovery-lab #quiz-fieldset {
+        padding: 16px;
+    }
+
+    .discovery-lab #quiz-question {
+        font-size: 20px;
+    }
+
+    .discovery-lab .lab-footer-links {
+        flex-direction: column;
+    }
+}
+
+/* Reduced motion */
+
+@media (prefers-reduced-motion: reduce) {
+    .discovery-lab .lab-portal {
+        transition: none;
+    }
+
+    .discovery-lab .lab-portal:hover {
+        transform: none;
+    }
+}
+
+/* Fill the available screen height. */
+body.discovery-lab-page main.ocean-layout {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    min-height: 100dvh;
+}
+
+body.discovery-lab-page main.ocean-layout > .ocean-columns {
+    flex: 1;
+    min-width: 0;
+}
+
+/* Larger activity cards on desktop. */
+@media (min-width: 1001px) {
+    body.discovery-lab-page .discovery-lab {
+        max-width: 1600px;
+    }
+
+    .discovery-lab .lab-portals {
+        gap: 28px;
+    }
+
+    .discovery-lab .lab-portal {
+        min-height: 52vh;
+        padding: 36px;
+    }
+
+    .discovery-lab .lab-art {
+        width: 88px;
+        height: 88px;
+        font-size: 44px;
+    }
+
+    .discovery-lab .lab-portal-title {
+        font-size: 32px;
+    }
+
+    .discovery-lab .lab-portal-description {
+        font-size: 20px;
+    }
+
+    .discovery-lab .lab-enter {
+        padding: 12px 20px;
+        font-size: 18px;
+    }
+}

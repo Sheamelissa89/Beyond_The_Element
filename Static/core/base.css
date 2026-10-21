@@ -42,7 +42,7 @@ main {
 
 /* 2. SHARED HEADER AND FOOTER */
 
-header {
+main.ocean-layout > header {
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -72,7 +72,7 @@ header {
     font-size: 0.85rem;
 }
 
-footer {
+main.ocean-layout > footer {
     margin-top: 60px;
     color: #ffffff;
     font-size: 0.85rem;

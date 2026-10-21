@@ -5,1083 +5,14 @@
 {% block body_class %}learning-page plasma-page{% endblock %}
 
 {% block content %}
-<style>
-    /* ======================================================
-       PLASMA PAGE — LAYOUT AND BACKGROUND
-       Side navigation remains controlled by base.html.
-       ====================================================== */
-
-    body.learning-page.plasma-page {
-        margin: 0;
-        min-height: 100vh;
-        color: #eaf4ff;
-        font-size: 17px;
-        line-height: 1.7;
-        background:
-            radial-gradient(
-                ellipse at 15% 15%,
-                rgba(91, 37, 151, 0.2),
-                transparent 45%
-            ),
-            radial-gradient(
-                ellipse at 90% 65%,
-                rgba(20, 89, 145, 0.18),
-                transparent 50%
-            ),
-            #020612;
-    }
-
-    /* Remove the inherited narrow center-column limits. */
-    body.learning-page.plasma-page main.ocean-layout {
-        display: block;
-        width: auto !important;
-        max-width: none !important;
-        min-width: 0;
-        margin: 0 112px !important;
-        padding: 0 !important;
-        background: transparent !important;
-        box-sizing: border-box;
-    }
-
-    body.learning-page.plasma-page .ocean-columns {
-        display: block;
-        width: 100% !important;
-        max-width: none !important;
-        min-width: 0;
-        margin: 0 !important;
-        padding: 0 !important;
-        background: transparent !important;
-    }
-
-    body.learning-page.plasma-page .ocean-content {
-        width: 100% !important;
-        max-width: none !important;
-        min-width: 0;
-        margin: 0 !important;
-        padding: 0 !important;
-        flex: 1 1 auto;
-        background: transparent !important;
-    }
-
-    body.plasma-page .plasma-world,
-    body.plasma-page .plasma-world * {
-        box-sizing: border-box;
-    }
-
-    body.plasma-page .plasma-world {
-        width: 100%;
-        min-width: 0;
-        margin: 0;
-        color: #eaf4ff;
-        background: rgba(3, 8, 25, 0.7);
-    }
-
-    body.plasma-page .plasma-container {
-        width: calc(100% - 64px);
-        max-width: 1700px;
-        min-width: 0;
-        margin: 0 auto;
-    }
-
-    body.plasma-page .plasma-world h1,
-    body.plasma-page .plasma-world h2,
-    body.plasma-page .plasma-world h3 {
-        font-family: inherit;
-    }
-
-    body.plasma-page .plasma-world p {
-        overflow-wrap: break-word;
-    }
-
-    /* ======================================================
-       INTRODUCTION
-       ====================================================== */
-
-    body.plasma-page .plasma-introduction {
-        padding: 70px 0 65px;
-        background:
-            radial-gradient(
-                ellipse at 50% 0,
-                rgba(96, 44, 170, 0.18),
-                transparent 65%
-            ),
-            linear-gradient(
-                180deg,
-                rgba(5, 10, 32, 0.94),
-                rgba(12, 10, 45, 0.82)
-            );
-    }
-
-    body.plasma-page .plasma-introduction-heading {
-        max-width: 1080px;
-        margin: 0 auto 48px;
-        text-align: center;
-    }
-
-    body.plasma-page .plasma-eyebrow {
-        margin: 0 0 18px;
-        color: #91e9ff;
-        font-size: 0.95rem;
-        letter-spacing: 3px;
-        text-transform: uppercase;
-    }
-
-    body.plasma-page .plasma-introduction-heading h1 {
-        margin: 12px 0 25px;
-        color: #fff;
-        font-size: clamp(2.6rem, 4.8vw, 5.3rem);
-        line-height: 1.15;
-        text-shadow:
-            0 0 15px rgba(175, 105, 255, 0.9),
-            0 0 45px rgba(100, 65, 255, 0.65);
-    }
-
-    body.plasma-page .plasma-introduction-heading p:not(.plasma-eyebrow) {
-        max-width: 920px;
-        margin: 16px auto;
-        color: #e4edff;
-        font-size: 1.12rem;
-        line-height: 1.85;
-    }
-
-    body.plasma-page .plasma-learning-heading {
-        margin: 0 0 30px;
-        color: #b7eaff;
-        font-size: clamp(1.8rem, 2.8vw, 2.8rem);
-        line-height: 1.3;
-        text-align: center;
-    }
-
-    body.plasma-page .plasma-introduction-action {
-        margin-top: 38px;
-        text-align: center;
-    }
-
-    /* ======================================================
-       BUTTONS AND KEYBOARD FOCUS
-       ====================================================== */
-
-    body.plasma-page .plasma-button {
-        display: inline-block;
-        margin-top: 12px;
-        padding: 14px 26px;
-        border: 1px solid #76e8ff;
-        border-radius: 12px;
-        color: #c8f7ff;
-        background: rgba(9, 40, 61, 0.95);
-        font: inherit;
-        font-size: 1rem;
-        text-align: center;
-        text-decoration: none;
-        cursor: pointer;
-        transition:
-            background 0.2s ease,
-            box-shadow 0.2s ease,
-            transform 0.2s ease;
-    }
-
-    body.plasma-page .plasma-button:hover {
-        background: #164e70;
-        box-shadow: 0 0 24px rgba(66, 223, 255, 0.35);
-        transform: translateY(-2px);
-    }
-
-    body.plasma-page .plasma-world :is(
-        a,
-        button,
-        select,
-        input
-    ):focus-visible {
-        outline: 3px solid #b8f3ff;
-        outline-offset: 5px;
-    }
-
-    /* ======================================================
-       EDUCATIONAL SECTIONS AND CARDS
-       ====================================================== */
-
-    body.plasma-page .plasma-section {
-        width: 100%;
-        margin: 0;
-        padding: 65px 0;
-        background: rgba(3, 8, 25, 0.88);
-    }
-
-    body.plasma-page .plasma-section-title {
-        margin: 0 0 22px;
-        color: #e9d4ff;
-        font-size: clamp(2rem, 3.2vw, 3.3rem);
-        line-height: 1.25;
-        text-align: center;
-        text-shadow: 0 0 20px rgba(155, 76, 255, 0.45);
-    }
-
-    body.plasma-page .plasma-intro {
-        max-width: 1000px;
-        margin: 0 auto 36px;
-        color: #e4edff;
-        font-size: 1.1rem;
-        line-height: 1.85;
-        text-align: center;
-    }
-
-    body.plasma-page .plasma-grid {
-        display: grid;
-        grid-template-columns: repeat(4, minmax(0, 1fr));
-        gap: 22px;
-        align-items: stretch;
-    }
-
-    body.plasma-page .plasma-card {
-        display: flex;
-        flex-direction: column;
-        min-width: 0;
-        padding: 26px;
-        border: 1px solid rgba(125, 170, 255, 0.45);
-        border-radius: 18px;
-        background: rgba(4, 12, 31, 0.92);
-        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.25);
-        transition:
-            transform 0.2s ease,
-            border-color 0.2s ease,
-            box-shadow 0.2s ease;
-    }
-
-    body.plasma-page .plasma-card:hover {
-        transform: translateY(-4px);
-        border-color: #a56cff;
-        box-shadow: 0 0 25px rgba(128, 76, 255, 0.25);
-    }
-
-    body.plasma-page .plasma-card h3 {
-        margin: 0 0 16px;
-        color: #a7ecff;
-        font-size: 1.2rem;
-        line-height: 1.4;
-    }
-
-    body.plasma-page .plasma-card p {
-        margin: 0;
-        color: #e2edff;
-        font-size: 1rem;
-        line-height: 1.8;
-    }
-
-    body.plasma-page .plasma-state-icon,
-    body.plasma-page .plasma-discovery-icon {
-        margin-bottom: 14px;
-        font-size: 2.7rem;
-        line-height: 1.3;
-    }
-
-    body.plasma-page .plasma-discovery {
-        text-align: center;
-    }
-
-    /* ======================================================
-       DEDICATED, UNCROPPED INFOGRAPHIC
-       ====================================================== */
-
-    body.plasma-page .plasma-infographic-section {
-        width: 100%;
-        padding: 60px 0;
-        background: linear-gradient(
-            180deg,
-            rgba(3, 8, 25, 0.98),
-            rgba(10, 12, 35, 0.95)
-        );
-    }
-
-    body.plasma-page .plasma-infographic-heading {
-        width: calc(100% - 64px);
-        max-width: 1000px;
-        margin: 0 auto 32px;
-        text-align: center;
-    }
-
-    body.plasma-page .plasma-infographic-heading p {
-        margin: 16px auto 0;
-        color: #d9e8ff;
-        font-size: 1.1rem;
-        line-height: 1.8;
-    }
-
-    body.plasma-page .plasma-infographic-frame {
-        width: calc(100% - 40px);
-        max-width: 1800px;
-        margin: 0 auto;
-        border: 1px solid rgba(130, 165, 255, 0.35);
-        border-radius: 20px;
-        background: #020612;
-        box-shadow: 0 0 40px rgba(95, 65, 210, 0.18);
-    }
-
-    body.plasma-page .plasma-infographic-frame img {
-        display: block;
-        width: 100%;
-        max-width: none;
-        height: auto;
-        margin: 0;
-        border-radius: inherit;
-        object-fit: contain;
-    }
-
-    /* ======================================================
-       INTERACTIVE LABORATORY
-       ====================================================== */
-
-    body.plasma-page #plasma-lab {
-        padding: 75px 0;
-        scroll-margin-top: 24px;
-        background:
-            radial-gradient(
-                ellipse at 50% 20%,
-                rgba(65, 30, 120, 0.28),
-                transparent 65%
-            ),
-            rgba(3, 8, 25, 0.94);
-    }
-
-    body.plasma-page .plasma-laboratory {
-        padding: 30px;
-        border: 1px solid rgba(163, 104, 255, 0.6);
-        border-radius: 24px;
-        background: rgba(3, 8, 25, 0.96);
-        box-shadow: 0 0 50px rgba(102, 51, 255, 0.12);
-    }
-
-    body.plasma-page .plasma-lab-grid {
-        display: grid;
-        grid-template-columns: minmax(260px, 1fr) minmax(0, 1.8fr);
-        gap: 28px;
-        align-items: stretch;
-    }
-
-    body.plasma-page .plasma-controls {
-        min-width: 0;
-        padding: 24px;
-        border: 1px solid #425d8d;
-        border-radius: 18px;
-        background: rgba(3, 12, 29, 0.94);
-    }
-
-    body.plasma-page .plasma-controls h3 {
-        margin: 0 0 22px;
-        color: #a9eaff;
-        font-size: 1.45rem;
-        line-height: 1.4;
-    }
-
-    body.plasma-page .plasma-control {
-        margin: 22px 0;
-    }
-
-    body.plasma-page .plasma-control label {
-        display: block;
-        margin-bottom: 10px;
-        color: #dceaff;
-        font-weight: 600;
-    }
-
-    body.plasma-page .plasma-control select,
-    body.plasma-page .plasma-control input {
-        width: 100%;
-        min-width: 0;
-    }
-
-    body.plasma-page .plasma-control select {
-        padding: 12px;
-        border: 1px solid #5574a5;
-        border-radius: 10px;
-        color: #fff;
-        background: #08172e;
-        font: inherit;
-    }
-
-    body.plasma-page .plasma-control input[type="range"] {
-        accent-color: #b685ff;
-        cursor: pointer;
-    }
-
-    body.plasma-page .plasma-control output {
-        color: #a9eaff;
-    }
-
-    body.plasma-page .plasma-model-note {
-        margin: 22px 0 0;
-        color: #bacce5;
-        font-size: 0.92rem;
-        line-height: 1.7;
-    }
-
-    body.plasma-page .plasma-chamber {
-        position: relative;
-        min-width: 0;
-        min-height: 500px;
-        overflow: hidden;
-        border: 2px solid #6585c7;
-        border-radius: 24px;
-        background: #020612;
-        box-shadow:
-            inset 0 0 60px #000,
-            0 0 30px rgba(112, 76, 255, 0.25);
-    }
-
-    body.plasma-page #plasma-canvas {
-        position: absolute;
-        inset: 0;
-        display: block;
-        width: 100%;
-        height: 100%;
-    }
-
-    body.plasma-page .plasma-chamber-label {
-        position: absolute;
-        top: 14px;
-        left: 14px;
-        right: 14px;
-        width: fit-content;
-        max-width: calc(100% - 28px);
-        padding: 8px 12px;
-        border-radius: 10px;
-        color: #bceeff;
-        background: rgba(2, 6, 18, 0.82);
-        font-size: 0.75rem;
-        letter-spacing: 1px;
-        pointer-events: none;
-    }
-
-    body.plasma-page .plasma-chamber-glow {
-        position: absolute;
-        inset: 0;
-        box-shadow: inset 0 0 60px rgba(152, 92, 255, 0.2);
-        pointer-events: none;
-    }
-
-    body.plasma-page .plasma-readouts {
-        display: grid;
-        grid-template-columns: repeat(3, minmax(0, 1fr));
-        gap: 16px;
-        margin-top: 24px;
-    }
-
-    body.plasma-page .plasma-readout {
-        padding: 18px;
-        border: 1px solid #4d6298;
-        border-radius: 15px;
-        background: rgba(5, 14, 34, 0.95);
-        text-align: center;
-    }
-
-    body.plasma-page .plasma-readout strong {
-        display: block;
-        margin-top: 8px;
-        color: #c4a0ff;
-        font-size: 1.8rem;
-    }
-
-    body.plasma-page .plasma-readout-note {
-        max-width: 1000px;
-        margin: 24px auto 0;
-        color: #bacce5;
-        font-size: 0.95rem;
-        line-height: 1.8;
-        text-align: center;
-    }
-
-    /* ======================================================
-       REMAINING SECTIONS AND QUIZ
-       ====================================================== */
-
-    body.plasma-page .plasma-learning-section {
-        background: rgba(5, 12, 32, 0.96);
-    }
-
-    body.plasma-page .plasma-discovery-section {
-        background: rgba(9, 10, 35, 0.96);
-    }
-
-    body.plasma-page .plasma-challenge-section {
-        background: linear-gradient(
-            180deg,
-            rgba(8, 12, 35, 0.97),
-            rgba(20, 10, 48, 0.94)
-        );
-    }
-
-    body.plasma-page .plasma-quiz {
-        max-width: 1000px;
-        margin: 0 auto;
-        padding: 30px;
-        border: 1px solid #7256a9;
-        border-radius: 20px;
-        background: rgba(8, 15, 41, 0.96);
-    }
-
-    body.plasma-page .plasma-quiz-progress {
-        margin: 0 0 12px;
-        color: #a9eaff;
-        font-size: 0.95rem;
-    }
-
-    body.plasma-page .plasma-quiz h3 {
-        margin: 0 0 22px;
-        color: #f0e7ff;
-        font-size: 1.35rem;
-        line-height: 1.5;
-    }
-
-    body.plasma-page .plasma-quiz button {
-        display: block;
-        width: 100%;
-        margin: 12px 0;
-        padding: 16px;
-        border: 1px solid #526ca1;
-        border-radius: 12px;
-        color: #fff;
-        background: #101d3d;
-        font: inherit;
-        text-align: left;
-        cursor: pointer;
-    }
-
-    body.plasma-page .plasma-quiz button:hover:not(:disabled) {
-        background: #253d70;
-    }
-
-    body.plasma-page .plasma-quiz button:disabled {
-        cursor: default;
-    }
-
-    body.plasma-page .plasma-quiz button.is-correct {
-        border-color: #7ee3bc;
-        background: #123c36;
-    }
-
-    body.plasma-page .plasma-quiz button.is-incorrect {
-        border-color: #efb1cf;
-        background: #44253f;
-    }
-
-    body.plasma-page #plasma-quiz-result {
-        margin: 20px 0;
-        color: #bdefff;
-        font-weight: 600;
-    }
-
-    body.plasma-page #plasma-next {
-        text-align: center;
-        background: #282047;
-    }
-
-    body.plasma-page .plasma-world [hidden] {
-        display: none !important;
-    }
-
-    body.plasma-page .plasma-footer {
-        padding: 30px 20px;
-        border-top: 1px solid rgba(125, 170, 255, 0.25);
-        color: #d0def2;
-        background: rgba(3, 8, 25, 0.94);
-        text-align: center;
-    }
-
-    /* ======================================================
-       RESPONSIVE LAYOUT
-       ====================================================== */
-
-    @media (max-width: 1200px) {
-        body.plasma-page .plasma-grid {
-            grid-template-columns: repeat(2, minmax(0, 1fr));
-        }
-
-        body.plasma-page .plasma-container {
-            width: calc(100% - 40px);
-        }
-
-        body.plasma-page .plasma-laboratory {
-            padding: 22px;
-        }
-
-        body.plasma-page .plasma-lab-grid {
-            grid-template-columns: 1fr;
-        }
-
-        body.plasma-page .plasma-chamber {
-            min-height: 420px;
-        }
-    }
-
-    @media (max-width: 850px) {
-        body.learning-page.plasma-page main.ocean-layout {
-            margin-left: 88px !important;
-            margin-right: 88px !important;
-        }
-
-        body.plasma-page .plasma-readouts {
-            grid-template-columns: 1fr;
-        }
-
-        body.plasma-page .plasma-introduction {
-            padding: 48px 0;
-        }
-
-        body.plasma-page .plasma-card {
-            padding: 22px;
-        }
-    }
-
-    @media (max-width: 650px) {
-        body.learning-page.plasma-page main.ocean-layout {
-            margin-left: 70px !important;
-            margin-right: 70px !important;
-        }
-
-        body.plasma-page .plasma-container,
-        body.plasma-page .plasma-infographic-heading {
-            width: calc(100% - 24px);
-        }
-
-        body.plasma-page .plasma-grid {
-            grid-template-columns: 1fr;
-            gap: 16px;
-        }
-
-        body.plasma-page .plasma-introduction-heading h1 {
-            font-size: clamp(2rem, 7vw, 3rem);
-        }
-
-        body.plasma-page .plasma-eyebrow {
-            font-size: 0.78rem;
-            letter-spacing: 2px;
-        }
-
-        body.plasma-page .plasma-introduction-heading p:not(.plasma-eyebrow),
-        body.plasma-page .plasma-intro,
-        body.plasma-page .plasma-infographic-heading p {
-            font-size: 1rem;
-        }
-
-        body.plasma-page .plasma-section,
-        body.plasma-page .plasma-infographic-section,
-        body.plasma-page #plasma-lab {
-            padding: 42px 0;
-        }
-
-        body.plasma-page .plasma-section-title,
-        body.plasma-page .plasma-learning-heading {
-            font-size: 1.65rem;
-        }
-
-        body.plasma-page .plasma-infographic-frame {
-            width: 100%;
-            border-radius: 0;
-        }
-
-        body.plasma-page .plasma-laboratory,
-        body.plasma-page .plasma-controls,
-        body.plasma-page .plasma-quiz {
-            padding: 16px;
-        }
-
-        body.plasma-page .plasma-lab-grid {
-            gap: 18px;
-        }
-
-        body.plasma-page .plasma-chamber {
-            min-height: 300px;
-            border-radius: 16px;
-        }
-
-        body.plasma-page .plasma-chamber-label {
-            font-size: 0.65rem;
-        }
-    }
-
-    @media (prefers-reduced-motion: reduce) {
-        body.plasma-page .plasma-button,
-        body.plasma-page .plasma-card {
-            transition: none;
-        }
-
-        body.plasma-page .plasma-button:hover,
-        body.plasma-page .plasma-card:hover {
-            transform: none;
-        }
-    }
-    /* ======================================================
-   LARGER SIDE BUBBLES
-   ====================================================== */
-
-body.learning-page.plasma-page {
-    --plasma-bubble-size: 176px;
-    --plasma-bubble-gap: 14px;
-    --plasma-rail-offset: 14px;
-}
-
-/* Keep the expanded center clear of the larger bubbles. */
-body.learning-page.plasma-page main.ocean-layout {
-    margin-left: 208px !important;
-    margin-right: 208px !important;
-}
-
-body.learning-page.plasma-page .nav-bubble,
-body.learning-page.plasma-page .discovery-bubble {
-    font-size: 1.05rem;
-    line-height: 1.3;
-    padding: 14px;
-}
-
-body.learning-page.plasma-page .discovery-panel {
-    width: min(360px, calc(100vw - 230px));
-}
-
-/* ======================================================
-   GLASS PLASMA BALL
-   ====================================================== */
-
-body.plasma-page .plasma-lab-grid {
-    align-items: center;
-}
-
-body.plasma-page .plasma-chamber {
-    isolation: isolate;
-    position: relative;
-
-    width: 100%;
-    max-width: 680px;
-    height: auto;
-    min-height: 0;
-    aspect-ratio: 1 / 1;
-
-    justify-self: center;
-    overflow: hidden;
-
-    border: 2px solid rgba(195, 228, 255, 0.65);
-    border-radius: 50%;
-
-    background:
-        radial-gradient(
-            circle at 35% 25%,
-            rgba(132, 153, 255, 0.18),
-            rgba(12, 15, 42, 0.95) 55%,
-            #020612 85%
-        );
-
-    box-shadow:
-        inset 0 0 20px rgba(224, 242, 255, 0.25),
-        inset -22px -20px 55px rgba(0, 0, 0, 0.8),
-        inset 12px 10px 35px rgba(139, 174, 255, 0.18),
-        0 0 24px rgba(125, 178, 255, 0.3),
-        0 0 65px rgba(143, 80, 255, 0.25),
-        0 24px 45px rgba(0, 0, 0, 0.55);
-}
-
-body.plasma-page #plasma-canvas {
-    border-radius: 50%;
-}
-
-/* Curved glass reflection. */
-body.plasma-page .plasma-chamber::before {
-    content: "";
-    position: absolute;
-    top: 8%;
-    left: 14%;
-    width: 48%;
-    height: 24%;
-
-    border-radius: 50%;
-    background: linear-gradient(
-        180deg,
-        rgba(255, 255, 255, 0.42),
-        rgba(220, 237, 255, 0.12) 45%,
-        transparent
-    );
-
-    transform: rotate(-28deg);
-    filter: blur(3px);
-    pointer-events: none;
-    z-index: 3;
-}
-
-/* Glass surface and illuminated rim. */
-body.plasma-page .plasma-chamber::after {
-    content: "";
-    position: absolute;
-    inset: 0;
-
-    border-radius: 50%;
-    background:
-        radial-gradient(
-            circle at 27% 23%,
-            rgba(255, 255, 255, 0.18),
-            transparent 30%
-        ),
-        radial-gradient(
-            circle at 50% 50%,
-            transparent 57%,
-            rgba(145, 188, 255, 0.1) 78%,
-            rgba(231, 245, 255, 0.35) 96%,
-            rgba(255, 255, 255, 0.6) 100%
-        );
-
-    pointer-events: none;
-    z-index: 2;
-}
-
-body.plasma-page .plasma-chamber-glow {
-    border-radius: 50%;
-    box-shadow:
-        inset 0 0 45px rgba(152, 92, 255, 0.3),
-        inset 0 0 12px rgba(218, 239, 255, 0.3);
-    z-index: 1;
-}
-
-body.plasma-page .plasma-chamber-label {
-    top: auto;
-    bottom: 12%;
-    left: 50%;
-    right: auto;
-
-    width: max-content;
-    max-width: 72%;
-    padding: 8px 12px;
-
-    transform: translateX(-50%);
-    text-align: center;
-    font-size: 0.7rem;
-    z-index: 4;
-}
-
-/* ======================================================
-   RESPONSIVE BUBBLES AND GLASS BALL
-   ====================================================== */
-
-@media (max-width: 1200px) {
-    body.learning-page.plasma-page {
-        --plasma-bubble-size: 128px;
-        --plasma-bubble-gap: 12px;
-        --plasma-rail-offset: 10px;
-    }
-
-    body.learning-page.plasma-page main.ocean-layout {
-        margin-left: 154px !important;
-        margin-right: 154px !important;
-    }
-
-    body.learning-page.plasma-page .nav-bubble,
-    body.learning-page.plasma-page .discovery-bubble {
-        font-size: 0.9rem;
-        padding: 10px;
-    }
-}
-
-@media (max-width: 850px) {
-    body.learning-page.plasma-page {
-        --plasma-bubble-size: 88px;
-        --plasma-bubble-gap: 10px;
-        --plasma-rail-offset: 8px;
-    }
-
-    body.learning-page.plasma-page main.ocean-layout {
-        margin-left: 110px !important;
-        margin-right: 110px !important;
-    }
-
-    body.learning-page.plasma-page .nav-bubble,
-    body.learning-page.plasma-page .discovery-bubble {
-        font-size: 0.72rem;
-        padding: 6px;
-    }
-
-    body.learning-page.plasma-page .discovery-panel {
-        width: min(320px, calc(100vw - 125px));
-    }
-}
-
-@media (max-width: 650px) {
-    body.learning-page.plasma-page {
-        --plasma-bubble-size: 60px;
-        --plasma-bubble-gap: 8px;
-        --plasma-rail-offset: 5px;
-    }
-
-    body.learning-page.plasma-page main.ocean-layout {
-        margin-left: 73px !important;
-        margin-right: 73px !important;
-    }
-
-    body.learning-page.plasma-page .nav-bubble,
-    body.learning-page.plasma-page .discovery-bubble {
-        font-size: 0.6rem;
-        padding: 4px;
-    }
-
-    body.learning-page.plasma-page .discovery-panel {
-        left: 73px;
-        width: calc(100vw - 146px);
-    }
-
-    body.plasma-page .plasma-chamber-label {
-        font-size: 0.55rem;
-        letter-spacing: 0;
-        padding: 5px 8px;
-    }
-}
-/* Reduce desktop bubbles by 25%. */
-@media (min-width: 1201px) {
-    body.learning-page.plasma-page {
-        --plasma-bubble-size: 132px;
-        --plasma-bubble-gap: 12px;
-    }
-
-    body.learning-page.plasma-page main.ocean-layout {
-        margin-left: 164px !important;
-        margin-right: 164px !important;
-    }
-
-    body.learning-page.plasma-page .nav-bubble,
-    body.learning-page.plasma-page .discovery-bubble {
-        font-size: 0.9rem;
-        padding: 10px;
-    }
-}
-/* ======================================================
-   LARGER LEARNING CARDS AND KNOWLEDGE CHALLENGE
-   ====================================================== */
-
-body.plasma-page .plasma-learning-section .plasma-container,
-body.plasma-page .plasma-discovery-section .plasma-container,
-body.plasma-page .plasma-challenge-section .plasma-container {
-    width: calc(100% - 40px);
-    max-width: 1800px;
-}
-
-body.plasma-page .plasma-learning-section .plasma-grid,
-body.plasma-page .plasma-discovery-section .plasma-grid {
-    gap: 26px;
-}
-
-body.plasma-page .plasma-learning-section .plasma-card,
-body.plasma-page .plasma-discovery-section .plasma-card {
-    min-height: 320px;
-    padding: 34px;
-    justify-content: center;
-}
-
-body.plasma-page .plasma-learning-section .plasma-card h3,
-body.plasma-page .plasma-discovery-section .plasma-card h3 {
-    margin-bottom: 20px;
-    font-size: 1.55rem;
-}
-
-body.plasma-page .plasma-learning-section .plasma-card p,
-body.plasma-page .plasma-discovery-section .plasma-card p {
-    font-size: 1.2rem;
-    line-height: 1.85;
-}
-
-body.plasma-page .plasma-state-icon,
-body.plasma-page .plasma-discovery-icon {
-    margin-bottom: 22px;
-    font-size: 3.8rem;
-}
-
-body.plasma-page .plasma-learning-section .plasma-intro,
-body.plasma-page .plasma-discovery-section .plasma-intro,
-body.plasma-page .plasma-challenge-section .plasma-intro {
-    max-width: 1200px;
-    font-size: 1.25rem;
-}
-
-body.plasma-page .plasma-quiz {
-    width: 100%;
-    max-width: 1400px;
-    padding: 44px;
-}
-
-body.plasma-page .plasma-quiz-progress {
-    font-size: 1.1rem;
-}
-
-body.plasma-page .plasma-quiz h3 {
-    margin-bottom: 28px;
-    font-size: 1.7rem;
-}
-
-body.plasma-page .plasma-quiz button {
-    min-height: 68px;
-    padding: 20px 24px;
-    font-size: 1.2rem;
-    line-height: 1.6;
-}
-
-body.plasma-page #plasma-quiz-result {
-    font-size: 1.2rem;
-    line-height: 1.8;
-}
-
-@media (max-width: 1400px) {
-    body.plasma-page .plasma-learning-section .plasma-grid,
-    body.plasma-page .plasma-discovery-section .plasma-grid {
-        grid-template-columns: repeat(2, minmax(0, 1fr));
-    }
-}
-
-@media (max-width: 650px) {
-    body.plasma-page .plasma-learning-section .plasma-container,
-    body.plasma-page .plasma-discovery-section .plasma-container,
-    body.plasma-page .plasma-challenge-section .plasma-container {
-        width: calc(100% - 24px);
-    }
-
-    body.plasma-page .plasma-learning-section .plasma-grid,
-    body.plasma-page .plasma-discovery-section .plasma-grid {
-        grid-template-columns: 1fr;
-        gap: 18px;
-    }
-
-    body.plasma-page .plasma-learning-section .plasma-card,
-    body.plasma-page .plasma-discovery-section .plasma-card {
-        min-height: 0;
-        padding: 24px;
-    }
-
-    body.plasma-page .plasma-learning-section .plasma-card h3,
-    body.plasma-page .plasma-discovery-section .plasma-card h3 {
-        font-size: 1.3rem;
-    }
-
-    body.plasma-page .plasma-learning-section .plasma-card p,
-    body.plasma-page .plasma-discovery-section .plasma-card p {
-        font-size: 1.05rem;
-    }
-
-    body.plasma-page .plasma-quiz {
-        padding: 20px;
-    }
-
-    body.plasma-page .plasma-quiz h3 {
-        font-size: 1.35rem;
-    }
-
-    body.plasma-page .plasma-quiz button {
-        padding: 16px;
-        font-size: 1.05rem;
-    }
-}
-</style>
+<link rel="stylesheet" href="{% static 'pages/plasma.css' %}">
 
 <div class="plasma-world">
-
-    <!-- INTRODUCTION AND FOUR EDUCATIONAL CARDS -->
-    <section class="plasma-introduction"
-             aria-labelledby="plasma-title">
+    <!-- Introduction -->
+    <section class="plasma-introduction" aria-labelledby="plasma-title">
         <div class="plasma-container">
             <div class="plasma-introduction-heading">
-                <p class="plasma-eyebrow">
-                    The Science of Charged Matter
-                </p>
+                <p class="plasma-eyebrow">The Science of Charged Matter</p>
 
                 <h1 id="plasma-title">Plasma Laboratory</h1>
 
@@ -1104,9 +35,7 @@ body.plasma-page #plasma-quiz-result {
                 </p>
             </div>
 
-            <h2 class="plasma-learning-heading">
-                How Does Plasma Form?
-            </h2>
+            <h2 class="plasma-learning-heading">How Does Plasma Form?</h2>
 
             <div class="plasma-grid">
                 <article class="plasma-card">
@@ -1146,9 +75,7 @@ body.plasma-page #plasma-quiz-result {
             </div>
 
             <div class="plasma-introduction-action">
-                <p class="plasma-eyebrow">
-                    Experiment. Observe. Discover.
-                </p>
+                <p class="plasma-eyebrow">Experiment. Observe. Discover.</p>
                 <a href="#plasma-lab" class="plasma-button">
                     Enter the Laboratory ↓
                 </a>
@@ -1156,12 +83,11 @@ body.plasma-page #plasma-quiz-result {
         </div>
     </section>
 
-    <!-- FULL, UNCROPPED INFOGRAPHIC -->
+    <!-- Full infographic -->
     <section class="plasma-infographic-section"
              aria-labelledby="plasma-infographic-title">
         <div class="plasma-infographic-heading">
-            <h2 id="plasma-infographic-title"
-                class="plasma-section-title">
+            <h2 id="plasma-infographic-title" class="plasma-section-title">
                 Plasma Throughout Our World
             </h2>
             <p>
@@ -1180,7 +106,7 @@ body.plasma-page #plasma-quiz-result {
         </div>
     </section>
 
-    <!-- INTERACTIVE LABORATORY -->
+    <!-- Interactive laboratory -->
     <section id="plasma-lab"
              class="plasma-section"
              aria-labelledby="plasma-lab-title">
@@ -1324,7 +250,7 @@ body.plasma-page #plasma-quiz-result {
         </div>
     </section>
 
-    <!-- FOUR FAMILIAR STATES OF MATTER -->
+    <!-- States of matter -->
     <section class="plasma-section plasma-learning-section"
              aria-labelledby="plasma-states-title">
         <div class="plasma-container">
@@ -1378,12 +304,11 @@ body.plasma-page #plasma-quiz-result {
         </div>
     </section>
 
-    <!-- PLASMA DISCOVERIES -->
+    <!-- Plasma discoveries -->
     <section class="plasma-section plasma-discovery-section"
              aria-labelledby="plasma-discoveries-title">
         <div class="plasma-container">
-            <h2 id="plasma-discoveries-title"
-                class="plasma-section-title">
+            <h2 id="plasma-discoveries-title" class="plasma-section-title">
                 Plasma Throughout Our Universe
             </h2>
 
@@ -1394,8 +319,7 @@ body.plasma-page #plasma-quiz-result {
 
             <div class="plasma-grid">
                 <article class="plasma-card plasma-discovery">
-                    <div class="plasma-discovery-icon"
-                         aria-hidden="true">☀️</div>
+                    <div class="plasma-discovery-icon" aria-hidden="true">☀️</div>
                     <h3>Stellar Plasma</h3>
                     <p>
                         Stars contain enormous quantities of ionized
@@ -1405,8 +329,7 @@ body.plasma-page #plasma-quiz-result {
                 </article>
 
                 <article class="plasma-card plasma-discovery">
-                    <div class="plasma-discovery-icon"
-                         aria-hidden="true">🌌</div>
+                    <div class="plasma-discovery-icon" aria-hidden="true">🌌</div>
                     <h3>Atmospheric Plasma</h3>
                     <p>
                         Lightning creates ionized channels.
@@ -1416,8 +339,7 @@ body.plasma-page #plasma-quiz-result {
                 </article>
 
                 <article class="plasma-card plasma-discovery">
-                    <div class="plasma-discovery-icon"
-                         aria-hidden="true">💜</div>
+                    <div class="plasma-discovery-icon" aria-hidden="true">💜</div>
                     <h3>Noble-Gas Plasma</h3>
                     <p>
                         Electrical discharges in gases such as neon
@@ -1427,8 +349,7 @@ body.plasma-page #plasma-quiz-result {
                 </article>
 
                 <article class="plasma-card plasma-discovery">
-                    <div class="plasma-discovery-icon"
-                         aria-hidden="true">🚀</div>
+                    <div class="plasma-discovery-icon" aria-hidden="true">🚀</div>
                     <h3>Technological Plasma</h3>
                     <p>
                         Plasma is used in manufacturing, lighting,
@@ -1440,12 +361,11 @@ body.plasma-page #plasma-quiz-result {
         </div>
     </section>
 
-    <!-- KNOWLEDGE CHALLENGE -->
+    <!-- Knowledge challenge -->
     <section class="plasma-section plasma-challenge-section"
              aria-labelledby="plasma-challenge-title">
         <div class="plasma-container">
-            <h2 id="plasma-challenge-title"
-                class="plasma-section-title">
+            <h2 id="plasma-challenge-title" class="plasma-section-title">
                 Test Your Discoveries
             </h2>
 
@@ -1468,9 +388,7 @@ body.plasma-page #plasma-quiz-result {
                    role="status"
                    aria-live="polite"></p>
 
-                <button type="button"
-                        id="plasma-next"
-                        hidden>
+                <button type="button" id="plasma-next" hidden>
                     Next Question →
                 </button>
 
@@ -1494,9 +412,7 @@ body.plasma-page #plasma-quiz-result {
 (() => {
     "use strict";
 
-    /* ======================================================
-       LABORATORY REFERENCES AND STATE
-       ====================================================== */
+    /* Laboratory references and state */
 
     const byId = id => document.getElementById(id);
 
@@ -1758,13 +674,19 @@ body.plasma-page #plasma-quiz-result {
 
         previousTime = null;
 
+        if (!ctx) {
+            pauseButton.disabled = true;
+            pauseButton.textContent = "Animation Unavailable";
+            return;
+        }
+
         pauseButton.textContent = paused
             ? "Resume Animation"
             : "Pause Animation";
 
         pauseButton.setAttribute("aria-pressed", String(paused));
 
-        if (!paused && !document.hidden && ctx) {
+        if (!paused && !document.hidden) {
             animationFrame = requestAnimationFrame(animate);
         } else {
             renderFrame();
@@ -1812,17 +734,12 @@ body.plasma-page #plasma-quiz-result {
         }
 
         resizeCanvas();
-    } else {
-        pauseButton.disabled = true;
-        pauseButton.textContent = "Animation Unavailable";
     }
 
     updateReadouts();
     syncAnimation();
 
-    /* ======================================================
-       KNOWLEDGE CHALLENGE
-       ====================================================== */
+    /* Knowledge challenge */
 
     const questions = [
         {

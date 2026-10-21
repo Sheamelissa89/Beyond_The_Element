@@ -1,0 +1,328 @@
+body.matter-page .matter-experience {
+    position: relative;
+    left: 50%;
+    transform: translateX(-50%);
+    width: calc(100vw - clamp(32px, 8vw, 160px));
+    max-width: none;
+    min-height: 100vh;
+    padding: 24px 0 40px;
+    box-sizing: border-box;
+    color: #eef4f7;
+}
+
+.matter-experience *,
+#matter-dialog * {
+    box-sizing: border-box;
+}
+
+/* Page heading */
+
+body.matter-page .matter-heading {
+    display: block;
+    width: 100%;
+    max-width: 950px;
+    margin: 0 auto 30px;
+    text-align: center;
+}
+
+.matter-heading .eyebrow {
+    color: #e9c780;
+    font-size: 14px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+}
+
+.matter-heading h1 {
+    margin: 12px 0 18px;
+    color: #ffe4ad;
+    font: 400 clamp(36px, 4vw, 62px) / 1.15 Georgia, serif;
+    text-shadow: 0 3px 14px #000;
+}
+
+.matter-heading .matter-intro {
+    margin: 0;
+    color: #f0f4f7;
+    font-size: 20px;
+    line-height: 1.7;
+}
+
+/* Discovery cards */
+
+.matter-portals {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 20px;
+}
+
+.matter-portal {
+    min-height: 60vh;
+    min-width: 0;
+    overflow: hidden;
+    border: 1px solid rgba(233, 199, 128, 0.55);
+    border-radius: 20px;
+    background: rgba(4, 20, 32, 0.95);
+    box-shadow: 0 16px 35px rgba(0, 0, 0, 0.3);
+}
+
+.matter-open {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    height: 100%;
+    padding: 0;
+    border: 0;
+    border-radius: 0;
+    background: transparent;
+    color: inherit;
+    text-align: left;
+    overflow-wrap: anywhere;
+    cursor: pointer;
+}
+
+.matter-open img {
+    display: block;
+    width: 100%;
+    max-width: none;
+    height: auto;
+    margin: 0;
+    border-radius: 0;
+    aspect-ratio: 16 / 9;
+    object-fit: contain;
+    transition: filter 0.2s;
+}
+
+.matter-open:hover img {
+    filter: brightness(1.12);
+}
+
+.matter-portal-copy {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    flex: 1;
+    width: 100%;
+    padding: 30px 26px;
+}
+
+.matter-portal-title {
+    display: block;
+    margin-bottom: 14px;
+    color: #ffe4ad;
+    font: 400 34px / 1.2 Georgia, serif;
+}
+
+.matter-portal-summary {
+    display: block;
+    min-height: 0;
+    margin-bottom: 28px;
+    color: #e0eaf0;
+    font: 20px / 1.7 Arial, sans-serif;
+}
+
+.matter-portal-action {
+    display: inline-block;
+    margin-top: auto;
+    padding: 12px 18px;
+    border: 1px solid #e9c780;
+    border-radius: 28px;
+    color: #ffe4ad;
+    font: 18px / 1.4 Arial, sans-serif;
+}
+
+/* Page actions and shared dialog controls */
+
+.matter-actions {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 16px;
+    margin: 30px 0 22px;
+}
+
+.matter-actions > *,
+#matter-dialog button,
+#matter-dialog .matter-topic-link {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 48px;
+    padding: 12px 20px;
+    border: 1px solid #e9c780;
+    border-radius: 28px;
+    background: #102c3b;
+    color: #ffe4ad;
+    font: 18px / 1.45 Arial, sans-serif;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+.matter-actions > :hover,
+#matter-dialog button:hover,
+#matter-dialog .matter-topic-link:hover {
+    background: #244b5e;
+}
+
+.matter-note {
+    max-width: 1000px;
+    margin: 0 auto;
+    color: #dce8ee;
+    font-size: 16px;
+    line-height: 1.7;
+    text-align: center;
+}
+
+/* Discovery dialog */
+
+#matter-dialog {
+    box-sizing: border-box;
+    width: min(1050px, calc(100vw - 32px));
+    max-width: calc(100vw - 32px);
+    max-height: 88vh;
+    max-height: 88dvh;
+    overflow-wrap: anywhere;
+    overflow-y: auto;
+    padding: clamp(24px, 4vw, 48px);
+    border: 2px solid #e9c780;
+    border-radius: 22px;
+    background: #091e2b;
+    color: #f0f4f7;
+    font: 20px / 1.7 Arial, sans-serif;
+    text-align: left;
+    box-shadow: 0 24px 100px #000;
+}
+
+#matter-dialog::backdrop {
+    background: rgba(0, 8, 15, 0.85);
+    backdrop-filter: blur(5px);
+}
+
+.matter-dialog-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 14px;
+    margin-bottom: 24px;
+}
+
+#matter-dialog .matter-dialog-label {
+    margin: 0;
+    color: #e9c780;
+    font-size: 15px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+}
+
+#matter-dialog h2 {
+    margin: 0 0 24px;
+    color: #ffe4ad;
+    font: 400 clamp(32px, 3.5vw, 46px) / 1.2 Georgia, serif;
+    text-shadow: none;
+}
+
+#matter-dialog h3 {
+    margin: 28px 0 12px;
+    color: #f6d89c;
+    font-size: 23px;
+}
+
+#matter-dialog p,
+#matter-dialog li {
+    color: #edf3f7;
+    font-size: 21px;
+    line-height: 1.75;
+}
+
+#matter-dialog ul {
+    padding-left: 26px;
+}
+
+.matter-example-buttons,
+.matter-dialog-navigation {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    margin: 20px 0;
+}
+
+#matter-dialog .matter-callout {
+    padding: 18px 22px;
+    border-left: 4px solid #e9c780;
+    background: #163342;
+}
+
+/* Comparison table */
+
+.matter-table-scroll {
+    overflow-x: auto;
+}
+
+#matter-dialog table {
+    width: 100%;
+    min-width: 720px;
+    border-collapse: collapse;
+    font-size: 18px;
+    line-height: 1.6;
+}
+
+#matter-dialog caption {
+    margin-bottom: 16px;
+    color: #dce8ee;
+    text-align: left;
+}
+
+#matter-dialog th,
+#matter-dialog td {
+    padding: 16px;
+    border: 1px solid #52616a;
+    vertical-align: top;
+    text-align: left;
+}
+
+#matter-dialog th {
+    background: #173746;
+    color: #ffe4ad;
+}
+
+/* Keyboard focus */
+
+.matter-experience :focus-visible,
+#matter-dialog :focus-visible {
+    outline: 3px solid #fff0c8;
+    outline-offset: 5px;
+}
+
+/* Responsive layout */
+
+@media (max-width: 1200px) {
+    .matter-portals {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+}
+
+@media (max-width: 700px) {
+    .matter-portals {
+        grid-template-columns: 1fr;
+    }
+
+    .matter-portal {
+        min-height: 560px;
+    }
+
+    .matter-portal-copy {
+        padding: 22px;
+    }
+
+    #matter-dialog p,
+    #matter-dialog li {
+        font-size: 18px;
+    }
+}
+
+/* Reduced motion */
+
+@media (prefers-reduced-motion: reduce) {
+    .matter-open img {
+        transition: none;
+    }
+}

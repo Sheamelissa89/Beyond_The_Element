@@ -7,15 +7,14 @@
 
     <title>{% block title %}Beyond the Elements{% endblock %}</title>
 
-    <!-- Shared foundation and navigation -->
-    <link rel="stylesheet" href="{% static 'core/base.css' %}?v=1">
-    <link rel="stylesheet" href="{% static 'core/navigation.css' %}?v=3">
+    <!-- Legacy styles remain available during migration. -->
+    <link rel="stylesheet" href="{% static 'css/style.css' %}?v=11">
 
-    <!-- Keep until the remaining styles have been migrated -->
-    <link rel="stylesheet" href="{% static 'css/style.css' %}?v=10">
-    <link rel="stylesheet" href="{% static 'css/learning.css' %}?v=10">
+    <!-- Shared foundation and navigation override legacy equivalents. -->
+    <link rel="stylesheet" href="{% static 'core/base.css' %}?v=2">
+    <link rel="stylesheet" href="{% static 'core/navigation.css' %}?v=4">
 
-    <!-- Page-specific styles -->
+    <!-- Page-specific styles load after the shared styles. -->
     {% block extra_css %}{% endblock %}
 </head>
 
@@ -60,6 +59,7 @@
                     <summary class="discovery-bubble">Quiz</summary>
                     <div class="discovery-panel">
                         <p>Is water an element or a compound?</p>
+
                         <details class="discovery-answer">
                             <summary>Reveal answer</summary>
                             <p>
@@ -74,11 +74,13 @@
                     <summary class="discovery-bubble">
                         Human<br>Elements
                     </summary>
+
                     <div class="discovery-panel">
                         <p>
                             Our bodies contain many chemical elements.
                             These six account for roughly 99% of body mass:
                         </p>
+
                         <ul>
                             <li>
                                 <strong>Oxygen (O)</strong> — in water
@@ -105,11 +107,13 @@
                                 DNA, and energy-carrying ATP.
                             </li>
                         </ul>
+
                         <p>
                             Smaller amounts of elements such as iron,
                             sodium, potassium, and magnesium also play
                             essential roles.
                         </p>
+
                         <a href="{% url 'chemistry:elements' %}?group=human#periodic-table">
                             Highlight the six main human elements →
                         </a>
@@ -117,70 +121,70 @@
                 </details>
                 {% endblock %}
             </aside>
-            
-            <details class="mobile-explore">
+
+            <details class="mobile-explore" id="site-explore-menu" open>
                 <summary>Explore Pages ☰</summary>
 
-            <nav class="bubble-navigation" aria-label="Main navigation">
-                </details>
-                <p class="bubble-heading">Explore</p>
+                <nav class="bubble-navigation" aria-label="Main navigation">
+                    <p class="bubble-heading">Explore</p>
 
-                {% with current_page=request.resolver_match.url_name %}
-                <a class="nav-bubble"
-                   href="{% url 'chemistry:home' %}"
-                   {% if current_page == 'home' %}aria-current="page"{% endif %}>
-                    Home
-                </a>
+                    {% with current_page=request.resolver_match.url_name %}
+                    <a class="nav-bubble"
+                       href="{% url 'chemistry:home' %}"
+                       {% if current_page == 'home' %}aria-current="page"{% endif %}>
+                        Home
+                    </a>
 
-                <a class="nav-bubble"
-                   href="{% url 'chemistry:elements' %}"
-                   {% if current_page == 'elements' %}aria-current="page"{% endif %}>
-                    Periodic<br>Table
-                </a>
+                    <a class="nav-bubble"
+                       href="{% url 'chemistry:elements' %}"
+                       {% if current_page == 'elements' %}aria-current="page"{% endif %}>
+                        Periodic<br>Table
+                    </a>
 
-                <a class="nav-bubble"
-                   href="{% url 'chemistry:element_classes' %}"
-                   {% if current_page == 'element_classes' %}aria-current="page"{% endif %}>
-                    Element<br>Classes
-                </a>
+                    <a class="nav-bubble"
+                       href="{% url 'chemistry:element_classes' %}"
+                       {% if current_page == 'element_classes' %}aria-current="page"{% endif %}>
+                        Element<br>Classes
+                    </a>
 
-                <a class="nav-bubble"
-                   href="{% url 'chemistry:states_matter' %}"
-                   {% if current_page == 'states_matter' %}aria-current="page"{% endif %}>
-                    States of<br>Matter
-                </a>
+                    <a class="nav-bubble"
+                       href="{% url 'chemistry:states_matter' %}"
+                       {% if current_page == 'states_matter' %}aria-current="page"{% endif %}>
+                        States of<br>Matter
+                    </a>
 
-                <a class="nav-bubble"
-                   href="{% url 'chemistry:plasma' %}"
-                   {% if current_page == 'plasma' %}aria-current="page"{% endif %}>
-                    Plasma<br>Laboratory
-                </a>
+                    <a class="nav-bubble"
+                       href="{% url 'chemistry:plasma' %}"
+                       {% if current_page == 'plasma' %}aria-current="page"{% endif %}>
+                        Plasma<br>Laboratory
+                    </a>
 
-                <a class="nav-bubble"
-                   href="{% url 'chemistry:classical_elements' %}"
-                   {% if current_page == 'classical_elements' %}aria-current="page"{% endif %}>
-                    Classical<br>Elements
-                </a>
+                    <a class="nav-bubble"
+                       href="{% url 'chemistry:classical_elements' %}"
+                       {% if current_page == 'classical_elements' %}aria-current="page"{% endif %}>
+                        Classical<br>Elements
+                    </a>
 
-                <a class="nav-bubble"
-                   href="{% url 'chemistry:history' %}"
-                   {% if current_page == 'history' %}aria-current="page"{% endif %}>
-                    History
-                </a>
+                    <a class="nav-bubble"
+                       href="{% url 'chemistry:history' %}"
+                       {% if current_page == 'history' %}aria-current="page"{% endif %}>
+                        History
+                    </a>
 
-                <a class="nav-bubble"
-                   href="{% url 'chemistry:interactive_learning' %}"
-                   {% if current_page == 'interactive_learning' or current_page == 'notes' %}aria-current="page"{% endif %}>
-                    Interactive<br>Learning
-                </a>
+                    <a class="nav-bubble"
+                       href="{% url 'chemistry:interactive_learning' %}"
+                       {% if current_page == 'interactive_learning' or current_page == 'notes' %}aria-current="page"{% endif %}>
+                        Interactive<br>Learning
+                    </a>
 
-                <a class="nav-bubble"
-                   href="{% url 'chemistry:atomic_architect' %}"
-                   {% if current_page == 'atomic_architect' %}aria-current="page"{% endif %}>
-                    Atomic<br>Architect
-                </a>
-                {% endwith %}
-            </nav>
+                    <a class="nav-bubble"
+                       href="{% url 'chemistry:atomic_architect' %}"
+                       {% if current_page == 'atomic_architect' %}aria-current="page"{% endif %}>
+                        Atomic<br>Architect
+                    </a>
+                    {% endwith %}
+                </nav>
+            </details>
 
             <div class="ocean-content">
                 {% block content %}{% endblock %}
@@ -191,6 +195,22 @@
             Beyond the Elements · Built one discovery at a time.
         </footer>
     </main>
+
+    <script>
+    (() => {
+        "use strict";
+
+        const menu = document.getElementById("site-explore-menu");
+        const mobile = window.matchMedia("(max-width: 600px)");
+
+        function syncExploreMenu() {
+            menu.open = !mobile.matches;
+        }
+
+        syncExploreMenu();
+        mobile.addEventListener("change", syncExploreMenu);
+    })();
+    </script>
 
     {% block scripts %}{% endblock %}
 </body>

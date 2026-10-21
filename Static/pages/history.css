@@ -1,0 +1,270 @@
+/* Page layout */
+
+body.history-image-page main.ocean-layout {
+    display: block;
+    width: calc(100% - 140px);
+    max-width: none;
+    min-width: 0;
+    margin: 0 auto;
+    padding: 0 0 20px;
+    box-sizing: border-box;
+}
+
+body.history-image-page .parallel-history {
+    position: relative;
+    left: 50%;
+    transform: translateX(-50%);
+    grid-column: 1 / -1;
+    justify-self: stretch;
+    width: calc(100vw - clamp(32px, 8vw, 160px));
+    max-width: none;
+    min-width: 0;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+.parallel-history *,
+#history-dialog * {
+    box-sizing: border-box;
+}
+
+/* Scrollable timeline artwork */
+
+body.history-image-page .history-scroll {
+    width: 100%;
+    max-width: none;
+    min-width: 0;
+    overflow-x: auto;
+    scrollbar-color: #e9c780 #061722;
+}
+
+body.history-image-page .history-canvas {
+    position: relative;
+    width: 100%;
+    min-width: 1000px;
+    max-width: none;
+    line-height: 0;
+}
+
+body.history-image-page .history-canvas > img {
+    display: block;
+    width: 100%;
+    max-width: none;
+    height: auto;
+    margin: 0;
+}
+
+/* Interactive artwork regions */
+
+.history-hotspot {
+    position: absolute;
+    left: var(--x);
+    top: var(--y);
+    transform: translate(-50%, -50%);
+    width: 10.3%;
+    height: 13%;
+    padding: 0;
+    border: 2px solid transparent;
+    border-radius: 50%;
+    background: transparent;
+    color: #fff2cc;
+    font: inherit;
+    line-height: 1.2;
+    cursor: pointer;
+    transition:
+        border-color 0.2s,
+        box-shadow 0.2s;
+}
+
+.history-hotspot:hover,
+.history-hotspot:focus-visible {
+    border-color: #ffe0a0;
+    box-shadow:
+        0 0 20px rgba(255, 210, 120, 0.65),
+        inset 0 0 18px rgba(255, 210, 120, 0.15);
+    outline: none;
+}
+
+.hotspot-hint {
+    position: absolute;
+    bottom: -8px;
+    right: 8px;
+    display: grid;
+    place-items: center;
+    width: 26px;
+    height: 26px;
+    border: 1px solid #e9c780;
+    border-radius: 50%;
+    background: #071b27;
+    color: #ffe0a0;
+    font-size: 20px;
+    line-height: 1;
+}
+
+.history-card-hotspot {
+    width: 15.5%;
+    height: 4.6%;
+    border-radius: 25px;
+}
+
+.history-arrow-hotspot {
+    width: 3.2%;
+    height: 5.7%;
+    border-radius: 50%;
+}
+
+.history-help {
+    margin: 12px 0 0;
+    color: #eed8aa;
+    font-size: 0.9rem;
+    line-height: 1.5;
+    text-align: center;
+}
+
+/* Information dialog */
+
+#history-dialog {
+    box-sizing: border-box;
+    width: min(1050px, calc(100vw - 32px));
+    max-width: calc(100vw - 32px);
+    max-height: 88vh;
+    max-height: 88dvh;
+    overflow-y: auto;
+    overflow-wrap: break-word;
+    padding: clamp(24px, 4vw, 56px);
+    border: 2px solid #e9c780;
+    border-radius: 20px;
+    background: #091e2b;
+    color: #f5f7fa;
+    font-family: Arial, sans-serif;
+    font-size: 18px;
+    text-align: left;
+    box-shadow: 0 20px 90px #000;
+}
+
+#history-dialog::backdrop {
+    background: rgba(0, 8, 15, 0.85);
+    backdrop-filter: blur(5px);
+}
+
+#history-dialog .history-dialog-label {
+    clear: both;
+    color: #f5d797;
+    font-size: 17px;
+    line-height: 1.6;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+}
+
+#history-dialog h2 {
+    margin: 16px 0 24px;
+    color: #ffe0a0;
+    font-family: Georgia, serif;
+    font-size: clamp(32px, 3.5vw, 48px);
+    line-height: 1.25;
+    text-shadow: none;
+}
+
+#history-dialog > p:not(.history-dialog-label) {
+    color: #f0f4f7;
+    font-size: 24px;
+    line-height: 1.7;
+}
+
+#history-dialog .history-dialog-question {
+    margin-top: 24px;
+    padding: 20px;
+    border-left: 4px solid #f1ce85;
+    background: #173342;
+}
+
+/* Dialog controls */
+
+#history-dialog button,
+#history-dialog a {
+    display: inline-block;
+    max-width: 100%;
+    min-height: 48px;
+    padding: 14px 24px;
+    border: 1px solid #e9c780;
+    border-radius: 24px;
+    background: #153444;
+    color: #ffe4ad;
+    font: inherit;
+    font-size: 20px;
+    line-height: 1.5;
+    text-decoration: none;
+    white-space: normal;
+    cursor: pointer;
+}
+
+#history-dialog button:hover,
+#history-dialog a:hover {
+    background: #254b5d;
+}
+
+#history-dialog .history-close {
+    float: right;
+    margin: 0 0 12px 16px;
+}
+
+#history-dialog .history-dialog-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 14px;
+    margin-top: 28px;
+}
+
+#history-dialog .history-era-navigation {
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 14px;
+    margin-top: 26px;
+    padding-top: 22px;
+    border-top: 1px solid rgba(233, 199, 128, 0.35);
+}
+
+/* Keyboard focus */
+
+.history-scroll:focus-visible,
+#history-dialog :focus-visible {
+    outline: 3px solid #fff1ce;
+    outline-offset: 4px;
+}
+
+/* Responsive layout */
+
+@media (max-width: 720px) {
+    body.history-image-page main.ocean-layout {
+        width: calc(100% - 110px);
+    }
+}
+
+@media (max-width: 600px) {
+    #history-dialog > p:not(.history-dialog-label) {
+        font-size: 20px;
+    }
+
+    #history-dialog button,
+    #history-dialog a {
+        font-size: 18px;
+    }
+
+    #history-dialog .history-dialog-actions {
+        flex-direction: column;
+    }
+
+    #history-dialog .history-dialog-actions > * {
+        text-align: center;
+    }
+}
+
+/* Reduced motion */
+
+@media (prefers-reduced-motion: reduce) {
+    .history-hotspot {
+        transition: none;
+    }
+}
